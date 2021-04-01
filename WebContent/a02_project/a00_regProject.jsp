@@ -26,11 +26,9 @@
 <script src="${path}/a00_com/a02_project/codebase/dhtmlxgantt.js?v=7.0.13"></script>
 <link rel="stylesheet" href="${path}/a00_com/a02_project/codebase/dhtmlxgantt.css?v=7.0.13">
 <style>
-html, body {
-	/* height: 100%;
-	padding: 0px;
-	margin: 0px;
-	overflow: hidden; */
+#projectRow:hover {
+	background: #1E1E28;
+	cursor: pointer;
 }
 </style>
 </head>
@@ -46,294 +44,102 @@ html, body {
 			<!-- Start Content -->
 			<div class="content">
 
-				<%@ include file="project_header.jsp"%>
-
-				<!-- Start project-info -->
-				<div class="row">
-
-					<div class="col-lg-6 col-md-6">
-						<div class="card card-tasks">
-							<div class="card-header">
-								<h4 class="title">프로젝트 정보</h4>
-							</div>
-							<div class="card-body">
-								<div class="row mb-2">
-									<div class="col-md-12">
-										<h4>프로젝트명</h4>
-									</div>
-								</div>
-								<div class="row mb-4">
-									<div class="col-md-3">
-										<h5>시작일</h5>
-										<div class="btn btn-info btn-sm">2021-03-23</div>
-									</div>
-									<div class="col-md-3">
-										<h5>종료일</h5>
-										<div class="btn btn-danger btn-sm">2021-04-21</div>
-									</div>
-									<div class="col-md-6">
-										<h5 class="mb-2">Progress</h5>
-										<div class="progress-container">
-											<span class="progress-badge">&nbsp</span>
-											<div class="progress">
-												<div class="progress-bar" role="progressbar"
-													aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-													style="width: 25%;">
-													<span class="progress-value">25%</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="row mb-2">
-									<div class="col-md-12">
-										<h5>PM</h5>
-										<p>홍길동과장</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-6 col-sm-6 text-center">
-						<div class="card card-tasks text-left">
-							<div class="card-header">
-								<h4 class="title">참여인원</h4>
-							</div>
-							<div class="card-body">
-								<div class="table-full-width table-responsive"
-									style="overflow: auto; max-height: 380px;">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>이름</th>
-												<th>직급</th>
-												<th>직책</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
+				<div class="col-md-8 ml-auto mr-auto mb-3">
+					<h2 class="text-center m-0">프로젝트 센터</h2>
 				</div>
-				<!-- End of row -->
-
 				<div class="row">
 					<div class="col-md-12">
-						<div class="card">
-							<div class="card-header">
-								<h4 class="title">주요 작업 현황</h4>
+						<div class="card" style="height:700px;">
+							<div class="card-header mb-4">
+								<h4 class="title">프로젝트 등록 정보</h4>
 							</div>
+							<div class="card-body mb-4">
+								<form method="get" action="/" class="form-horizontal">
 
-							<div class="card-body row p-4 m-0">
-								<div class="col-md-2 bg-warning p-3">
-									<div class="progress-container">
-										<h4>요구사항 정의</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
+									<!-- 프로젝트 명 -->
+									<div class="row mb-3">
+										<label class="col-sm-2 col-form-label">프로젝트 명 *</label>
+										<div class="col-sm-10">
+											<div class="form-group">
+												<input type="text" class="form-control" name="p_name">
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-2 bg-info p-3">
-									<div class="progress-container">
-										<h4>유스케이스 설계</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
+									
+									<!-- 부서 -->
+									<div class="row mb-1">
+										<label class="col-sm-2 col-form-label">부서명 *</label>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<select class="selectpicker" data-size="7" name="d_no"
+													data-style="btn btn-primary" title="Single Select">
+													<option disabled selected>담당 부서를 선택하세요.</option>
+													<option value="2">경영지원</option>
+													<option value="3">개발팀</option>
+												</select>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="col-md-2 bg-danger p-3">
-									<div class="progress-container">
-										<h4>데이터베이스 설계</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
+
+									<!-- 프로젝트 관리자 -->
+									<div class="row mb-1">
+										<label class="col-sm-2 col-form-label">프로젝트 관리자 *</label>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<select class="selectpicker" data-size="7" name="p_pm"
+													data-style="btn btn-primary" title="Single Select">
+													<option disabled selected>관리자를 선택하세요.</option>
+													<option value="2">홍길동</option>
+													<option value="3">이길동</option>
+												</select>
 											</div>
 										</div>
 									</div>
-								</div>
-							</div>
-							<!-- End of card-body -->
 
-						</div>
-					</div>
-				</div>
-				<!-- End of row -->
-
-				<div class="row">
-					<div class="col-md-6">
-						<div class="card card-chart card-chart-pie">
-							<div class="card-header">
-								<h4 class="title">프로젝트 태스크 진행상태</h4>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-6">
-										<div class="chart-area">
-											<canvas id="PieChartGradient"></canvas>
+									<!-- 날짜 -->
+									<div class="row mb-3">
+										<label class="col-sm-2 col-form-label">날짜 *</label>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<input type="text" class="form-control datetimepicker"
+													value="10/05/2018">
+											</div>
 										</div>
 									</div>
-									<div class="col-6">
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 시작전 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 진행중 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 완료 - 5 건
-										</h4>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
 
-					<div class="col-md-6">
-						<div class="card card-chart card-chart-pie">
-							<div class="card-header">
-								<h4 class="title">프로젝트 태스크 진행상태</h4>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-6">
-										<div class="chart-area">
-											<canvas id="PieChartGradient2"></canvas>
+									<!-- 프로젝트 설명 -->
+									<div class="row">
+										<label class="col-sm-2 col-form-label">설명</label>
+										<div class="col-sm-10">
+											<div class="form-group">
+												<textarea class="form-control" rows="10" cols=""
+													name="p_content" id="p_content"
+													style="max-height: 200px;
+													border-top: 1px solid #2b3553;"></textarea>
+											</div>
 										</div>
 									</div>
-									<div class="col-6">
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 시작전 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 진행중 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 완료 - 5 건
-										</h4>
-									</div>
-								</div>
+
+								</form>
+								
 							</div>
+							
+							<div class="card-footer text-right">
+								<button type="submit" class="btn btn-primary">
+									<i class="tim-icons icon-check-2"></i> 저장
+								</button>
+								<button type="button" class="btn ml-2"
+									onclick="location.href='${path}/a02_project/a00_projectList.jsp'">
+									<i class="tim-icons icon-simple-remove"></i> 취소
+								</button>
+							</div>
+							
 						</div>
 					</div>
 
 				</div>
-				<!-- End of row -->
 
-				<div class="row">
-				
-					<div class="col-md-12">
-						<div class="card">
-							<div class="card-header">
-								<h4 class="title">담당영역</h4>
-							</div>
-							<div class="card-body p-4">
-								<div id="gantt_here" style="width:100%; height:500px;"></div>
-							</div>
-						</div>
-					</div>
-					
-				</div>
-				<!-- End of row -->
-				
+
 			</div>
 			<!-- End Content -->
 
@@ -350,8 +156,8 @@ html, body {
 					<div class="copyright">
 						©
 						<script>
-              document.write(new Date().getFullYear())
-            </script>
+							document.write(new Date().getFullYear())
+						</script>
 						made with <i class="tim-icons icon-heart-2"></i> by <a
 							href="javascript:void(0)" target="_blank">Creative Tim</a> for a
 						better web.
@@ -568,25 +374,14 @@ html, body {
 	</script>
 	
 	<script>
-	$(document).ready(function() {
-	      // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-	    	demo.initChartPageCharts();
-	    });
-		
-		gantt.init("gantt_here");
-		
-		gantt.parse({
-			data: [
-				{ id: 1, text: "요구사항 정의", start_date: "01-04-2021", duration: 18, progress: 0.4, open: true },
-				{ id: 2, text: "화면설계", start_date: "02-04-2021", duration: 8, progress: 0.6, parent: 1 },
-				{ id: 3, text: "화면구현", start_date: "11-04-2021", duration: 8, progress: 0.6, parent: 1 }
-			],
-			links: [
-				{id: 1, source: 1, target: 2, type: "1"},
-				{id: 2, source: 2, target: 3, type: "0"}
-			]
+		$(document).ready(function() {
+			// initialise Datetimepicker and Sliders
+			blackDashboard.initDateTimePicker();
+			if ($('.slider').length != 0) {
+				demo.initSliders();
+			}
 		});
-  </script>
+	</script>
 </body>
 
 </html>

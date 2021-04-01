@@ -413,20 +413,160 @@ demo = {
       }
     };
 
-    var ctx = document.getElementById("PieChartGradient").getContext("2d");
+
+
+    var ctx = document.getElementById("chartSimpleWithGradient").getContext("2d");
+
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(72,72,176,0.4)');
+    gradientStroke.addColorStop(0.8, 'rgba(72,72,176,0.2)');
+    gradientStroke.addColorStop(0, 'rgba(119,52,169,0)'); //purple colors
+
+
+
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      responsive: true,
+      data: {
+        labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        datasets: [{
+          label: "Data",
+          fill: true,
+          backgroundColor: gradientStroke,
+          borderColor: '#ba54f5',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#be55ed',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#be55ed',
+          //pointHoverBorderColor:'rgba(35,46,55,1)',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          data: [80, 100, 70, 80, 120, 80],
+        }]
+      },
+      options: gradientChartOptionsConfigurationPurple
+    });
+
+    var ctx = document.getElementById("chartWithNumbersAndGrid").getContext("2d");
+
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(0,135,191,0.2)');
+    gradientStroke.addColorStop(0.8, 'rgba(0,135,191,0.1)');
+    gradientStroke.addColorStop(0, 'rgba(0,84,119,0)'); //blue colors
+
+
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      responsive: true,
+      data: {
+        labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        datasets: [{
+          label: "Data",
+          fill: true,
+          backgroundColor: gradientStroke,
+          borderColor: '#2380f7',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          pointBackgroundColor: '#2380f7',
+          pointBorderColor: 'rgba(255,255,255,0)',
+          pointHoverBackgroundColor: '#2380f7',
+          pointBorderWidth: 20,
+          pointHoverRadius: 4,
+          pointHoverBorderWidth: 15,
+          pointRadius: 4,
+          pointRadius: 4,
+          data: [80, 100, 70, 80, 120, 80],
+        }]
+      },
+      options: gradientChartOptionsConfigurationBlue
+    });
+
+    var ctx = document.getElementById("BarChart").getContext("2d");
+
+    var gradientStroke = ctx.createLinearGradient(0, 230, 0, 50);
+
+    gradientStroke.addColorStop(1, 'rgba(253,93,147,0.8)');
+    gradientStroke.addColorStop(0, 'rgba(253,93,147,0)'); //blue colors
+
+
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      responsive: true,
+      data: {
+        labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        datasets: [{
+          label: "Data",
+          fill: true,
+          backgroundColor: gradientStroke,
+          hoverBackgroundColor: gradientStroke,
+          borderColor: '#ff5991',
+          borderWidth: 2,
+          borderDash: [],
+          borderDashOffset: 0.0,
+          data: [80, 100, 70, 80, 120, 80],
+        }]
+      },
+      options: gradientBarChartConfigurationWithGrid
+    });
+
+
+    var ctx = document.getElementById("MultipleBarsChart").getContext("2d");
+
+
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      responsive: true,
+      data: {
+        labels: ['JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+        datasets: [{
+            label: "Data",
+            fill: true,
+            backgroundColor: '#ff8a76',
+            hoverBackgroundColor: ' #ff8a76',
+            borderColor: '#ff8a76',
+            borderWidth: 2,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            data: [80, 100, 70, 80, 120, 80],
+          },
+          {
+            label: "Data",
+            fill: true,
+            backgroundColor: '#2782f0',
+            hoverBackgroundColor: ' #2782f0',
+            borderColor: '#2782f0',
+            borderWidth: 2,
+            borderDash: [],
+            borderDashOffset: 0.0,
+            data: [60, 110, 90, 70, 90, 100],
+          }
+        ]
+      },
+      options: gradientBarChartConfiguration
+    });
+
+
+    var ctx = document.getElementById("PieChart").getContext("2d");
 
 
     var myChart = new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: [1, 2, 3],
+        labels: [1, 2],
         datasets: [{
           label: "Emails",
           pointRadius: 0,
           pointHoverRadius: 0,
-          backgroundColor: ['#ff8779', '#2a84e9', '#e2e2e2'],
+          backgroundColor: ['#00c09d', '#e2e2e2'],
           borderWidth: 0,
-          data: [60, 40, 20]
+          data: [60, 40]
         }]
       },
       options: {
@@ -476,7 +616,8 @@ demo = {
         },
       }
     });
-    var ctx = document.getElementById("PieChartGradient2").getContext("2d");
+
+    var ctx = document.getElementById("PieChartGradient").getContext("2d");
 
 
     var myChart = new Chart(ctx, {

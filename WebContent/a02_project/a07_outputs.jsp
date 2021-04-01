@@ -25,14 +25,7 @@
 <!-- gantt -->
 <script src="${path}/a00_com/a02_project/codebase/dhtmlxgantt.js?v=7.0.13"></script>
 <link rel="stylesheet" href="${path}/a00_com/a02_project/codebase/dhtmlxgantt.css?v=7.0.13">
-<style>
-html, body {
-	/* height: 100%;
-	padding: 0px;
-	margin: 0px;
-	overflow: hidden; */
-}
-</style>
+
 </head>
 <body class="sidebar-mini ">
 	<div class="wrapper">
@@ -48,292 +41,235 @@ html, body {
 
 				<%@ include file="project_header.jsp"%>
 
-				<!-- Start project-info -->
-				<div class="row">
-
-					<div class="col-lg-6 col-md-6">
-						<div class="card card-tasks">
-							<div class="card-header">
-								<h4 class="title">프로젝트 정보</h4>
-							</div>
-							<div class="card-body">
-								<div class="row mb-2">
-									<div class="col-md-12">
-										<h4>프로젝트명</h4>
-									</div>
-								</div>
-								<div class="row mb-4">
-									<div class="col-md-3">
-										<h5>시작일</h5>
-										<div class="btn btn-info btn-sm">2021-03-23</div>
-									</div>
-									<div class="col-md-3">
-										<h5>종료일</h5>
-										<div class="btn btn-danger btn-sm">2021-04-21</div>
-									</div>
-									<div class="col-md-6">
-										<h5 class="mb-2">Progress</h5>
-										<div class="progress-container">
-											<span class="progress-badge">&nbsp</span>
-											<div class="progress">
-												<div class="progress-bar" role="progressbar"
-													aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-													style="width: 25%;">
-													<span class="progress-value">25%</span>
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="row mb-2">
-									<div class="col-md-12">
-										<h5>PM</h5>
-										<p>홍길동과장</p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-lg-6 col-sm-6 text-center">
-						<div class="card card-tasks text-left">
-							<div class="card-header">
-								<h4 class="title">참여인원</h4>
-							</div>
-							<div class="card-body">
-								<div class="table-full-width table-responsive"
-									style="overflow: auto; max-height: 380px;">
-									<table class="table">
-										<thead>
-											<tr>
-												<th>이름</th>
-												<th>직급</th>
-												<th>직책</th>
-											</tr>
-										</thead>
-										<tbody>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-										</tbody>
-									</table>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- End of row -->
+				
 
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-header">
-								<h4 class="title">주요 작업 현황</h4>
-							</div>
-
-							<div class="card-body row p-4 m-0">
-								<div class="col-md-2 bg-warning p-3">
-									<div class="progress-container">
-										<h4>요구사항 정의</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
-											</div>
+								<div class="row">
+									<div class="col-4 text-left">
+										<h4 class="title">산출물 리스트</h4>	
+									</div>
+									<div class="col-8 text-right">
+										<div class="d-flex justify-content-end mb-2">
+											<div class="col-sm-5">
+						                    <div class="input-group m-0" style="top: 5px;">
+						                      <div class="input-group-prepend">
+						                        <div class="input-group-text">
+						                          <i class="tim-icons icon-zoom-split"></i>
+						                        </div>
+						                      </div>
+						                      <input type="text" name="firstname"
+						                      	class="form-control" placeholder="Search..">
+						                    </div>
+						                  </div>
+											<button class="btn" data-toggle="modal" data-target="#noticeModal">
+												산출물 등록
+											</button>
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2 bg-info p-3">
-									<div class="progress-container">
-										<h4>유스케이스 설계</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2 bg-danger p-3">
-									<div class="progress-container">
-										<h4>데이터베이스 설계</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-							<!-- End of card-body -->
-
-						</div>
-					</div>
-				</div>
-				<!-- End of row -->
-
-				<div class="row">
-					<div class="col-md-6">
-						<div class="card card-chart card-chart-pie">
-							<div class="card-header">
-								<h4 class="title">프로젝트 태스크 진행상태</h4>
 							</div>
 							<div class="card-body">
-								<div class="row">
-									<div class="col-6">
-										<div class="chart-area">
-											<canvas id="PieChartGradient"></canvas>
-										</div>
-									</div>
-									<div class="col-6">
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 시작전 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 진행중 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 완료 - 5 건
-										</h4>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+								<table id="simple-table" class="table text-center">
+									<colgroup>
+										<col width="40%">
+										<col width="30%">
+										<col width="30%">
+									</colgroup>
+									<thead>
+										<tr>
+											<th>산출물 정보</th>
+											<th>작업정보</th>
+											<th></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr class="text-left">
+											<td class="pl-4">saplem_imges_01.png</td>
+											<td class="pl-4">usecase 작성</td>
+											<td class="text-right">
+												<button class="btn btn-icon detail">
+													<i class="tim-icons icon-zoom-split"></i>
+												</button>
+												<button class="btn btn-icon download ml-3">
+													<i class="fas fa-download"></i>
+												</button>
+											</td>
+										</tr>
+										<tr class="text-left">
+											<td class="pl-4">saplem_imges_01.png</td>
+											<td class="pl-4">usecase 작성</td>
+											<td class="text-right">
+												<button class="btn btn-icon detail">
+													<i class="tim-icons icon-zoom-split"></i>
+												</button>
+												<button class="btn btn-icon download ml-3">
+													<i class="fas fa-download"></i>
+												</button>
+											</td>
+										</tr>
+										<tr class="text-left">
+											<td class="pl-4">saplem_imges_01.png</td>
+											<td class="pl-4">usecase 작성</td>
+											<td class="text-right">
+												<button class="btn btn-icon detail">
+													<i class="tim-icons icon-zoom-split"></i>
+												</button>
+												<button class="btn btn-icon download ml-3">
+													<i class="fas fa-download"></i>
+												</button>
+											</td>
+										</tr>
+										<tr class="text-left">
+											<td class="pl-4">saplem_imges_01.png</td>
+											<td class="pl-4">usecase 작성</td>
+											<td class="text-right">
+												<button class="btn btn-icon detail">
+													<i class="tim-icons icon-zoom-split"></i>
+												</button>
+												<button class="btn btn-icon download ml-3">
+													<i class="fas fa-download"></i>
+												</button>
+											</td>
+										</tr>
+										<tr class="text-left">
+											<td class="pl-4">saplem_imges_01.png</td>
+											<td class="pl-4">usecase 작성</td>
+											<td class="text-right">
+												<button class="btn btn-icon detail">
+													<i class="tim-icons icon-zoom-split"></i>
+												</button>
+												<button class="btn btn-icon download ml-3">
+													<i class="fas fa-download"></i>
+												</button>
+											</td>
+										</tr>
+										<tr class="text-left">
+											<td class="pl-4">saplem_imges_01.png</td>
+											<td class="pl-4">usecase 작성</td>
+											<td class="text-right">
+												<button class="btn btn-icon detail">
+													<i class="tim-icons icon-zoom-split"></i>
+												</button>
+												<button class="btn btn-icon download ml-3">
+													<i class="fas fa-download"></i>
+												</button>
+											</td>
+										</tr>
+										<tr class="text-left">
+											<td class="pl-4">saplem_imges_01.png</td>
+											<td class="pl-4">usecase 작성</td>
+											<td class="text-right">
+												<button class="btn btn-icon detail">
+													<i class="tim-icons icon-zoom-split"></i>
+												</button>
+												<button class="btn btn-icon download ml-3">
+													<i class="fas fa-download"></i>
+												</button>
+											</td>
+										</tr>
+										<tr class="text-left">
+											<td class="pl-4">saplem_imges_01.png</td>
+											<td class="pl-4">usecase 작성</td>
+											<td class="text-right">
+												<button class="btn btn-icon detail">
+													<i class="tim-icons icon-zoom-split"></i>
+												</button>
+												<button class="btn btn-icon download ml-3">
+													<i class="fas fa-download"></i>
+												</button>
+											</td>
+										</tr>
+										<tr class="text-left">
+											<td class="pl-4">saplem_imges_01.png</td>
+											<td class="pl-4">usecase 작성</td>
+											<td class="text-right">
+												<button class="btn btn-icon detail">
+													<i class="tim-icons icon-zoom-split"></i>
+												</button>
+												<button class="btn btn-icon download ml-3">
+													<i class="fas fa-download"></i>
+												</button>
+											</td>
+										</tr>
 
-					<div class="col-md-6">
-						<div class="card card-chart card-chart-pie">
-							<div class="card-header">
-								<h4 class="title">프로젝트 태스크 진행상태</h4>
+									</tbody>
+								</table>
+								<ul class="pagination justify-content-center">
+									<li class="page-item"><a class="page-link" href="#link"
+										aria-label="Previous"> <span aria-hidden="true"><i
+												class="tim-icons icon-double-left" aria-hidden="true"></i></span>
+									</a></li>
+									<li class="page-item"><a class="page-link" href="#link">1</a>
+									</li>
+									<li class="page-item active"><a class="page-link"
+										href="#link">2</a></li>
+									<li class="page-item"><a class="page-link" href="#link">3</a>
+									</li>
+									<li class="page-item"><a class="page-link" href="#link"
+										aria-label="Next"> <span aria-hidden="true"><i
+												class="tim-icons icon-double-right" aria-hidden="true"></i></span>
+									</a></li>
+								</ul>
 							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-6">
-										<div class="chart-area">
-											<canvas id="PieChartGradient2"></canvas>
-										</div>
-									</div>
-									<div class="col-6">
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 시작전 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 진행중 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 완료 - 5 건
-										</h4>
-									</div>
-								</div>
-							</div>
+							<!-- end card-body-->
 						</div>
+						<!--  end card  -->
 					</div>
-
+					<!-- end col-md-12 -->
 				</div>
-				<!-- End of row -->
+				<!-- end row -->
 
 				<div class="row">
-				
-					<div class="col-md-12">
-						<div class="card">
-							<div class="card-header">
-								<h4 class="title">담당영역</h4>
-							</div>
-							<div class="card-body p-4">
-								<div id="gantt_here" style="width:100%; height:500px;"></div>
+					<!-- notice modal -->
+					<div class="modal fade" id="noticeModal" tabindex="-1"
+						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-notice">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal"
+										aria-hidden="true">
+										<i class="tim-icons icon-simple-remove"></i>
+									</button>
+									<h4 class="modal-title" id="myModalLabel">산출물 등록</h4>
+								</div>
+								<div class="modal-body">
+									<form method="get" action="/" class="form-horizontal">
+										<input type="file" name="..."
+											style="border: 1px solid #1e1e2f; border-radius: 5px; width: 100%;"
+											class="fileinput mb-4" />
+										<div class="row mb-4">
+											<div class="col-lg-5 col-md-6 col-sm-3" style="color: black;">
+												<select class="selectpicker" data-size="7" data-style="btn"
+													title="Single Select" style="color: black;">
+													<option disabled selected style="color: black;">작업선택</option>
+													<option value="2">유스케이스 설계</option>
+													<option value="3">데이터베이스 설계</option>
+												</select>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-12 text-right">
+												<button type="button" class="btn btn-primary"
+													data-dismiss="modal">
+													등록
+												</button>
+												<button type="button" class="btn"
+													data-dismiss="modal">
+													취소
+												</button>
+											</div>
+										</div>
+									</form>
+								</div>
 							</div>
 						</div>
 					</div>
-					
 				</div>
-				<!-- End of row -->
-				
+				<!-- end notice modal -->
+
 			</div>
 			<!-- End Content -->
 
@@ -350,8 +286,8 @@ html, body {
 					<div class="copyright">
 						©
 						<script>
-              document.write(new Date().getFullYear())
-            </script>
+							document.write(new Date().getFullYear())
+						</script>
 						made with <i class="tim-icons icon-heart-2"></i> by <a
 							href="javascript:void(0)" target="_blank">Creative Tim</a> for a
 						better web.
@@ -566,27 +502,6 @@ html, body {
       });
     });
 	</script>
-	
-	<script>
-	$(document).ready(function() {
-	      // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-	    	demo.initChartPageCharts();
-	    });
-		
-		gantt.init("gantt_here");
-		
-		gantt.parse({
-			data: [
-				{ id: 1, text: "요구사항 정의", start_date: "01-04-2021", duration: 18, progress: 0.4, open: true },
-				{ id: 2, text: "화면설계", start_date: "02-04-2021", duration: 8, progress: 0.6, parent: 1 },
-				{ id: 3, text: "화면구현", start_date: "11-04-2021", duration: 8, progress: 0.6, parent: 1 }
-			],
-			links: [
-				{id: 1, source: 1, target: 2, type: "1"},
-				{id: 2, source: 2, target: 3, type: "0"}
-			]
-		});
-  </script>
 </body>
 
 </html>
