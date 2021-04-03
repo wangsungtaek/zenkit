@@ -4,7 +4,7 @@
 <div class="sidebar">
 	<div class="sidebar-wrapper">
 		<div class="logo">
-			<a href="javascript:void(0)" class="simple-text logo-mini"> <img
+			<a href="${path}/a01_main/a01_dashboard_personal.jsp" class="simple-text logo-mini"> <img
 				src="../a00_com/logo_symbol.png" />
 			</a> <a href="javascript:void(0)" class="simple-text logo-normal">
 				Zenkit </a>

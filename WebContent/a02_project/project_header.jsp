@@ -35,8 +35,8 @@
 	      		</a>
 	        </li>
 					<li class="nav-item mr-1">
-	          <a class="btn" href="##">
-	        		<i class="tim-icons icon-alert-circle-exc"></i> 이슈
+	          <a class="btn" href="${path}/a05_risk/a01_riskTable.jsp">
+	        		<i class="tim-icons icon-alert-circle-exc"></i> 리스크
 	      		</a>
 	        </li>
 					<li class="nav-item mr-1">
