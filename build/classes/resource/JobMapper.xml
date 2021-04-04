@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zenkit.web.dao.A03_JobDao">
+	
+	<resultMap type="job" id="jobMap"/>
+	<select id="jobList" resultMap="jobMap">
+		SELECT rownum rn, LEVEL, j.*
+		  FROM Z_JOB j
+		START WITH j_refno = 0
+		CONNECT BY PRIOR j_no = j_refno
+		ORDER siblings BY j_no DESC
+	</select>
+	
+</mapper>
