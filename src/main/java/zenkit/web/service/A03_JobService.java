@@ -24,9 +24,9 @@ public class A03_JobService {
 			g.setId(j.getJ_no());
 			g.setParent(j.getJ_refno());
 			g.setText(j.getJ_name());
-			g.setStart_date(j.getJ_startD());
-			g.setEnd_date(j.getJ_endD());
-			g.setProgress(j.getJ_completer());
+			g.setStart_date(j.getJ_startD_s());
+			g.setEnd_date(j.getJ_endD_s());
+			g.setProgress(j.getJ_completeR());
 			gantt.add(g);
 		}
 		

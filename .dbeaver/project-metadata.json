@@ -1,1 +1,1 @@
-{"resources":{"database/z_job.sql":{"sql-editor-data-source-id":"oracle_thin-17863efd470-347cf8cd836fead0","default-datasource":"oracle_thin-17863efd470-347cf8cd836fead0","default-schema":"SCOTT"}}}
+{"resources":{"database/z_job.sql":{"default-schema":"SCOTT","sql-editor-data-source-id":"oracle_thin-17863efd470-347cf8cd836fead0","default-datasource":"oracle_thin-17863efd470-347cf8cd836fead0"}}}

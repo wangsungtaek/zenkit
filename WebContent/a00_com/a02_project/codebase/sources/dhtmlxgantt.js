@@ -6510,8 +6510,10 @@ module.exports = function () {
         columns: [
             { name: "text", tree: true, width: "*", resize: true },
             { name: "start_date", align: "center", resize: true },
+            { name: "end_date", align: "center", resize: true },
             { name: "duration", align: "center" },
-            { name: "add", width: 44 }
+            { name: "add", width: 44 },
+            { name: "writer", align: "center" }
         ],
         /*scale*/
         scale_offset_minimal: true,
@@ -37436,6 +37438,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
