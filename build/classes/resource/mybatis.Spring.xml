@@ -4,11 +4,13 @@
 <configuration>
 	
 	<typeAliases>
+		<typeAlias alias="dept" type="zenkit.web.vo.Department"/>
 		<typeAlias alias="job" type="zenkit.web.vo.Job"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="resource/JobMapper.xml" />
+		<mapper resource="resource/A01_deptMapper.xml" />
 	</mappers>
 
 </configuration>
