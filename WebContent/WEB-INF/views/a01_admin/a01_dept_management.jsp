@@ -9,16 +9,16 @@
 <html>
 <head>
 	<%@ include file="../a01_main/bootstrapTop.jsp"%>
+	<style>
+		.dept-item {
+			padding: 10px;
+		}
+		.dept-item:hover {
+			background: #1E1E28;
+			cursor: pointer;
+		}
+	</style>
 </head>
-<style>
-.dept-item {
-	padding: 10px;
-}
-.dept-item:hover {
-	background: #1E1E28;
-	cursor: pointer;
-}
-</style>
 </head>
 <body class="sidebar-mini ">
 	<div class="wrapper">
@@ -108,7 +108,6 @@
 	</div>
 	<%@ include file="../a01_main/plugin.jsp"%>
 	<%@ include file="../a01_main/bootstrapBottom.jsp"%>
-	</script>
 	<script>
 		function insert(){
 			if($('#d_name').val().trim() == ""){

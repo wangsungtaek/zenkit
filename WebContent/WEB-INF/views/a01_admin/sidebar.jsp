@@ -12,13 +12,13 @@
 		
 		<ul class="nav">
 			<li>
-				<a href="${path}/a01_admin/a01_department_management.jsp">
+				<a href="${path}/department.do?method=form">
 					<i class="tim-icons icon-vector"></i>
 					<p class="title">부서 관리</p>
 				</a>
 			</li>
 			<li>
-				<a href="${path}/a01_admin/a02_user_management.jsp">
+				<a href="${path}/user.do?method=form">
 					<i class="tim-icons icon-single-02"></i>
 					<p class="title">임직원 관리</p>
 				</a>

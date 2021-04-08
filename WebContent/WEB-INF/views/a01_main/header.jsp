@@ -44,8 +44,8 @@
 					<ul class="dropdown-menu dropdown-navbar">
 						<li class="nav-link"><a href="${path}/a00_login/a02_user.jsp"
 							class="nav-item dropdown-item">Profile</a></li>
-						<li class="nav-link"><a href="${path}/a01_admin/a01_department_management.jsp"
-							class="nav-item dropdown-item">Settings</a></li>
+						<li class="nav-link"><a href="${path}/department.do?method=form"
+							class="nav-item dropdown-item">관리</a></li>
 						<li class="dropdown-divider"></li>
 						<li class="nav-link"><a href="${path}/a00_login/a01_login.jsp"
 							class="nav-item dropdown-item">Log out</a></li>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="zenkit.web.dao.A01_userDao">
+	
+	<resultMap type="usersch" id="userMap"/>
+	<select id="userList" resultMap="userMap" parameterType="usersch">
+		SELECT u.u_id, u.u_name, d.d_name, r.r_name, p.pos_name
+		  FROM Z_USER u, Z_DEPARTMENT d, Z_POSITION p, Z_RANK r
+		 WHERE u.d_no = d.d_no
+		   AND u.r_no = r.r_no
+		   AND u.pos_no = p.pos_no
+		   AND d.d_name LIKE '%'||#{d_name}||'%'
+		   AND r.r_name LIKE '%'||#{r_name}||'%'
+		   AND p.pos_name LIKE '%'||#{pos_name}||'%'
+	</select>
+
+</mapper>
