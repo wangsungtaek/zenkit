@@ -40,7 +40,6 @@ public class A01_deptController {
 	}
 	
 	
-	
 	@ModelAttribute("deptList")
 	public ArrayList<Department> getDepts(){
 		return service.getDeptList();

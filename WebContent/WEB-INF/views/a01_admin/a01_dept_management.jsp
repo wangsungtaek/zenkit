@@ -103,7 +103,7 @@
 				</div>
 			</div>
 			<!-- End Content -->
-
+			
 		</div>
 	</div>
 	<%@ include file="../a01_main/plugin.jsp"%>
@@ -179,7 +179,7 @@
 			})
 			console.log("${isDel}");
 			$('#delBtn').on('click', function(){
-				if(selectDept.trim() != ""){
+				if(selectDept.trim() != "" && selectDept.trim() != "부서없음"){
 					const swalWithBootstrapButtons = Swal.mixin({
 						customClass: {
 							confirmButton: 'btn btn-danger',

@@ -17,4 +17,12 @@ public class A01_userService {
 	public ArrayList<UserSch> getUserList(UserSch user){
 		return dao.userList(user);
 	}
+	public void userDelete(String id) {
+		dao.userDelete(id);
+	}
+	public void userUpdate(UserSch user) {
+		dao.userUpdate(user);
+	}
+		
+	
 }

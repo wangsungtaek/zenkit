@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 <div class="sidebar">
-	<div class="sidebar-wrapper">
+	<div class="sidebar-wrapper" style="overflow: hidden;">
 		<div class="logo">
 			<a href="${path}/a01_main/a01_dashboard_personal.jsp" class="simple-text logo-mini"> <img
 				src="${path}/a00_com/logo_symbol.png" />

@@ -8,12 +8,15 @@
 	<resultMap type="dept" id="deptMap"/>
 	<select id="getDeptList" resultMap="deptMap">
 		SELECT * FROM Z_DEPARTMENT
+		ORDER BY d_no
 	</select>
 	
+	<!-- 부서 추가 -->
 	<insert id="insertDept" parameterType="dept">
 		INSERT INTO Z_DEPARTMENT VALUES (Z_DEPARTMENT_NO_SEQ.NEXTVAL, #{d_name})
 	</insert>
 	
+	<!-- 부서 삭제 -->
 	<delete id="deleteDept" parameterType="String">
 		DELETE Z_DEPARTMENT
 		 WHERE d_name = #{d_name}

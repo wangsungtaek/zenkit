@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import zenkit.web.dto.UserSch;
 import zenkit.web.service.A01_userService;
@@ -28,16 +29,25 @@ public class A01_userController {
 	
 	// http://localhost:7080/zenkit/user.do?method=form
 	@RequestMapping(params = "method=form")
-	public String deptForm() {
+	public String userForm() {
 		return "/a01_admin/a02_user_management";
+	}
+	// http://localhost:7080/zenkit/user.do?method=delete
+	@RequestMapping(params = "method=delete")
+	public String userDelete(UserSch user) {
+		userService.userDelete(user.getU_id());
+		return "redirect:/user.do?method=form";
+	}
+	// http://localhost:7080/zenkit/user.do?method=update
+	@RequestMapping(params = "method=update")
+	public String userUpdate(UserSch user) {
+		userService.userUpdate(user);
+		return "redirect:/user.do?method=form";
 	}
 	
 	// http://localhost:7080/zenkit/user.do?method=data
 	@RequestMapping(params = "method=data")
 	public String userList(Model d, UserSch user) {
-		System.out.println(user.getD_name());
-		System.out.println(user.getPos_name());
-		System.out.println(user.getR_name());
 		if(user.getD_name().equals("부서"))
 			user.setD_name("");
 		if(user.getPos_name().equals("직책"))

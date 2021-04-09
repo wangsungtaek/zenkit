@@ -6,14 +6,56 @@
 	
 	<resultMap type="usersch" id="userMap"/>
 	<select id="userList" resultMap="userMap" parameterType="usersch">
-		SELECT u.u_id, u.u_name, d.d_name, r.r_name, p.pos_name
-		  FROM Z_USER u, Z_DEPARTMENT d, Z_POSITION p, Z_RANK r
-		 WHERE u.d_no = d.d_no
-		   AND u.r_no = r.r_no
-		   AND u.pos_no = p.pos_no
-		   AND d.d_name LIKE '%'||#{d_name}||'%'
-		   AND r.r_name LIKE '%'||#{r_name}||'%'
-		   AND p.pos_name LIKE '%'||#{pos_name}||'%'
+		SELECT * FROM (
+			SELECT u.u_id, u.u_name, d.d_name, r.r_name, p.pos_name
+		 	  FROM Z_USER u LEFT OUTER JOIN Z_DEPARTMENT d ON(u.d_no = d.d_no),
+					 Z_POSITION p, Z_RANK r
+		 	 WHERE u.r_no = r.r_no
+				AND u.pos_no = p.pos_no
+		)
+		WHERE pos_name LIKE '%'||#{pos_name}||'%'
+		  AND r_name LIKE '%'||#{r_name}||'%'
+		  AND (d_name LIKE  '%'||#{d_name}||'%' OR d_name IS NULL)
+		  ORDER BY d_name
 	</select>
-
+	
+	<delete id="userDelete" parameterType="String">
+		DELETE Z_USER
+		 WHERE u_id = #{id}
+	</delete>
+	
+	<!-- 부서정보 변경 -->
+	<update id="userDeptUp" parameterType="String">
+		UPDATE Z_USER
+	   	SET d_no = (
+				SELECT d_no
+				  FROM Z_DEPARTMENT
+				 WHERE d_name = NULL
+	   	)
+	 	WHERE d_no = (
+				SELECT d_no
+				  FROM Z_DEPARTMENT
+				 WHERE d_name = #{d_name}
+			)
+	</update>
+	
+	<!-- 부서, 직급, 직책 변경 -->
+	<update id="userUpdate" parameterType="usersch">
+		UPDATE Z_USER
+			SET d_no = (
+				SELECT d_no
+				  FROM Z_DEPARTMENT
+				 WHERE d_name = #{d_name}
+			), pos_no = (
+				SELECT pos_no
+				  FROM Z_POSITION
+				 WHERE pos_name = #{pos_name}
+			), r_no =(
+				SELECT r_no
+				  FROM Z_RANK
+				 WHERE r_name = #{r_name}
+			)
+		WHERE U_ID = #{u_id}
+	</update>
+	
 </mapper>
