@@ -3,25 +3,43 @@ package zenkit.web.vo;
 import java.util.Date;
 
 public class Risk {
-	private int r_no;
-	private String r_name;
-	private String r_content;
-	private Date r_regdate;
-	private String r_regdate_s;
-	private String r_send;
-	private String r_receive;
-	private String r_rcontent;
-	private String r_file;
-	
-	private int j_no;
-	private String rs_name;
+	private int r_no;//리스크 번호
+	private String r_name;// 리스크명
+	private String r_content; // 리스크 내용
+	private Date r_regdate; //등록일
+	private String r_regdate_s; //등록일
+	private String r_send; //제기자
+	private String r_receive; //조치자
+	private String r_rcontent; //조치내용
+	private String r_file; //첨부파일
+	private int j_no; //작업번호
+	private String zj;
+	private String zr;
+	private String j_name; //작업 이름
+	private String rs_name; //상태명
 	
 	public Risk() {
 		// TODO Auto-generated constructor stub
 	}
+   
+	public String getZj() {
+		return zj;
+	}
+
+	public void setZj(String zj) {
+		this.zj = zj;
+	}
+
+	public String getZr() {
+		return zr;
+	}
+
+	public void setZr(String zr) {
+		this.zr = zr;
+	}
 
 	public Risk(int r_no, String r_name, String r_content, Date r_regdate, String r_regdate_s, String r_send,
-			String r_receive, String r_rcontent, String r_file, int j_no, String rs_name) {
+			String r_receive, String r_rcontent, String r_file, int j_no, String j_name, String rs_name) {
 		super();
 		this.r_no = r_no;
 		this.r_name = r_name;
@@ -33,6 +51,7 @@ public class Risk {
 		this.r_rcontent = r_rcontent;
 		this.r_file = r_file;
 		this.j_no = j_no;
+		this.j_name=j_name;
 		this.rs_name = rs_name;
 	}
 
@@ -123,5 +142,12 @@ public class Risk {
 	public void setRs_name(String rs_name) {
 		this.rs_name = rs_name;
 	}
-	
+
+	public String getJ_name() {
+		return j_name;
+	}
+
+	public void setJ_name(String j_name) {
+		this.j_name = j_name;
+	}
 }

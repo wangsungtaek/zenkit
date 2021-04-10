@@ -32,15 +32,8 @@
 			<!-- Start Content -->
 			<div class="content">
 
-				<div class="col-md-8 ml-auto mr-auto mb-3">
-					<h2 class="text-center m-0">부서 관리</h2>
-				</div>
-				
 				<div class="row">
 					<div class="card">
-						<div class="card-header">
-							<h4 class="title">부서조회</h4>
-						</div>
 						<div class="card-body">
 							<div class="row">
 								<div class="col-4">

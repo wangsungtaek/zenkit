@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<c:set var="fileName" value="${pageContext.request.servletPath}"/>
 <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
 	<div class="container-fluid">
 		<div class="navbar-wrapper">
@@ -19,7 +19,17 @@
 					<span class="navbar-toggler-bar bar3"></span>
 				</button>
 			</div>
-			<a class="navbar-brand" href="javascript:void(0)">Charts</a>
+			
+			<a class="navbar-brand title" href="javascript:void(0)">
+				<c:choose>
+					<c:when test="${fileName == '/WEB-INF/views/a01_admin/a01_dept_management.jsp'}">
+						부서 관리
+					</c:when>
+					<c:when test="${fileName == '/WEB-INF/views/a01_admin/a02_user_management.jsp'}">
+						임직원 관리
+					</c:when>
+				</c:choose>
+			</a>
 		</div>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			data-target="#navigation" aria-expanded="false"
@@ -31,7 +41,7 @@
 		<div class="collapse navbar-collapse" id="navigation">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item d-flex align-items-center">
-					<div><strong>IT부서</strong> 홍길동</div>
+					<div><strong>${sesMem.u_id}</strong> ${sesMem.u_name}</div>
 				</li>
 				<li class="dropdown nav-item">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">

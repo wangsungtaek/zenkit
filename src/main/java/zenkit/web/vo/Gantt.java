@@ -7,7 +7,14 @@ public class Gantt {
 	private String end_date;
 	private double progress;
 	private int parent;
+	private String charger;
 	
+	public String getCharger() {
+		return charger;
+	}
+	public void setCharger(String charger) {
+		this.charger = charger;
+	}
 	public int getId() {
 		return id;
 	}

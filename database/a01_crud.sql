@@ -32,21 +32,12 @@ CREATE TABLE z_position(
 	pos_name VARCHAR2(50) CONSTRAINT z_position_name_nn NOT NULL
 );
 
-CREATE SEQUENCE Z_POSITION_NO_SEQ
-	START WITH 1
-	INCREMENT BY 1;
 
 -- 데이터
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'최고경영자');
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'프로젝트매니저');
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'경영지원팀장');
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'경영지원팀원');
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'인사팀장');
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'인사팀원');
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'전략기획팀장');
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'전략기획팀원');
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'IT팀장');
-INSERT INTO Z_POSITION VALUES (Z_POSITION_NO_SEQ.NEXTVAL,'IT팀원');
+INSERT INTO Z_POSITION VALUES (1,'CEO');
+INSERT INTO Z_POSITION VALUES (2,'인사담당자');
+INSERT INTO Z_POSITION VALUES (3,'PM');
+INSERT INTO Z_POSITION VALUES (4,'임직원');
 
 -- 조회
 SELECT * FROM z_position;
@@ -54,7 +45,6 @@ SELECT Z_POSITION_NO_SEQ.CURRVAL FROM DUAL;
 
 -- 삭제
 DROP TABLE Z_POSITION CASCADE CONSTRAINTS ;
-DROP SEQUENCE Z_POSITION_NO_SEQ;
 
 ----------------------------------------------------------------
 -- 부서 테이블 ##########
@@ -252,42 +242,41 @@ SELECT * FROM Z_RESOURCE;
 DROP TABLE Z_RESOURCE CASCADE CONSTRAINTS;
 
 ----------------------------------------------------------------
+----------------------------------------------------------------
 -- 작업 테이블 ##########
 CREATE TABLE Z_JOB (
-	j_no NUMBER CONSTRAINT z_job_pk PRIMARY KEY,
---	j_level NUMBER CONSTRAINT z_job_level_nn NOT NULL,
-	j_refno NUMBER CONSTRAINT z_job_refno_nn NOT NULL,
-	j_name VARCHAR2(500) CONSTRAINT z_job_name_nn NOT NULL,
-	j_startD VARCHAR2(200) CONSTRAINT z_job_startD_nn NOT NULL,
-	j_endD VARCHAR2(200) CONSTRAINT z_job_endD_nn NOT NULL,
-	j_charger VARCHAR2(200) CONSTRAINT z_job_charger_nn NOT NULL,
-	j_completeR NUMBER CONSTRAINT z_job_completeR NOT NULL,
-	p_no NUMBER CONSTRAINT z_job_p_no_fk REFERENCES Z_PROJECT(p_no) ON DELETE CASCADE,
-	u_no NUMBER CONSTRAINT z_job_u_no_fk REFERENCES Z_USER(u_no) ON DELETE CASCADE
+   j_no NUMBER CONSTRAINT z_job_pk PRIMARY KEY,
+--   j_level NUMBER CONSTRAINT z_job_level_nn NOT NULL,
+   j_refno NUMBER CONSTRAINT z_job_refno_nn NOT NULL,
+   j_name VARCHAR2(500) CONSTRAINT z_job_name_nn NOT NULL,
+   j_content varchar2(1000) CONSTRAINT z_job_content_nn NOT NULL,
+   j_startD date CONSTRAINT z_job_startD_nn NOT NULL,
+   j_endD DATE CONSTRAINT z_job_endD_nn NOT NULL,
+   j_regD date CONSTRAINT z_job_regD_nn NOT NULL,
+   j_uptD date CONSTRAINT z_job_uptD_nn NOT NULL,
+   j_completeR NUMBER CONSTRAINT z_job_completeR NOT NULL,
+   p_no NUMBER CONSTRAINT z_job_p_no_fk REFERENCES Z_PROJECT(p_no) ON DELETE CASCADE,
+   u_no NUMBER CONSTRAINT z_job_u_no_fk REFERENCES Z_USER(u_no) ON DELETE CASCADE
 );
 CREATE SEQUENCE Z_JOB_NO_SEQ
-	START WITH 1
-	INCREMENT BY 1;
+   START WITH 1
+   INCREMENT BY 1;
 
 -- 데이터
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 0, 'Zenkit PMS 시스템', '01-04-2021', '30-04-2021','왕성택', 0.2, 1, 3);
+(z_job_no_seq.nextval, 0, 'Zenkit PMS 시스템','작업설명1' ,to_date('2021-04-01','yyyy-mm-dd'), to_date('2021-04-30','yyyy-mm-dd'), sysdate, sysdate, 0.2, 1, 2);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '로그인/프로필', '01-04-2021', '02-04-2021','최혜주', 0.2, 1, 3);
+(z_job_no_seq.nextval, 1, '로그인/프로필', '작업설명2' ,to_date('2021-04-01','YYYY-MM-DD'), to_date('2021-04-02','YYYY-MM-DD'),sysdate, sysdate,0.2, 1, 9);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '대시보드', '02-04-2021', '03-04-2021','이슬', 0.2, 1, 3);
+(z_job_no_seq.nextval, 1, '대시보드', '작업설명3' ,to_date('2021-04-02','YYYY-MM-DD'), to_date('2021-04-03','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 10);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '내작업', '03-04-2021', '04-04-2021','이슬', 0.2, 1, 3);
+(z_job_no_seq.nextval, 1, '내작업', '작업설명4' ,to_date('2021-04-03','YYYY-MM-DD'), to_date('2021-04-04','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 11);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '프로젝트/배정현황', '04-04-2021', '05-04-2021','왕성택', 0.2, 1, 3);
+(z_job_no_seq.nextval, 1, '프로젝트/배정현황', '작업설명5' ,to_date('2021-04-04','YYYY-MM-DD'), to_date('2021-04-05','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 12);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '프로젝트/리스크', '05-04-2021', '06-04-2021','이지은', 0.2, 1, 3);
+(z_job_no_seq.nextval, 1, '프로젝트/리스크', '작업설명6' ,to_date('2021-04-05','YYYY-MM-DD'), to_date('2021-04-06','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 13);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '프로젝트/간트차트', '06-04-2021', '07-04-2021','이재완', 0.2, 1, 3);
-INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '리스크관리', '07-04-2021', '08-04-2021','최혜주', 0.2, 1, 3);
-INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '결제관련', '08-04-2021', '09-04-2021','강혜지', 0, 1, 3);
+(z_job_no_seq.nextval, 1, '프로젝트/간트차트', '작업설명7' ,to_date('2021-04-07','YYYY-MM-DD'), to_date('2021-04-07','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 14);
 
 -- 조회
 SELECT * FROM Z_JOB;
@@ -296,6 +285,8 @@ SELECT z_job_no_seq.CURRVAL FROM DUAL;
 DROP TABLE Z_JOB CASCADE CONSTRAINTS;
 DROP SEQUENCE z_job_no_seq;
 
+
+----------------------------------------------------------------
 ----------------------------------------------------------------
 -- 결재상태 테이블 ##########
 CREATE TABLE Z_AUTH_STATE(
@@ -393,6 +384,7 @@ insert into z_risk values(z_risk_no_seq.nextval, '일정 지연','리스크 내�
 insert into z_risk values(z_risk_no_seq.nextval, '기타 사유','리스크 내용13' , '2021-02-25', '도경아', '프로젝트매니저3','조치 내용','/z01_upload/risk/1.png',1,'취소');
 insert into z_risk values(z_risk_no_seq.nextval, '고객 변심','리스크 내용14' , '2021-03-26', '이민지', '프로젝트매니저4','조치 내용','/z01_upload/risk/1.png',2,'홀드');
 insert into z_risk values(z_risk_no_seq.nextval, '일정 지연','리스크 내용15' , '2021-01-21', '유성환', '프로젝트매니저5','조치 내용','/z01_upload/risk/1.png',3,'조치완료');
+insert into z_risk values(z_risk_no_seq.nextval, '일정 지연','리스크 내용15' , '2021-01-21', '유성환', '프로젝트매니저5','조치 내용','/z01_upload/risk/1.png',21,'조치완료');
 
 --조회
 select * from z_risk;
@@ -419,6 +411,7 @@ CREATE SEQUENCE Z_OUTPUTS_NO_SEQ
 INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '요구사항정의서 완료 사진', '/z01_upload/img/1.png', '작업 완료했습니다.', 1);
 INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '완료', '/z01_upload/img/2.png', '작업 완료했습니다.', 2);
 INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '사진', '/z01_upload/img/3.png', '작업 완료했습니다.', 3);
+INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '사진', '/z01_upload/img/3.png', '작업 완료했습니다.', 21);
 
 -- 조회
 SELECT * FROM Z_OUTPUTS;

@@ -30,7 +30,7 @@
 
 			<!-- Start Content -->
 			<div class="content">
-
+			
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card">
@@ -84,31 +84,42 @@
 				</div>
 				<div class="row">
 					<div class="col-12">
-						<form method="get" action="/" class="form-horizontal">
-							<div class="card">
-								<div class="card-body">
-									<!-- 직원정보 -->
-									<div class="row text-left">
-										<div class="col-1 p-0 align-items-center d-flex justify-content-end">
-											<label class="col-form-label m-0 p-0">
-												이메일 *
-											</label>
-										</div>
-										<div class="col-5">
-											<div class="form-group mt-2">
-												<input type="email" class="form-control" name="d_name"
-													placeholder="exam@email.com">
-											</div>
-										</div>
-										<div class="col-3 align-items-center pt-1">
-											<button type="submit" class="btn btn-primary">
-												<i class="tim-icons icon-simple-add"></i> 초대
-											</button>
+						<div class="card">
+							<div class="card-body">
+								<!-- 직원정보 -->
+								<form method="post" action="${path}/user.do?method=insert" id="inviteForm">
+								<div class="row text-left">
+									<div class="col-1 p-0 align-items-center d-flex justify-content-end">
+										<label class="col-form-label m-0 p-0">
+											이메일 *
+										</label>
+									</div>
+									<div class="col-3">
+										<div class="form-group mt-2">
+											<input type="email" class="form-control" name="u_email"
+												placeholder="exam@email.com">
 										</div>
 									</div>
+									<div class="col-1 p-0 align-items-center d-flex justify-content-end">
+										<label class="col-form-label m-0 p-0">
+											이름 *
+										</label>
+									</div>
+									<div class="col-2">
+										<div class="form-group mt-2">
+											<input type="text" class="form-control" name="u_name"
+												placeholder="이름을 입력하세요.">
+										</div>
+									</div>
+									<div class="col-3 align-items-center pt-1">
+										<button class="btn btn-primary" id="inviteBtn">
+											<i class="tim-icons icon-simple-add"></i> 초대
+										</button>
+									</div>
 								</div>
+								</form>
 							</div>
-						</form>
+						</div>
 					</div>
 				</div>
 				<div class="row">
@@ -261,8 +272,14 @@
 						show += "<td>"+"소속 부서 없음"+"</td>";
 					else
 						show += "<td>"+user.d_name+"</td>";
-					show += "<td>"+user.pos_name+"</td>";
-					show += "<td>"+user.r_name+"</td></tr>";
+					if(user.pos_name == null)
+						show += "<td>"+"직책 없음"+"</td>";
+					else
+						show += "<td>"+user.pos_name+"</td>";
+					if(user.r_name == null)
+						show += "<td>"+"직급 없음"+"</td>";
+					else
+						show += "<td>"+user.r_name+"</td>";
 				})
 				$('#userList').append(show);
 			},
@@ -274,7 +291,6 @@
 	
 	<%@ include file="../a01_main/plugin.jsp"%>
 	<%@ include file="../a01_main/bootstrapBottom.jsp"%>
-	
 	<script>
 		$(document).ready(function() {
 			var userList = "";
@@ -306,8 +322,14 @@
 								show += "<td>"+"소속 부서 없음"+"</td>";
 							else
 								show += "<td>"+user.d_name+"</td>";
-							show += "<td>"+user.pos_name+"</td>";
-							show += "<td>"+user.r_name+"</td></tr>";
+							if(user.pos_name == null)
+								show += "<td>"+"직책 없음"+"</td>";
+							else
+								show += "<td>"+user.pos_name+"</td>";
+							if(user.r_name == null)
+								show += "<td>"+"직급 없음"+"</td>";
+							else
+								show += "<td>"+user.r_name+"</td>";
 						})
 						$('#userList').html(show);
 						
@@ -330,6 +352,13 @@
 				var pos = $(this).children().eq(3).text();
 				// rank
 				var rank = $(this).children().eq(4).text();
+				if(dept == "소속 부서 없음")
+					dept = "부서";
+				if(pos == "직책 없음")
+					pos = "직책";
+				if(rank == "직급 없음")
+					rank = "직급";
+				
 				$('#modalId').val(id);
 				$('#modalName').val(name);
 				$('#modalDept').val(dept);
@@ -358,8 +387,42 @@
 					reverseButtons: true
 		      }).then((result) => {
 					if (result.value) {
-						$("#detailForm").attr("action","${path}/user.do?method=update");
-						$("#detailForm").submit();
+						/* modalDeptmodalPosmodalRank */
+						var dept = $("#modalDept").val();
+						var pos = $("#modalPos").val();
+						var rank = $("#modalRank").val();
+						
+						if(dept==null || dept=="" || dept=="부서"){
+							Swal.fire({
+								title: '부서를 선택하세요.',
+								type: 'error',
+								customClass: {
+									confirmButton: 'btn'
+								},
+								buttonsStyling: false,
+					      })
+						} else if(pos==null || pos=="" || pos=="직책"){
+							Swal.fire({
+								title: '직책를 선택하세요.',
+								type: 'error',
+								customClass: {
+									confirmButton: 'btn'
+								},
+								buttonsStyling: false,
+					      })	
+						} else if(rank==null || rank=="" || rank=="직급"){
+							Swal.fire({
+								title: '직급를 선택하세요.',
+								type: 'error',
+								customClass: {
+									confirmButton: 'btn'
+								},
+								buttonsStyling: false,
+					      })	
+						} else {
+							$("#detailForm").attr("action","${path}/user.do?method=update");
+							$("#detailForm").submit();							
+						}
 		      	} 
 		      });
 			});
@@ -387,6 +450,59 @@
 						$("#detailForm").submit();
 		      	} 
 		      });
+			});
+			
+			//초대
+			$('#inviteBtn').on("click",function(){
+				var email = $('#inviteForm [name=u_email]').val();
+				var name = $('#inviteForm [name=u_name]').val();
+				console.log(email);
+				console.log(name);
+				if(email==""){
+					Swal.fire({
+						title: '이메일을 입력하세요.',
+						type: 'error',
+						customClass: {
+							confirmButton: 'btn'
+						},
+						buttonsStyling: false,
+			      })
+				} else if(name=="") {
+					Swal.fire({
+						title: '이름을 입력하세요.',
+						type: 'error',
+						customClass: {
+							confirmButton: 'btn'
+						},
+						buttonsStyling: false,
+			      })
+				} else {
+					$('#inviteForm').submit();
+					let timerInterval
+				      Swal.fire({
+				        title: '초대 중입니다. 잠시만 기다려주세요.',
+				        html: '<strong></strong>',
+				        timer: 10000,
+				        onBeforeOpen: () => {
+				          Swal.showLoading()
+				          timerInterval = setInterval(() => {
+				            Swal.getContent().querySelector('strong')
+				              .textContent = Swal.getTimerLeft()
+				          }, 100)
+				        },
+				        onClose: () => {
+				          clearInterval(timerInterval)
+				        }
+				      }).then((result) => {
+				        if (
+				          /* Read more about handling dismissals below */
+				          result.dismiss === Swal.DismissReason.timer
+				        ) {
+				          console.log('I was closed by the timer')
+				        }
+				      })
+				}
+				return false;
 			});
 		});
 	</script>

@@ -38,13 +38,6 @@
 	          <a class="btn" href="${path}/a05_risk/a01_riskTable.jsp">
 	        		<i class="tim-icons icon-alert-circle-exc"></i> 리스크
 	      		</a>
-	        </li>
-					<li class="nav-item mr-1">
-	          <a class="btn ${(fileName=='/a02_project/a07_outputs.jsp')?'btn-primary':''}"
-	          	href="${path}/a02_project/a07_outputs.jsp">
-	        		<i class="tim-icons icon-attach-87"></i> 산출물
-	      		</a>
-	        </li>
 	      </ul>
 	    </div>
 	  </div>

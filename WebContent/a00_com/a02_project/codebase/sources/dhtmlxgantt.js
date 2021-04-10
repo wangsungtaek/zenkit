@@ -6478,7 +6478,7 @@ module.exports = function () {
         show_chart: true,
         show_grid: true,
         min_duration: 60 * 60 * 1000,
-        date_format: "%d-%m-%Y %H:%i",
+        date_format: "%Y-%m-%d %H:%i",
         xml_date: undefined,
         start_on_monday: true,
         server_utc: false,
@@ -6508,12 +6508,12 @@ module.exports = function () {
         root_id: 0,
         autofit: false,
         columns: [
-            { name: "text", tree: true, width: "*", resize: true },
-            { name: "start_date", align: "center", resize: true },
-            { name: "end_date", align: "center", resize: true },
-            { name: "duration", align: "center" },
-            { name: "add", width: 44 },
-            { name: "writer", align: "center" }
+            { name: "text", tree: true, width: 250, resize: true },
+            { name: "start_date", align: "center", resize: true ,width: 150},
+            { name: "end_date", align: "center", resize: true ,width: 150},
+            { name: "charger", align: "center" ,width: 100},
+            { name: "progress", align: "center" ,width: 100},
+            { name: "add", width: 44 }
         ],
         /*scale*/
         scale_offset_minimal: true,
@@ -6528,7 +6528,7 @@ module.exports = function () {
         // 		date_scale: "%d %M",
         time_step: 60,
         duration_step: 1,
-        task_date: "%d %F %Y",
+        task_date: "%Y %m %d",
         time_picker: "%H:%i",
         task_attribute: "data-task-id",
         link_attribute: "data-link-id",
@@ -6570,9 +6570,9 @@ module.exports = function () {
         order_branch: false,
         order_branch_free: false,
         task_height: "full",
-        min_column_width: 70,
+        min_column_width: 100,
         // min width for grid column (when resizing)
-        min_grid_column_width: 70,
+        min_grid_column_width: 100,
         // name of the attribute with column index for resize element
         grid_resizer_column_attribute: "data-column-index",
         // name of the attribute with column index for resize element
@@ -6592,7 +6592,7 @@ module.exports = function () {
         dynamic_resource_calendars: false,
         inherit_calendar: false,
         type_renderers: {},
-        open_tree_initially: false,
+        open_tree_initially: true,
         optimize_render: true,
         prevent_default_scroll: false,
         show_errors: true,
@@ -36835,6 +36835,8 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -36986,6 +36988,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -37142,6 +37145,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -37216,6 +37220,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -37364,6 +37369,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -37436,10 +37442,11 @@ var locale = {
         section_type: "Type",
         /* grid columns */
         column_wbs: "WBS",
-        column_text: "Task name",
-        column_start_date: "Start time",
-        column_end_date: "End time",
-        column_duration: "Duration",
+        column_text: "작업명",
+        column_start_date: "시작날짜",
+        column_end_date: "종료날짜",
+        column_charger: "담당자",
+        column_progress: "완료율",
         column_add: "",
         /* link confirmation */
         link: "Link",
@@ -37700,6 +37707,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -37848,6 +37856,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -38000,6 +38009,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -38074,6 +38084,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -38230,6 +38241,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -38410,6 +38422,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -38558,6 +38571,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -38801,6 +38815,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -38949,6 +38964,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -39023,6 +39039,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */
@@ -39251,6 +39268,7 @@ var locale = {
         column_wbs: "WBS",
         column_text: "Task name",
         column_start_date: "Start time",
+        column_end_date: "End time",
         column_duration: "Duration",
         column_add: "",
         /* link confirmation */

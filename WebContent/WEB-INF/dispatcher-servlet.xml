@@ -59,8 +59,19 @@
 		<property name="contentType" value="text/html;charset=utf-8"/>
 	</bean>
 	
-	<!-- 2. 파일업로드뷰 viewer -->
-	
-	<!-- 3. 파일 다운로드 뷰 viewer -->
-	
+	<!-- SMTP 서버 설정 -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com"/>
+		<property name="port" value="587"/>
+		<property name="username" value="gun235448@gmail.com"/>
+		<property name="password" value="see010811^^"/>
+		<!-- 보안 관련 설정 -->
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+		
 </beans>

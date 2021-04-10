@@ -90,3 +90,9 @@ button.authClose {
 .task_info_nav.active {
 	color:#FF00DD;
 }
+#modal_resName, #modal_reqName {
+	margin-left:10px;
+}
+#no_task_tr {
+	height:300px;
+}

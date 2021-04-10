@@ -2,20 +2,35 @@
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	
+
 	<typeAliases>
-		<typeAlias alias="dept" type="zenkit.web.vo.Department"/>
+		<typeAlias alias="department" type="zenkit.web.vo.Department"/>
 		<typeAlias alias="position" type="zenkit.web.vo.Position"/>
 		<typeAlias alias="rank" type="zenkit.web.vo.Rank"/>
 		<typeAlias alias="usersch" type="zenkit.web.dto.UserSch"/>
 		<typeAlias alias="job" type="zenkit.web.vo.Job"/>
+		<typeAlias alias="user" type="zenkit.web.vo.User"/>
+		<typeAlias alias="project" type="zenkit.web.vo.Project"/>
+		<typeAlias alias="calen" type="zenkit.web.vo.Calendar2"/>
+		<typeAlias alias="a03_proInfo" type="zenkit.web.vo.A03_ProInfo"/>
+		<typeAlias alias="dashboard" type="zenkit.web.vo.DashBoard"/>
+		<typeAlias alias="authinfo" type="zenkit.web.vo.AuthInfo"/>
+		<typeAlias alias="output" type="zenkit.web.vo.Output"/>
+		<typeAlias alias="risk" type="zenkit.web.vo.Risk"/>
 	</typeAliases>
 	
 	<mappers>
+		<mapper resource="resource/JobMapper.xml"/>
+		<mapper resource="resource/A01_deptMapper.xml"/>
+		<mapper resource="resource/A01_userMapper.xml"/>
+		<mapper resource="resource/A01_utilMapper.xml"/>
+		<mapper resource="resource/A03_proMapper.xml"/>
+		<mapper resource="resource/CalenMapper.xml"/>
+		<mapper resource="resource/a03_defaultInfoMapper.xml"/>
+		<mapper resource="resource/A01_DashboardMapper.xml"/>
+		<mapper resource="resource/A04_AuthMapper.xml"/>		
 		<mapper resource="resource/JobMapper.xml" />
-		<mapper resource="resource/A01_deptMapper.xml" />
-		<mapper resource="resource/A01_userMapper.xml" />
-		<mapper resource="resource/A01_utilMapper.xml" />
+		<mapper resource="resource/A03_riskMapper.xml"/>
 	</mappers>
 
 </configuration>
