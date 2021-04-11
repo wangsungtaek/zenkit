@@ -2,7 +2,6 @@ package zenkit.web.service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import zenkit.web.dao.A03_projectDao;
 import zenkit.web.dto.ResourceName;
+import zenkit.web.dto.AddResource;
 import zenkit.web.vo.Project;
 
 @Service
@@ -38,7 +38,7 @@ public class A03_projectService {
 		
 		// Date타입 => String타입 (패턴으로 변경)
 		pro.setP_startD_s(dateFormat.format(pro.getP_startD()));
-		pro.setP_endD_s(dateFormat.format(pro.getP_startD()));
+		pro.setP_endD_s(dateFormat.format(pro.getP_endD()));
 		
 		// 프로젝트 설명 없을 때 처리
 		if(pro.getP_content().equals("") || pro.getP_content() == null)
@@ -71,9 +71,29 @@ public class A03_projectService {
 				
 		return pro;
 	}
+	// 프로젝트 참여시키기
+	public void addResource(AddResource resource) {
+		dao.addUser(resource);
+	}
+	// 프로젝트 제외시키기
+	public void delResource(AddResource resource) {
+		dao.delUser(resource);
+	}
 	
 	// 프로젝트 참여인원
 	public ArrayList<ResourceName> getProjectResource(int p_no){
 		return dao.getResource(p_no);
 	}
+	
+	// 참여 가능한 부서별 전체인원
+	public ArrayList<ResourceName> getDeptResource(int d_no, int p_no){
+		
+		HashMap<String, Integer> hm = new HashMap<String, Integer>();
+		
+		hm.put("d_no", d_no);
+		hm.put("p_no", p_no);
+		
+		return dao.getDeptResource(hm);
+	}
+	
 }

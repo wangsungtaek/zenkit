@@ -8,13 +8,9 @@
 <html>
 <head>
 	<%@ include file="../a01_main/bootstrapTop.jsp"%>
-	<style>
-	html, body {
-		/* height: 100%;
-		padding: 0px;
-		margin: 0px;
-		overflow: hidden; */
-	}
+<style>
+.deptPerson-item:hover, .resource-item:hover
+{ background: #1E1E28; cursor: pointer; }
 </style>
 </head>
 <body class="sidebar-mini ">
@@ -40,22 +36,30 @@
 							<div class="card-body">
 								<div class="table-full-width table-responsive"
 									style="overflow: auto; max-height: 380px;">
-									<table class="table">
+									
+									<form method="post" id="memberForm">
+									<input type="hidden" value="" name="u_name" id="select-member"/>
+									<input type="hidden" value="" name="btnState"/>
+									<table class="table text-center">
 										<thead>
 											<tr>
 												<th>이름</th>
-												<th>직급</th>
 												<th>직책</th>
+												<th>직급</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
+											<c:forEach var="resource" items="${resourceList}">
+												<tr class="resource-item">
+													<td>${resource.u_name}</td>
+													<td>${resource.pos_name}</td>
+													<td>${resource.r_name}</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
+									</form>
+									
 								</div>
 							</div>
 						</div>
@@ -63,10 +67,10 @@
 
 					<div class="col-2 text-center d-flex align-items-center">
 						<div class="">
-							<button class="btn btn-info">
+							<button class="btn btn-info" id="addBtn">
 								<i class="tim-icons icon-double-left"></i> 추가
 							</button>
-							<button class="btn btn-warning">
+							<button class="btn btn-warning" id="delBtn">
 								<i class="tim-icons icon-simple-remove"></i> 삭제
 							</button>
 						</div>
@@ -75,25 +79,35 @@
 					<div class="col-5">
 						<div class="card card-tasks">
 							<div class="card-header">
-								<h4 class="title">전체인원</h4>
+								<h4 class="title">부서 전체 인원</h4>
 							</div>
 							<div class="card-body">
 								<div class="table-full-width table-responsive"
 									style="overflow: auto; max-height: 380px;">
-									<table class="table">
+									
+									<form method="post" id="deptPersonForm">
+									<input type="hidden" value="" name="u_name" id="select-deptUser"/>
+									<input type="hidden" value="" name="btnState"/>
+									<table class="table text-center">
 										<thead>
 											<tr>
 												<th>이름</th>
-												<th>직급</th>
 												<th>직책</th>
+												<th>직급</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr><td>홍길동</td><td>대리</td><td>개발자</td></tr>
-											<tr><td>홍길동</td><td>대리</td><td>개발자</td></tr>
-											<tr><td>홍길동</td><td>대리</td><td>개발자</td></tr>
+											<c:forEach var="deptPerson" items="${deptPersonList}">
+												<tr class="deptPerson-item">
+													<td>${deptPerson.u_name}</td>
+													<td>${deptPerson.pos_name}</td>
+													<td>${deptPerson.r_name}</td>
+												</tr>
+											</c:forEach>
 										</tbody>
 									</table>
+									</form>
+									
 								</div>
 							</div>
 						</div>
@@ -108,7 +122,69 @@
 	</div>
 	<%@ include file="../a01_main/plugin.jsp"%>
 	<%@ include file="../a01_main/bootstrapBottom.jsp"%>
-
+	<script>
+		
+		// 초대 할 인원 선택
+		var selectPerson = "";
+		$(".deptPerson-item").on("click", function(){
+			$(".deptPerson-item").css("background", "#26293D");
+			selectPerson = $(this).children().eq(0).text();
+			$("#select-deptUser").val(selectPerson);
+			$(this).css("background", "#1E1E28");
+		});
+		
+		// 제거 할 인원 선택
+		var selectMember = "";
+		var selectMemberPos = "";
+		$(".resource-item").on("click", function(){
+			$(".resource-item").css("background", "#26293D");
+			selectMember = $(this).children().eq(0).text();
+			selectMemberPos = $(this).children().eq(1).text();
+			$("#select-member").val(selectMember);
+			$(this).css("background", "#1E1E28");
+		});
+		
+		// 추가 버튼
+		$('#addBtn').on("click", function(){
+			if(selectPerson.trim() == ""){
+				Swal.fire({
+					position: 'center',
+					type: 'error',
+					title: '초대할 인원을 선택하세요.',
+					showConfirmButton: false,
+					timer: 1500
+				});
+			} else {
+				$('[name=btnState]').val('add');
+				$('#deptPersonForm').submit();
+			}
+		});
+		
+		// 삭제 버튼
+		$('#delBtn').on("click", function(){
+			if(selectMember.trim() == ""){
+				Swal.fire({
+					position: 'center',
+					type: 'error',
+					title: '삭제할 인원을 선택하세요.',
+					showConfirmButton: false,
+					timer: 1500
+				});
+			} else if(selectMemberPos.trim() == 'PM'){
+				Swal.fire({
+					position: 'center',
+					type: 'error',
+					title: '프로젝트 매니저(PM)는 삭제할 수 없습니다.',
+					showConfirmButton: false,
+					timer: 1500
+				});			
+			} else {
+				$('[name=btnState]').val('del');
+				$('#memberForm').submit();
+			}
+		});
+		
+	</script>
 </body>
 
 </html>

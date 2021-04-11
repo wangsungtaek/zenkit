@@ -26,17 +26,13 @@
 
 			<!-- Start Content -->
 			<div class="content">
-
-				<div class="col-md-8 ml-auto mr-auto mb-3">
-					<h2 class="text-center m-0">프로젝트 센터</h2>
-				</div>
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card" style="height:700px;">
-							<div class="card-header mb-4">
+							<div class="card-header mb-1">
 								<h4 class="title">프로젝트 등록 정보</h4>
 							</div>
-							<div class="card-body mb-4">
+							<div class="card-body mb-0">
 								<form method="post" class="form-horizontal" id="regForm">
 
 									<!-- 프로젝트 명 -->
@@ -74,13 +70,24 @@
 										</div>
 									</div>
 
-									<!-- 날짜 -->
+									<!-- 시작날짜 -->
 									<div class="row mb-3">
-										<label class="col-sm-2 col-form-label">날짜 *</label>
+										<label class="col-sm-2 col-form-label">시작 날짜 *</label>
 										<div class="col-sm-3">
 											<div class="form-group">
 												<input type="text" class="form-control datepicker"
-													value="${day}" name="p_startD">
+													value="${startDay}" name="p_startD">
+											</div>
+										</div>
+
+									</div>
+									<!-- 종료날짜 -->
+									<div class="row mb-3">
+										<label class="col-sm-2 col-form-label">종료 날짜 *</label>
+										<div class="col-sm-3">
+											<div class="form-group">
+												<input type="text" class="form-control datepicker"
+													value="${endDay}" name="p_endD">
 											</div>
 										</div>
 									</div>
@@ -97,11 +104,9 @@
 											</div>
 										</div>
 									</div>
-
+									
 								</form>
-								
 							</div>
-							
 							<div class="card-footer text-right">
 								<button type="submit" class="btn btn-primary" id="regBtn">
 									<i class="tim-icons icon-check-2"></i> 저장

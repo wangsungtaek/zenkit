@@ -18,6 +18,7 @@
 		<typeAlias alias="output" type="zenkit.web.vo.Output"/>
 		<typeAlias alias="risk" type="zenkit.web.vo.Risk"/>
 		<typeAlias alias="resourcename" type="zenkit.web.dto.ResourceName"/>
+		<typeAlias alias="addResource" type="zenkit.web.dto.AddResource"/>
 		<typeAlias alias="jobInfo" type="zenkit.web.vo.JobInfo"/>
 	</typeAliases>
 	

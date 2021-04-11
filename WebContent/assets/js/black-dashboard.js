@@ -288,7 +288,7 @@ var blackDashboard = {
 
     if ($datepicker.length != 0) {
       $datepicker.datetimepicker({
-        format: 'MM/DD/YYYY',
+        format: 'YYYY/MM/DD',
         icons: {
           time: "tim-icons icon-watch-time",
           date: "tim-icons icon-calendar-60",

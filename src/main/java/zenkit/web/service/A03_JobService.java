@@ -22,13 +22,11 @@ public class A03_JobService {
 		ArrayList<Gantt> gantt = new ArrayList<Gantt>();
 		ArrayList<Job> jobs = dao.jobList(p_no);
 		for (Job j : jobs) {
-			
-			
-			SimpleDateFormat sDate = new SimpleDateFormat("YYYY/MM/dd"); 
-			String startD = sDate.format(j.getJ_startD()); 
+
+			SimpleDateFormat sDate = new SimpleDateFormat("YYYY/MM/dd");
+			String startD = sDate.format(j.getJ_startD());
 			String endD = sDate.format(j.getJ_endD());
-			 
-			
+
 			Gantt g = new Gantt();
 			g.setId(j.getJ_no());
 			g.setParent(j.getJ_refno());
@@ -45,65 +43,72 @@ public class A03_JobService {
 	public ArrayList<Job> jobList2(int p_no) {
 		ArrayList<Job> jobs = dao.jobList(p_no);
 		for (Job j : jobs) {
-			
-			SimpleDateFormat sDate = new SimpleDateFormat("YYYY/MM/dd"); 
-			String startD = sDate.format(j.getJ_startD()); 
+
+			SimpleDateFormat sDate = new SimpleDateFormat("YYYY/MM/dd");
+			String startD = sDate.format(j.getJ_startD());
 			String endD = sDate.format(j.getJ_endD());
-			
+
 			j.setJ_startD_s(startD);
 			j.setJ_endD_s(endD);
 		}
-		
+
 		return jobs;
 	}
 
 	public void jobInsert(Job ins) {
 		
-		
+		SimpleDateFormat sDate = new SimpleDateFormat("yyyy/MM/dd");
+		String startD = sDate.format(ins.getJ_startD());
+		String endD = sDate.format(ins.getJ_endD());
+		ins.setJ_startD_s(startD);
+		ins.setJ_endD_s(endD);
 		dao.jobInsert(ins);
 	}
 
-	public ArrayList<Job> jobPeople(int p_no){
+	public ArrayList<Job> jobPeople(int p_no) {
 		return dao.jobPeople(p_no);
 	}
-	
+
 	public Job jobDetail(int j_no) {
-		
+
 		Job job = dao.jobDetail(j_no);
-		
-			
-			SimpleDateFormat sDate = new SimpleDateFormat("YYYY/MM/dd"); 
-			String startD = sDate.format(job.getJ_startD()); 
-			String endD = sDate.format(job.getJ_endD());
-			
-			job.setJ_startD_s(startD);
-			job.setJ_endD_s(endD);
-		
-		
+
+		SimpleDateFormat sDate = new SimpleDateFormat("yyyy/MM/dd");
+		String startD = sDate.format(job.getJ_startD());
+		String endD = sDate.format(job.getJ_endD());
+
+		job.setJ_startD_s(startD);
+		job.setJ_endD_s(endD);
+
 		return job;
 	}
-
-	
 
 	public Job parentjob(int j_no) {
 		return dao.parentjob(j_no);
 	}
 
 	public void jobUpdate(Job upt) {
+		
+		SimpleDateFormat sDate = new SimpleDateFormat("yyyy/MM/dd");
+		String startD = sDate.format(upt.getJ_startD());
+		String endD = sDate.format(upt.getJ_endD());
+		upt.setJ_startD_s(startD);
+		upt.setJ_endD_s(endD);
 		dao.jobUpdate(upt);
 	}
 
 	public void TopjobcomR(int j_refno) {
 		dao.TopjobcomR(j_refno);
 	}
-	
+
 	public void jobDelete(int j_no) {
 		dao.jobDelete(j_no);
 	}
+
 	public Project projectGet(int p_no) {
 		return dao.projectGet(p_no);
 	}
-	
+
 	public int jobcount(int p_no) {
 		return dao.jobcount(p_no);
 	}

@@ -36,7 +36,7 @@
 	<!-- public void jobInsert(Job ins);-->
 	<insert id="jobInsert" parameterType="job">
 		INSERT INTO Z_JOB VALUES
-		(z_job_no_seq.nextval, #{j_refno}, #{j_name},#{j_content},to_date(#{j_startD},'yyyy/mm/dd'), to_date(#{j_endD},'yyyy/mm/dd'), sysdate, sysdate, #{j_completeR}, #{p_no}, #{u_no})
+		(z_job_no_seq.nextval, #{j_refno}, #{j_name},#{j_content},to_date(#{j_startD_s},'yyyy/mm/dd'), to_date(#{j_endD_s},'yyyy/mm/dd'), sysdate, sysdate, #{j_completeR}, #{p_no}, #{u_no})
 	</insert>
 	
 	<!-- 특정 작업 데이터 가져오기 -->
@@ -64,8 +64,8 @@
 			SET j_name = #{j_name},
 				j_content = #{j_content},
 				u_no = #{u_no},
-				j_startD = #{j_startD},
-				j_endD = #{j_endD},
+				j_startD = #{j_startD_s},
+				j_endD = #{j_endD_s},
 				J_completeR = #{j_completeR}
 			WHERE j_no = #{j_no}
 	</update>

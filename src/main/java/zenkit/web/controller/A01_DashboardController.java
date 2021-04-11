@@ -35,7 +35,6 @@ public class A01_DashboardController {
 		d.addAttribute("outputCnt",service.outputCnt(user.getU_no()));
 		d.addAttribute("projectDate",service.projectDate(user.getU_no()));
 		d.addAttribute("projectList", service.projectList(user.getU_no()));
-		
 		return "a01_dashboard\\a01_dashboard_personal";
 	}
 

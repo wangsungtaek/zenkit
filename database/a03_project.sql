@@ -98,3 +98,92 @@ SELECT j_no, count(o_no)
 GROUP BY j_no;
 
 SELECT * FROM Z_OUTPUTS;
+
+-- 프로젝트 등록
+INSERT INTO Z_PROJECT
+   VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Zenkit', 
+         to_date('2021/03/29','YYYY-MM-DD'), to_date('2021/04/30','YYYY-MM-DD'),
+         '프로젝트 관리 시스템 PMS', '94MA757', 1);
+
+
+        
+SELECT u_no FROM Z_USER
+WHERE u_id = '94IT757';
+
+SELECT * FROM Z_PROJECT;
+
+SELECT * FROM Z_RESOURCE;
+
+SELECT * FROM Z_USER zu;
+INSERT INTO Z_RESOURCE
+VALUES (16, 6);
+SELECT * FROM Z_AUTH;
+
+SELECT * FROM Z_USER zu ;
+SELECT * FROM Z_RESOURCE zr ;
+INSERT INTO Z_JOB VALUES
+(z_job_no_seq.nextval, 0, 
+'Zenkit PMS 시스템','작업설명1' ,
+to_date('2021-04-01','yyyy-mm-dd'),
+to_date('2021-04-30','yyyy-mm-dd'),
+sysdate, sysdate,
+0.2, 24, 15);
+SELECT * FROM Z_JOB;
+INSERT INTO Z_AUTH VALUES (Z_AUTH_NO_SEQ.NEXTVAL, sysdate, NULL, '요청합니다', 80, 11, '승인중');
+INSERT INTO Z_AUTH VALUES (Z_AUTH_NO_SEQ.NEXTVAL, sysdate, NULL, '요청합니다', 70, 11, '승인완료');
+INSERT INTO Z_AUTH VALUES (Z_AUTH_NO_SEQ.NEXTVAL, sysdate, NULL, '요청합니다', 90, 11, '반려');
+INSERT INTO Z_AUTH VALUES (Z_AUTH_NO_SEQ.NEXTVAL, sysdate, NULL, '요청합니다', 30, 11, '회수');
+
+--	프로젝트 참여인원
+SELECT u.u_name, ra.r_name, pos.pos_name
+  FROM Z_RESOURCE r, Z_USER u, Z_RANK ra, Z_POSITION pos
+ WHERE r.u_no = u.u_no
+   AND u.r_no = ra.r_no
+   AND u.pos_no = pos.pos_no
+   AND r.p_no = 1;
+
+-- 프로젝트 정보
+SELECT *
+  FROM Z_PROJECT
+ WHERE p_no = 1;
+SELECT * FROM Z_USER zu ;
+
+-- 부서 전체 인원
+SELECT u.u_name, ra.r_name, pos.pos_name
+  FROM Z_USER u, Z_RANK ra, Z_POSITION pos
+ WHERE u.r_no = ra.r_no
+   AND u.pos_no = pos.pos_no
+	AND d_no = 4;
+	
+-- 프로젝트에 참여인원 추가
+SELECT * FROM Z_RESOURCE zr ;
+INSERT INTO Z_RESOURCE 
+	  VALUES (1,(SELECT u_no
+					   FROM Z_USER
+ 					  WHERE u_name = '정택진'));
+SELECT * FROM Z_USER zu;
+SELECT * FROM Z_RESOURCE zr ;
+
+-- 프로젝트에 인원 제거
+DELETE Z_RESOURCE
+ WHERE p_no = 
+   AND u_no = (SELECT u_no
+					  FROM Z_USER
+ 					 WHERE u_name = '정택진')
+ 					 
+-- 부서에서 초대 가능한 인원
+SELECT u.u_name, ra.r_name, pos.pos_name
+  FROM Z_USER u, Z_RANK ra, Z_POSITION pos
+ WHERE u.r_no = ra.r_no
+ 	AND u.pos_no = pos.pos_no
+   AND u.d_no = 5
+   AND NOT u.u_no IN (SELECT u_no
+								FROM Z_RESOURCE r
+								WHERE r.p_no = 1);
+SELECT u_no
+  FROM Z_RESOURCE r
+ WHERE r.p_no = 1;
+SELECT * FROM Z_USER zu ;
+SELECT u_no
+  FROM Z_USER
+ WHERE u_name = '정택진';

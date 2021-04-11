@@ -15,7 +15,7 @@
 			AND p_no=#{p_no}
 	</select>
 	
-	<!-- public void uptProInfo(A03_ProInfo upt) -->	
+	<!-- public void uptProInfo(A03_ProInfo upt) -->
 	<update id="uptProInfo" parameterType="a03_proInfo">
 		
 	</update>

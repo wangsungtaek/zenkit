@@ -47,6 +47,35 @@
 		 WHERE p_no = #{p_no}
 	</select>
 	
+	<!-- 해당 인원 참여 시키기 -->
+	<insert id="addUser" parameterType="addResource"> 
+		INSERT INTO Z_RESOURCE 
+	  		  VALUES (#{p_no},(SELECT u_no
+					   				FROM Z_USER
+ 					  		  		  WHERE u_name = #{u_name}))
+	</insert>
+	
+	<!-- 해당 인원 프로젝트에서 제외 -->
+	<delete id="delUser" parameterType="addResource">
+		DELETE Z_RESOURCE
+		 WHERE p_no = #{p_no}
+		   AND u_no = (SELECT u_no
+							  FROM Z_USER
+		 					 WHERE u_name = #{u_name})	
+	</delete>
+	
+	<!-- 참여 가능한 부서별 전체인원 -->
+	<resultMap type="resourcename" id="deptResourceMap"></resultMap>
+	<select id="getDeptResource" resultMap="deptResourceMap" parameterType="hashmap">
+		SELECT u.u_name, ra.r_name, pos.pos_name
+		  FROM Z_USER u, Z_RANK ra, Z_POSITION pos
+		 WHERE u.r_no = ra.r_no
+		 	AND u.pos_no = pos.pos_no
+		   AND u.d_no = #{d_no}
+		   AND NOT u.u_no IN (SELECT u_no
+										FROM Z_RESOURCE r
+										WHERE r.p_no = #{p_no})
+	</select>
 	
 	<!-- 프로젝트 등록 -->
 	<insert id="projectReg" parameterType="project">

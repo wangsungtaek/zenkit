@@ -226,6 +226,7 @@ CREATE TABLE Z_RESOURCE(
    FOREIGN KEY (u_no) REFERENCES Z_USER(u_no) ON DELETE CASCADE
 );
 
+
 -- 데이터
 INSERT INTO Z_RESOURCE VALUES(1,2);
 INSERT INTO Z_RESOURCE VALUES(1,4);
@@ -287,7 +288,7 @@ SELECT z_job_no_seq.CURRVAL FROM DUAL;
 -- 삭제
 DROP TABLE Z_JOB CASCADE CONSTRAINTS;
 DROP SEQUENCE z_job_no_seq;
-
+SELECT * FROM Z_USER ;
 ----------------------------------------------------------------
 
 ----------------------------------------------------------------
@@ -323,6 +324,7 @@ CREATE SEQUENCE Z_AUTH_NO_SEQ
 	START WITH 1
 	INCREMENT BY 1;
 
+SELECT * FROM Z_USER zu ;
 -- 데이터
 INSERT INTO Z_AUTH VALUES(Z_AUTH_NO_SEQ.NEXTVAL, sysdate, '요청합니다.', '승인합니다', 90, 1, '승인완료');
 INSERT INTO Z_AUTH VALUES(Z_AUTH_NO_SEQ.NEXTVAL, sysdate, '요청해주세요', NULL, 40, 2, '승인중');
