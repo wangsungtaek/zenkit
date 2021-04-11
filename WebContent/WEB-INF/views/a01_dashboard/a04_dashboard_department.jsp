@@ -18,7 +18,7 @@
 
 <body class="sidebar-mini ">
   <div class="wrapper">   
-   <%@ include file="../a01_main/sidebar_ceo.jsp"%>
+   <%@ include file="../a01_main/sidebar.jsp"%>
     <div class="main-panel">
       <%@ include file="../a01_main/header.jsp"%>
     

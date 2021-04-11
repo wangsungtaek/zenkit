@@ -140,7 +140,6 @@
             white_color = true;
           }
 
-
         });
 
         $('.light-badge').click(function() {
@@ -151,5 +150,9 @@
           $('body').removeClass('white-content');
         });
       });
+     blackDashboard.initDateTimePicker();
+     if ($('.slider').length != 0) {
+       demo.initSliders();
+     };
     });
 	</script>

@@ -16,14 +16,24 @@ public class A04_AuthService {
 	@Autowired(required=false)
 	private A04_AuthDao dao;
 	
+	public ArrayList<AuthInfo> authListPm(AuthInfo sch){
+		if(sch.getJob_name()==null) sch.setJob_name("");
+		if(sch.getPro_name()==null) sch.setPro_name("");
+		return dao.authListPm(sch);
+	}
+	
 	public ArrayList<AuthInfo> authList(AuthInfo sch){
 		if(sch.getJob_name()==null) sch.setJob_name("");
 		if(sch.getPro_name()==null) sch.setPro_name("");
 		return dao.authList(sch);
 	}
 	
-	public ArrayList<String> getPros() {
-		return dao.getPros();
+	public ArrayList<String> getPmPros(int u_no) {
+		return dao.getPmPros(u_no);
+	}
+	
+	public ArrayList<String> getPros(int u_no) {
+		return dao.getPros(u_no);
 	}
 	
 	public Job getJobInfo(int j_no) {

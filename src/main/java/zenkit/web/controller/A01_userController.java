@@ -32,7 +32,6 @@ public class A01_userController {
 	@Autowired(required = false)
 	A01_userService userService;
 	
-	
 	// http://localhost:7080/zenkit/user.do?method=form
 	@RequestMapping(params = "method=form")
 	public String userForm() {
@@ -78,6 +77,12 @@ public class A01_userController {
 			user.setR_name("");
 		
 		d.addAttribute("userList", userService.getUserList(user));
+		return "pageJsonReport";
+	}
+	
+	// http://localhost:7080/zenkit/user.do?method=model
+	@RequestMapping(params = "method=model")
+	public String modelList(Model d) {
 		return "pageJsonReport";
 	}
 	

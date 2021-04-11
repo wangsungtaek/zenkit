@@ -41,7 +41,10 @@
 		<div class="collapse navbar-collapse" id="navigation">
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item d-flex align-items-center">
-					<div><strong>${sesMem.u_id}</strong> ${sesMem.u_name}</div>
+					<div>
+					 	<strong>${sesMem.u_name}</strong>
+						<span id="pos">(${position})</span>
+					</div>
 				</li>
 				<li class="dropdown nav-item">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
@@ -52,13 +55,11 @@
 						<p class="d-lg-none">Log out</p>
 					</a>
 					<ul class="dropdown-menu dropdown-navbar">
-						<li class="nav-link"><a href="${path}/a00_login/a02_user.jsp"
-							class="nav-item dropdown-item">Profile</a></li>
-						<li class="nav-link"><a href="${path}/department.do?method=form"
-							class="nav-item dropdown-item">관리</a></li>
+						<li class="nav-link"><a href="${path}/profile.do"
+							class="nav-item dropdown-item">프로필</a></li>
 						<li class="dropdown-divider"></li>
-						<li class="nav-link"><a href="${path}/a00_login/a01_login.jsp"
-							class="nav-item dropdown-item">Log out</a></li>
+						<li class="nav-link"><a href="${path}/zenkit.do?method=login"
+							class="nav-item dropdown-item">로그아웃</a></li>
 					</ul>
 				</li>
 				<li class="separator d-lg-none"></li>
@@ -66,3 +67,10 @@
 		</div>
 	</div>
 </nav>
+<script>
+	var session = "${sesMem.u_name}";
+	if(session == "" || session == null){
+		alert("로그인 시간이 만료되었습니다. 로그인 페이지로 이동합니다.");
+		location.href="${path}/zenkit.do?method=login";
+	}
+</script>

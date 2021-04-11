@@ -27,7 +27,7 @@
 			<!-- Start Content -->
 			<div class="content">
 				
-				<div class="row">
+				<div class="row mb-3">
 					<div class="col-12 col-md-3 pr-0">
                     <div class="input-group m-0" style="top: 5px;">
                       <div class="input-group-prepend">
@@ -42,17 +42,22 @@
 					<div class="col-12 col-md-2 text-left p-0">
 						<button class="btn">검 색</button>
 					</div>
+					<c:if test="${sesMem.pos_no == 3}">
 					<div class="col-12 col-md-2 ml-auto text-right">
-						<button class="btn btn-primary" onclick="location.href='${path}/a02_project/a00_regProject.jsp'">
+						<button class="btn btn-primary"
+							onclick="location.href='${path}/project.do?method=regForm'">
 							프로젝트 등록
 						</button>
 					</div>
+					</c:if>
 				</div>
 
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-body">
+								<form id="proForm" method="post">
+								<input type="hidden" name="p_no" value=""/>
 								<table id="simple-table" class="table text-center">
 									<colgroup>
 										<col width="30%">
@@ -72,10 +77,13 @@
 											<th>이슈</th>
 										</tr>
 									</thead>
+									
 									<tbody id="project-list">
-										
 									</tbody>
+									
 								</table>
+								</form>
+								
 								<ul class="pagination justify-content-center">
 									<li class="page-item"><a class="page-link" href="#link"
 										aria-label="Previous"> <span aria-hidden="true"><i
@@ -138,11 +146,11 @@
 	
 	<script>
 	$(document).ready(function() {
-		console.log(1);
 		// 프로젝트 상세 클릭
 		$('.project-item').on('click',function(){
-			console.log($(this).children().eq(1).text());
-			location.href="${path}/project.do?method=detail_1";
+			var p_no = $(this).children().eq(1).text();
+			$('[name=p_no]').val(p_no);
+			$('#proForm').submit();
 		});
 	});
 	</script>

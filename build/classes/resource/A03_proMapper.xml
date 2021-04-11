@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="zenkit.web.dao.A03_projectDao">
 
+	<!-- 회원별 프로젝트 -->
 	<resultMap type="project" id="proListMap"/>
 	<select id="getProList" resultMap="proListMap" parameterType="int">
 		SELECT *
@@ -14,4 +15,52 @@
 		 	 WHERE u_no = #{u_no}
 		 )
 	</select>
+	
+	<!-- 마지막 프로젝트 번호 -->
+	<select id="get_LastPno" resultType="int">
+		SELECT max(p_no) p_no
+		  FROM Z_PROJECT
+	</select>
+	
+	<!-- 유저 아이디를 통한 유저 번호 -->
+	<select id="get_u_no" resultType="int" parameterType="String">
+		SELECT u_no
+		  FROM Z_USER
+		 WHERE u_id = #{p_pm}
+	</select>
+	
+	<!-- 프로젝트 별 참여인원 -->
+	<resultMap type="resourcename" id="resourceMap"></resultMap>
+	<select id="getResource" resultMap="resourceMap" parameterType="int">
+		SELECT u.u_name, ra.r_name, pos.pos_name
+		  FROM Z_RESOURCE r, Z_USER u, Z_RANK ra, Z_POSITION pos
+		 WHERE r.u_no = u.u_no
+		   AND u.r_no = ra.r_no
+		   AND u.pos_no = pos.pos_no
+		   AND r.p_no = #{p_no}
+	</select>
+	
+	<!-- 프로젝트 기본 정보 -->
+	<select id="getProInfo" resultType="project" parameterType="int">
+		SELECT *
+		  FROM Z_PROJECT
+		 WHERE p_no = #{p_no}
+	</select>
+	
+	
+	<!-- 프로젝트 등록 -->
+	<insert id="projectReg" parameterType="project">
+		INSERT INTO Z_PROJECT
+	   VALUES(Z_PROJECT_NO_SEQ.NEXTVAL,
+	   		#{p_name}, 
+	         to_date(#{p_startD_s},'YYYY-MM-DD'),
+	         to_date(#{p_endD_s},'YYYY-MM-DD'),
+	         #{p_content}, #{p_pm}, #{d_no})
+	</insert>
+	
+	<!-- 프로젝트 참여 -->
+	<insert id="projectInvite" parameterType="hashmap">
+		INSERT INTO Z_RESOURCE
+		VALUES (#{p_no}, #{u_no})
+	</insert>
 </mapper>

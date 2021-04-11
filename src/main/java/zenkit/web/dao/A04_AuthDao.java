@@ -12,8 +12,10 @@ import zenkit.web.vo.Output;
 
 @Repository
 public interface A04_AuthDao {
+	public ArrayList<AuthInfo> authListPm(AuthInfo sch);
 	public ArrayList<AuthInfo> authList(AuthInfo sch);
-	public ArrayList<String> getPros();
+	public ArrayList<String> getPmPros(int u_no);
+	public ArrayList<String> getPros(int u_no);
 	public Job getJobInfo(int j_no);
 	public AuthInfo getAuthInfo(int a_no);
 	public ArrayList<Output> getOutputInfo(int j_no);

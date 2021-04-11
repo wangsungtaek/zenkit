@@ -43,7 +43,7 @@
 				location.href="${path}/job.do?method=list";	
 			}
 		};
-			
+		$("#jobBtn").attr("class", "btn btn-primary");
 		
 	});
 </script>

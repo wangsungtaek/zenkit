@@ -20,17 +20,12 @@
 </head>
 <body class="sidebar-mini ">
 	<div class="wrapper">
-	
 		<%@ include file="../a01_main/sidebar.jsp"%>
-
 		<div class="main-panel">
-
 			<%@ include file="../a01_main/header.jsp"%>
-
 			<!-- Start Content -->
 			<div class="content">
 				<%@ include file="my_task_header.jsp"%>
-				
 				<div class="d-flex justify-content-end mb-2">
 				  <div class="col-md-3 " style="float:right;">
                         <select class="selectpicker" data-size="5" data-style="btn btn-primary" title="Single Select">
@@ -48,9 +43,7 @@
                           <option value="4">2019</option>
                         </select>
                   </div>
-				
-				
-					<div class="col-sm-3">
+				  <div class="col-sm-3">
                     <div class="input-group m-0" style="top: 5px;">
                       <div class="input-group-prepend">
                         <div class="input-group-text">
@@ -71,195 +64,72 @@
 		            <div class="card">
 
 		              <div class="card-body">
-		                <div class="table-responsive">
 		                  <table class="table table-striped">
+		                  	<colgroup>
+	        					<col width="50px">
+	        					<col width="20%">
+		        				<col width="20%">
+		        				<col width="90px">
+		        				<col width="80px">
+		        				<col width="100px">
+		        				<col width="100px">
+		        				<col width="100px">
+        					</colgroup>
 		                    <thead class="text-primary">
 		                      <tr>
 		                        <th class="text-center">
 		                          <div class="form-check">
 		                            <label class="form-check-label">
-		                              <input class="form-check-input" type="checkbox" checked="">
+		                              <input id="checkAll" class="form-check-input" type="checkbox">
 		                              <span class="form-check-sign"></span>
 		                            </label>
 		                          </div>
 		                        </th>
-		                        <th class="text-left">
-		                          작업
-		                        </th>
-		                        <th class="text-left">
-		                          프로젝트
-		                        </th>
-		                        <th class="text-center">
-		                          승인자
-		                        </th>
-		                        <th class="text-center">
-		                          상태
-		                        </th>
-		                        <th class="text-center">
-		                          시작일
-		                        </th>
-		                        <th class="text-center">
-		                          완료일
-		                        </th>
-		                        <th class="text-center">
-		                          완료율
-		                        </th>
+		                        <th class="text-left">작업</th>
+		                        <th class="text-left">프로젝트</th>
+		                        <th class="text-center">승인자</th>
+		                        <th class="text-center">상태</th>
+		                        <th class="text-center">시작일</th>
+		                        <th class="text-center">완료일</th>
+		                        <th class="text-center">완료율</th>
 		                      </tr>
 		                    </thead>
 		                    <tbody>
-		                      <tr>
-		                        <td class="text-center">
-		                          <div class="form-check">
-		                            <label class="form-check-label">
-		                              <input class="form-check-input" type="checkbox" checked="">
-		                              <span class="form-check-sign"></span>
-		                            </label>
-		                          </div>
-		                        </td>
-		                        <td>
-		                         ECOBEAN
-		                        </td>
-		                        <td>
-		                          요구사항 정의서
-		                        </td>
-		                        <td class="text-center">
-		                          김나영
-		                        </td>
-		                        <td class="text-center">
-		                          완료
-		                        </td>
-		                       <td class="text-center">
-		                          2019-02-14
-		                        </td>
-		                        <td class="text-center">
-		                          2019-06-30
-		                        </td>
-		                        <td class="text-center">
-		                          <div class="col-md-3" style="width:50px; padding:0px;">
-				                    <div class="input-group m-0" style="padding:0px;">
-				                      <input type="text" name="firstname" 
-				                      	class="form-control" placeholder="완료율" style=" width:160px;"/>
-				                    </div>
-				                  </div>
-		                        </td>
-		                      </tr>
-		                      <tr>
-		                        <td class="text-center">
-		                          <div class="form-check">
-		                            <label class="form-check-label">
-		                              <input class="form-check-input" type="checkbox">
-		                              <span class="form-check-sign"></span>
-		                            </label>
-		                          </div>
-		                        </td>
-		                        <td>
-		                         GAMEFLIX
-		                        </td>
-		                        <td>
-		                         화면설계서
-		                        </td>
-		                        <td class="text-center">
-		                          김나영
-		                        </td>
-		                        <td class="text-center">
-		                          완료
-		                        </td>
-		                       <td class="text-center">
-		                          2019-02-14
-		                        </td>
-		                        <td class="text-center">
-		                          2019-06-30
-		                        </td>
-		                       <td class="text-center">
-		                          <div class="col-md-3" style="width:50px; padding:0px;">
-				                    <div class="input-group m-0" style="padding:0px;">
-				                      <input type="text" name="firstname" 
-				                      	class="form-control" placeholder="완료율" style=" width:160px;"/>
-				                    </div>
-				                  </div>
-		                        </td>
-		                      </tr>
-		                      <tr>
-		                        <td class="text-center">
-		                          <div class="form-check">
-		                            <label class="form-check-label">
-		                              <input class="form-check-input" type="checkbox" checked="">
-		                              <span class="form-check-sign"></span>
-		                            </label>
-		                          </div>
-		                        </td>
-		                        <td>
-		                          PLO
-		                        </td>
-		                        <td>
-		                          뮤직플레이어
-		                        </td>
-		                        <td class="text-center">
-		                          하성찬
-		                        </td>
-		                        <td class="text-center">
-		                          진행
-		                        </td>
-		                        <td class="text-center">
-		                          2020-02-14
-		                        </td>
-		                        <td class="text-center">
-		                          2020-06-30
-		                        </td>
-		                        <td class="text-center">
-		                          <div class="col-md-3" style="width:50px; padding:0px;">
-				                    <div class="input-group m-0" style="padding:0px;">
-				                      <input type="text" name="firstname" 
-				                      	class="form-control" placeholder="완료율" style=" width:160px;"/>
-				                    </div>
-				                  </div>
-		                        </td>
-		                      </tr>
-		                      <tr>
-		                        <td class="text-center">
-		                          <div class="form-check">
-		                            <label class="form-check-label">
-		                              <input class="form-check-input" type="checkbox">
-		                              <span class="form-check-sign"></span>
-		                            </label>
-		                          </div>
-		                        </td>
-		                        <td>
-		                          ZENKIT
-		                        </td>
-		                        <td>
-		                          대시보드
-		                        </td>
-		                        <td class="text-center">
-		                          김나영
-		                        </td>
-		                        <td class="text-center">
-		                          시작전
-		                        </td>
-		                        <td class="text-center">
-		                          2021-02-14
-		                        </td>
-		                        <td class="text-center">
-		                          2021-06-30
-		                        </td>
-		                        <td class="text-center">
-		                          <div class="col-md-3" style="width:50px; padding:0px;">
-				                    <div class="input-group m-0" style="padding:0px;">
-				                      <input type="text" name="firstname" 
-				                      	class="form-control" placeholder="완료율" style=" width:160px;"/>
-				                    </div>
-				                  </div>
-		                        </td>
-		                      </tr>		                      
+		                    <c:if test="${empty taskList}">
+		                    </c:if>
+		                    <c:if test="${!empty taskList}">
+		                    <c:forEach var="task" items="${taskList}">
+		                    	<tr>
+		                    		<td class="text-center">
+	        							<div class="form-check">
+	        							<label class="form-check-label">
+	        							<input name="checkano" class="form-check-input" type="checkbox" value="${task.j_no}">
+	        							<span class="form-check-sign">
+											<span class="check"></span>
+										</span>
+										</label>
+										</div>
+        							</td>
+		                    		<td>${task.j_name}</td>
+		                    		<td>${task.p_name}</td>
+		                    		<td class="text-center">${task.pm_name}</td>
+		                    		<td class="text-center task_state">완료</td>
+		                    		<td class="text-center"><fmt:formatDate value="${task.j_startD}"/></td>
+		                    		<td class="text-center"><fmt:formatDate value="${task.j_endD}"/></td>
+		                    		<td class="text-center">
+				                     	<input type="number" name="completeRate" class="form-control" 
+				                     		min="0" max="100" step="10" value="${task.j_completeR*100}"/>
+		                    		</td>
+		                    	</tr>
+		                    </c:forEach>
+		                    </c:if>               
 		                    </tbody>
 		                  </table>
-		                </div>
-		              </div>
+		              </div> <%--card-body --%>
 		            </div>
 		          </div>
 				</div>
 				<!-- end row -->
-				<div class="row">
 					<!-- notice modal -->
 					<div class="modal fade" id="noticeModal" tabindex="-1"
 						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -272,11 +142,20 @@
 									</button>
 									<h4 class="modal-title" id="myModalLabel">승인요청</h4>
 								</div>
-								<div class="modal-body">
+								<div class="modal-body" id="auth-form">
+							        <div class="form-group">
+								        <label id="authContentLabel" for="auth_content" style="color:#222a42;">승인요청 내용</label>
+								        <textarea class="form-control" id="auth_content" rows="7" style="color:#222a42;border:1px solid #2b3553;max-height:150px;"></textarea>
+									</div>
+							    </div>	
+							    <div class="modal-footer">
+							       <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
+							       <button type="button" class="btn btn-primary" id="authBtn">저장</button>
+							    </div>
+							<%-- 	<div class="modal-body">
 									<form method="get" action="/" class="form-horizontal">
 										<p>승인요청 내용</p>
-										<textarea  cols="67" rows="5">
-										</textarea>
+										<textarea cols="67" rows="5"></textarea>
 										<div class="row">
 											<div class="col-12 text-right">
 												<button type="button" class="btn btn-primary" data-dismiss="modal">
@@ -285,68 +164,14 @@
 											</div>
 										</div>
 									</form>
-								</div>
+								</div>--%>
 							</div>
 						</div>
 					</div>
-				</div>
 				<!-- end notice modal -->
       	</div>
-			<!-- End Content -->
-			
+			<!-- End Content -->	
 		</div>
-	</div>
-	<div class="fixed-plugin">
-		<div class="dropdown show-dropdown">
-			<a href="#" data-toggle="dropdown"> <i class="fa fa-cog fa-2x">
-			</i>
-			</a>
-			<ul class="dropdown-menu">
-				<li class="header-title">Sidebar Background</li>
-				<li class="adjustments-line"><a href="javascript:void(0)"
-					class="switch-trigger background-color">
-						<div class="badge-colors text-center">
-							<span class="badge filter badge-primary active"
-								data-color="primary"></span> <span
-								class="badge filter badge-info" data-color="blue"></span> <span
-								class="badge filter badge-success" data-color="green"></span> <span
-								class="badge filter badge-warning" data-color="orange"></span> <span
-								class="badge filter badge-danger" data-color="red"></span>
-						</div>
-						<div class="clearfix"></div>
-				</a></li>
-				<li class="header-title">Sidebar Mini</li>
-				<li class="adjustments-line">
-					<div class="togglebutton switch-sidebar-mini">
-						<span class="label-switch">OFF</span> <input type="checkbox"
-							name="checkbox" checked class="bootstrap-switch" data-on-label=""
-							data-off-label="" /> <span class="label-switch label-right">ON</span>
-					</div>
-					<div class="togglebutton switch-change-color mt-3">
-						<span class="label-switch">LIGHT MODE</span> <input
-							type="checkbox" name="checkbox" checked class="bootstrap-switch"
-							data-on-label="" data-off-label="" /> <span
-							class="label-switch label-right">DARK MODE</span>
-					</div>
-				</li>
-				<li class="button-container mt-4"><a
-					href="../docs/1.0/getting-started/introduction.html"
-					class="btn btn-default btn-block btn-round"> Documentation </a></li>
-				<li class="header-title">Thank you for 95 shares!</li>
-				<li class="button-container text-center">
-					<button id="twitter" class="btn btn-round btn-info">
-						<i class="fab fa-twitter"></i> &middot; 45
-					</button>
-					<button id="facebook" class="btn btn-round btn-info">
-						<i class="fab fa-facebook-f"></i> &middot; 50
-					</button> <br> <br> <a class="github-button"
-					href="https://github.com/creativetimofficial/ct-black-dashboard-pro"
-					data-icon="octicon-star" data-size="large" data-show-count="true"
-					aria-label="Star ntkme/github-buttons on GitHub">Star</a>
-				</li>
-			</ul>
-		</div>
-
 	</div>
 	<%@ include file="../a01_main/plugin.jsp"%>
 	 <%@ include file="../a01_main/bootstrapBottom.jsp"%>

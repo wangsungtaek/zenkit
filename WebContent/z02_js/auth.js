@@ -47,6 +47,7 @@ $('.task_info_nav').on('click', function(){
 	$(this).addClass('active');
 	$('.tab-pane').removeClass('active');
 	$($(this).attr('href')).addClass('active');
+	return false; // a태그 #sss 주소 안나오게 하기
 });
 
 $('[class^=jno]').on('click', function(){
@@ -86,9 +87,14 @@ function modalOutputInfo(data) {
 function modalAuthInfo(data) {
 	$('#modal_reqName').text(data.req_name);
 	$('#modal_reqN').text(data.a_requestN);
-	$('#modal_resName').text(data.res_name);
-	$('#modal_resN').text(data.a_resultN);
 	$('#task_resName').text(data.res_name);
+	console.log(data.a_name);
+	if(data.a_name=='반려' || data.a_name=='승인완료') {
+		$('#modal_resName').text(data.res_name);
+		$('#modal_resN').text(data.a_resultN);
+	} else {
+		$('.task_resInfo').empty();	
+	}
 }
 
 function modalJobInfo(data) {

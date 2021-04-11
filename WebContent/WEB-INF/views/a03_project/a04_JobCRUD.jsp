@@ -53,8 +53,6 @@
 				console.log(err);
 			}
 		});
-		$("#jobbtn").attr("class", "btn btn-primary");
-		
 		$("#jobBack").on("click",function(){
 			location.href="${path}/job.do?method=job";
 		});
@@ -63,8 +61,9 @@
 			location.href="${path}/job.do?method=insertForm";
 		});
 		
-		$('#task_finish').text(new Date(data.j_endD).toLocaleDateString());
 		
+		
+		$("#jobBtn").attr("class", "btn btn-primary");
 	});
 </script>
 <style>

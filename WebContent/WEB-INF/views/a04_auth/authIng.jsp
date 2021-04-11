@@ -22,13 +22,12 @@
         <div class="col-md-12">
         	<div class="card">
         		<div class="card-header">
-        		<%-- 	<div class="form-row">--%>
         			<form:form modelAttribute="sch" method="post" class="form-row">
         			<div class="col-md-3">
         				<div class="dropdown bootstrap-select">
         					<form:select path="pro_name" class="selectpicker" data-size="7" data-style="btn btn-primary">
         						<option class="bs-title-option" value="">프로젝트를 선택하세요</option>
-        						<form:options items="${pros}"/>
+        						<form:options items="${pmPros}"/>
         					</form:select>
 <%--        					<form:select path="pro_name" items="${pros}" class="selectpicker" data-size="7" data-style="btn btn-primary"/>
          					<select class="selectpicker" data-size="7" data-style="btn btn-primary">

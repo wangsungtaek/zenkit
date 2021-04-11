@@ -22,7 +22,7 @@
 <body class="sidebar-mini ">
 	<div class="wrapper">
 
-		<%@ include file="sidebar.jsp"%>
+		<%@ include file="../a01_main/sidebar.jsp"%>
 
 		<div class="main-panel">
 			

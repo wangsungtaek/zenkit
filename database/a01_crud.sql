@@ -81,9 +81,9 @@ CREATE TABLE z_user(
 	u_id VARCHAR2(50) CONSTRAINT z_user_id_nn NOT NULL,
 	u_pass VARCHAR2(50) CONSTRAINT z_user_pass_nn NOT NULL,
 	u_name VARCHAR2(100) CONSTRAINT z_user_name_nn NOT NULL,
-	u_email VARCHAR2(500) CONSTRAINT z_user_email_nn NOT NULL,
-	u_phone VARCHAR2(50) CONSTRAINT z_user_phone_nn NOT NULL,
-	u_img VARCHAR2(200) CONSTRAINT z_user_img_nn NOT NULL,
+	u_email VARCHAR2(500) CONSTRAINT z_user_email_nn NULL,
+	u_phone VARCHAR2(50) CONSTRAINT z_user_phone_nn NULL,
+	u_img VARCHAR2(200) CONSTRAINT z_user_img_nn NULL,
 	d_no NUMBER CONSTRAINT z_user_d_no_fk REFERENCES z_department(d_no) ON DELETE CASCADE,
 	pos_no NUMBER CONSTRAINT z_user_pos_no_fk REFERENCES z_position(pos_no) ON DELETE CASCADE,
 	r_no NUMBER CONSTRAINT z_user_r_no_fk REFERENCES z_rank(r_no) ON DELETE CASCADE
@@ -103,25 +103,25 @@ INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '02MA064','kangny56','김나�
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '15MA486','haha1253','하성찬',
 							'hahaha@google.com','01031927121','img/user/15MA486_하성찬.jpg',02,04,05);							
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '82HR012','passhr00','이강식',
-							'hjhj@google.com','01012349876','img/user/82HR012_이강식.jpg',03,05,03);
+							'hjhj@google.com','01012349876','img/user/82HR012_이강식.jpg',03,03,03);
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '17HR095','wonhk123','차원혁',
-							'wkyuk@google.com','01007051220','img/user/17HR095_차원혁.jpg',03,06,06);			
+							'wkyuk@google.com','01007051220','img/user/17HR095_차원혁.jpg',03,04,06);			
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '05PL125','jonejj','정하나',
-							'jj11@google.com','01007751389','img/user/05PL125_정하나.jpg',04,08,04);
+							'jj11@google.com','01007751389','img/user/05PL125_정하나.jpg',04,04,04);
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '99PL614','zoooo555','강주희',
-							'zzzooo@google.com','01057513645','img/user/99PL614_강주희.jpg',04,07,03);							
+							'zzzooo@google.com','01057513645','img/user/99PL614_강주희.jpg',04,04,03);							
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '94IT757','psma9854','한지혜',
-							'ks9854@google.com','01012135976','img/user/94IT757_한지혜.jpg',05,09,03);						
+							'ks9854@google.com','01012135976','img/user/94IT757_한지혜.jpg',05,04,03);						
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '15IT536','jaekkk','이재관',
-							'jaekk@google.com','01054621568','img/user/15IT536_이재관.jpg',05,10,05);
+							'jaekk@google.com','01054621568','img/user/15IT536_이재관.jpg',05,04,05);
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '09IT801','jjean159','정택진',
-							'jjean@google.com','01057513645','img/user/09IT801_정택진.jpg',05,10,04);							
+							'jjean@google.com','01057513645','img/user/09IT801_정택진.jpg',05,04,04);							
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '20IT254','doood987','도경아',
-							'dodok@google.com','01065125014','img/user/20IT254_도경아.jpg',05,10,06);						
+							'dodok@google.com','01065125014','img/user/20IT254_도경아.jpg',05,04,06);						
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '18IT279','mingee31','이민지',
-							'minjee@google.com','01028915267','img/user/18IT279_이민지.jpg',05,10,06);	
+							'minjee@google.com','01028915267','img/user/18IT279_이민지.jpg',05,04,06);	
 INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '19IT574','you55','유성환',
-							'hwan@google.com','01055198510','img/user/19IT574_유성환.jpg',05,10,06);		
+							'hwan@google.com','01055198510','img/user/19IT574_유성환.jpg',05,04,06);		
 							
 -- 조회
 SELECT * FROM Z_USER;
@@ -130,34 +130,34 @@ SELECT Z_USER_NO_SEQ.CURRVAL FROM DUAL;
 DROP TABLE Z_USER CASCADE CONSTRAINTS ;
 DROP SEQUENCE Z_USER_NO_SEQ;
 
-----------------------------------------------------------------
+---------------------------------------------------------------
 -- 일정 테이블 ##########
 -- 생성
 CREATE TABLE z_calendar(
-	c_no NUMBER CONSTRAINT z_calendat_no_pk PRIMARY KEY,
-	c_title VARCHAR2(100) CONSTRAINT z_calendar_title_nn NOT NULL,
-	c_startD DATE CONSTRAINT z_calendar_startD_nn NOT NULL,
-	c_endD DATE CONSTRAINT z_calendar_endD_nn NOT NULL,
-	c_content VARCHAR2(500) CONSTRAINT z_calendar_content_nn NOT NULL,
-	u_no NUMBER CONSTRAINT z_calendar_u_no_fk REFERENCES z_user(u_no) ON DELETE CASCADE
+   c_no NUMBER CONSTRAINT z_calendat_no_pk PRIMARY KEY,
+   c_title VARCHAR2(100) CONSTRAINT z_calendar_title_nn NOT NULL,
+   c_startD DATE CONSTRAINT z_calendar_startD_nn NOT NULL,
+   c_endD DATE CONSTRAINT z_calendar_endD_nn NOT NULL,
+   c_content VARCHAR2(500) CONSTRAINT z_calendar_content_nn NOT NULL,
+   u_no NUMBER CONSTRAINT z_calendar_u_no_fk REFERENCES z_user(u_no) ON DELETE CASCADE
 );
 
 CREATE SEQUENCE Z_CALENDAR_NO_SEQ
-	START WITH 1
-	INCREMENT BY 1;
-	
+   START WITH 1
+   INCREMENT BY 1;
+   
 -- 데이터
 INSERT INTO Z_CALENDAR VALUES (Z_CALENDAR_NO_SEQ.NEXTVAL, '미팅',
-	to_date('2021-04-05', 'YYYY-MM-DD'), to_date('2021-04-05', 'YYYY-MM-DD'), '삼성전자 PTC 개발 건 관련 담당자', 5);
+   to_date('2021-04-05', 'YYYY-MM-DD'), to_date('2021-04-05', 'YYYY-MM-DD'), '삼성전자 PTC 개발 건 관련 담당자', 6);
 INSERT INTO Z_CALENDAR VALUES (Z_CALENDAR_NO_SEQ.NEXTVAL, '신입사원 교육',
-	to_date('2021-04-07', 'YYYY-MM-DD'), to_date('2021-04-09', 'YYYY-MM-DD'), '신규 개발 인력 교육', 2);
+   to_date('2021-04-07', 'YYYY-MM-DD'), to_date('2021-04-09', 'YYYY-MM-DD'), '신규 개발 인력 교육', 2);
 INSERT INTO Z_CALENDAR VALUES (Z_CALENDAR_NO_SEQ.NEXTVAL, '휴가',
-	to_date('2021-04-10', 'YYYY-MM-DD'), to_date('2021-04-12', 'YYYY-MM-DD'), '연차', 7);
+   to_date('2021-04-10', 'YYYY-MM-DD'), to_date('2021-04-12', 'YYYY-MM-DD'), '연차', 1);
 INSERT INTO Z_CALENDAR VALUES (Z_CALENDAR_NO_SEQ.NEXTVAL, '미팅',
-	to_date('2021-04-22', 'YYYY-MM-DD'), to_date('2021-04-22', 'YYYY-MM-DD'), 'LG전자 바데리 관리 시스템 관련 미팅', 4);
+   to_date('2021-04-22', 'YYYY-MM-DD'), to_date('2021-04-22', 'YYYY-MM-DD'), 'LG전자 바데리 관리 시스템 관련 미팅', 2);
 INSERT INTO Z_CALENDAR VALUES (Z_CALENDAR_NO_SEQ.NEXTVAL, '휴가',
-	to_date('2021-04-24', 'YYYY-MM-DD'), to_date('2021-04-24', 'YYYY-MM-DD'), '연차', 4);
-							
+   to_date('2021-04-24', 'YYYY-MM-DD'), to_date('2021-04-24', 'YYYY-MM-DD'), '연차', 3);
+                     
 -- 조회
 SELECT * FROM Z_CALENDAR;
 SELECT Z_CALENDAR_NO_SEQ.CURRVAL FROM DUAL;
@@ -166,47 +166,47 @@ DROP TABLE Z_CALENDAR CASCADE CONSTRAINTS ;
 DROP SEQUENCE Z_CALENDAR_NO_SEQ;
 
 ----------------------------------------------------------------
--- 일정 테이블 ##########
+-- 프로젝트 테이블 ##########
 -- 생성
 CREATE TABLE Z_PROJECT(
-	p_no NUMBER CONSTRAINT z_project_no_pk PRIMARY KEY,
-	p_name varchar2(100) CONSTRAINT z_project_name_nn NOT NULL,
-	p_startD DATE CONSTRAINT z_project_startD_nn NOT NULL,
-	p_endD DATE CONSTRAINT z_project_endD_nn NULL,
-	p_content varchar2(1000) CONSTRAINT z_project_content_nn NOT NULL,
-	p_pm varchar2(50) CONSTRAINT z_project_pm_nn NOT NULL,
-	d_no NUMBER CONSTRAINT z_d_no_fk REFERENCES Z_DEPARTMENT(d_no) ON DELETE CASCADE
+   p_no NUMBER CONSTRAINT z_project_no_pk PRIMARY KEY,
+   p_name varchar2(100) CONSTRAINT z_project_name_nn NOT NULL,
+   p_startD DATE CONSTRAINT z_project_startD_nn NOT NULL,
+   p_endD DATE CONSTRAINT z_project_endD_nn NULL,
+   p_content varchar2(1000) CONSTRAINT z_project_content_nn NOT NULL,
+   p_pm varchar2(50) CONSTRAINT z_project_pm_nn NOT NULL,
+   d_no NUMBER CONSTRAINT z_d_no_fk REFERENCES Z_DEPARTMENT(d_no) ON DELETE CASCADE
 );
 
 CREATE SEQUENCE Z_PROJECT_NO_SEQ
-	START WITH 1
-	INCREMENT BY 1;
-	
+   START WITH 1
+   INCREMENT BY 1;
+   
 -- 데이터
 INSERT INTO Z_PROJECT
-	VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Zenkit', 
-			to_date('2021/03/29','YYYY-MM-DD'), to_date('2021/04/30','YYYY-MM-DD'),
-			'프로젝트 관리 시스템 PMS', '94MA757', 1);
+   VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Zenkit', 
+         to_date('2021/03/29','YYYY-MM-DD'), to_date('2021/04/30','YYYY-MM-DD'),
+         '프로젝트 관리 시스템 PMS', '94MA757', 1);
 
 INSERT INTO Z_PROJECT
-	VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Plo', 
-			to_date('2021/02/11','YYYY-MM-DD'), to_date('2021/03/15','YYYY-MM-DD'),
-			'음원 스트리밍 사이트', '09PL801', 2);		
-		
+   VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Plo', 
+         to_date('2021/02/11','YYYY-MM-DD'), to_date('2021/03/15','YYYY-MM-DD'),
+         '음원 스트리밍 사이트', '09PL801', 2);      
+      
 INSERT INTO Z_PROJECT
-	VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Gameflix', 
-			to_date('2021/01/15','YYYY-MM-DD'), to_date('2021/02/14','YYYY-MM-DD'),
-			'게임 사이트', '15MA536', 3);	
-		
+   VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Gameflix', 
+         to_date('2021/01/15','YYYY-MM-DD'), to_date('2021/02/14','YYYY-MM-DD'),
+         '게임 사이트', '15MA536', 3);   
+      
 INSERT INTO Z_PROJECT
-	VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Ecobean',
-			to_date('2021/01/03','YYYY-MM-DD'), to_date('2021/01/25','YYYY-MM-DD'),
-			'친환경 제품을 판매하는 웹 쇼핑몰 사이트', '09PL801', 4);		
+   VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Ecobean',
+         to_date('2021/01/03','YYYY-MM-DD'), to_date('2021/01/25','YYYY-MM-DD'),
+         '친환경 제품을 판매하는 웹 쇼핑몰 사이트', '09PL801', 4);      
 
 INSERT INTO Z_PROJECT
-	VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Classsite',
-			to_date('2021/02/18','YYYY-MM-DD'), to_date('2021/03/20','YYYY-MM-DD'),
-			'수강 신청 사이트', '94MA757', 3);			
+   VALUES(Z_PROJECT_NO_SEQ.NEXTVAL, 'Classsite',
+         to_date('2021/02/18','YYYY-MM-DD'), to_date('2021/03/20','YYYY-MM-DD'),
+         '수강 신청 사이트', '94MA757', 3);         
 
 -- 조회
 SELECT * FROM Z_PROJECT;
@@ -219,22 +219,21 @@ DROP SEQUENCE Z_PROJECT_NO_SEQ;
 -- 프로젝트 참여인원 테이블 ##########
 -- 생성
 CREATE TABLE Z_RESOURCE(
-	p_no NUMBER,
-	u_no NUMBER,
-	PRIMARY KEY (p_no, u_no),
-	FOREIGN KEY (p_no) REFERENCES Z_PROJECT(p_no) ON DELETE CASCADE,
-	FOREIGN KEY (u_no) REFERENCES Z_USER(u_no) ON DELETE CASCADE
+   p_no NUMBER,
+   u_no NUMBER,
+   PRIMARY KEY (p_no, u_no),
+   FOREIGN KEY (p_no) REFERENCES Z_PROJECT(p_no) ON DELETE CASCADE,
+   FOREIGN KEY (u_no) REFERENCES Z_USER(u_no) ON DELETE CASCADE
 );
 
 -- 데이터
-INSERT INTO Z_RESOURCE VALUES(1,5);
+INSERT INTO Z_RESOURCE VALUES(1,2);
+INSERT INTO Z_RESOURCE VALUES(1,4);
 INSERT INTO Z_RESOURCE VALUES(1,6);
-INSERT INTO Z_RESOURCE VALUES(1,7);
-INSERT INTO Z_RESOURCE VALUES(1,8);
 INSERT INTO Z_RESOURCE VALUES(2,3);
-INSERT INTO Z_RESOURCE VALUES(2,4);
-INSERT INTO Z_RESOURCE VALUES(3,7);
+INSERT INTO Z_RESOURCE VALUES(2,7);
 INSERT INTO Z_RESOURCE VALUES(3,8);
+INSERT INTO Z_RESOURCE VALUES(3,9);
 
 -- 조회
 SELECT * FROM Z_RESOURCE;
@@ -262,21 +261,25 @@ CREATE SEQUENCE Z_JOB_NO_SEQ
    START WITH 1
    INCREMENT BY 1;
 
+  SELECT * FROM Z_RESOURCE zr ;
+  
 -- 데이터
 INSERT INTO Z_JOB VALUES
 (z_job_no_seq.nextval, 0, 'Zenkit PMS 시스템','작업설명1' ,to_date('2021-04-01','yyyy-mm-dd'), to_date('2021-04-30','yyyy-mm-dd'), sysdate, sysdate, 0.2, 1, 2);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '로그인/프로필', '작업설명2' ,to_date('2021-04-01','YYYY-MM-DD'), to_date('2021-04-02','YYYY-MM-DD'),sysdate, sysdate,0.2, 1, 9);
+(z_job_no_seq.nextval, 1, '로그인/프로필', '작업설명2' ,to_date('2021-04-01','YYYY-MM-DD'), to_date('2021-04-02','YYYY-MM-DD'),sysdate, sysdate,0.2, 1, 4);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '대시보드', '작업설명3' ,to_date('2021-04-02','YYYY-MM-DD'), to_date('2021-04-03','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 10);
+(z_job_no_seq.nextval, 1, '대시보드', '작업설명3' ,to_date('2021-04-02','YYYY-MM-DD'), to_date('2021-04-03','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 4);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '내작업', '작업설명4' ,to_date('2021-04-03','YYYY-MM-DD'), to_date('2021-04-04','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 11);
+(z_job_no_seq.nextval, 1, '내작업', '작업설명4' ,to_date('2021-04-03','YYYY-MM-DD'), to_date('2021-04-04','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 6);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '프로젝트/배정현황', '작업설명5' ,to_date('2021-04-04','YYYY-MM-DD'), to_date('2021-04-05','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 12);
+(z_job_no_seq.nextval, 0, 'plo', '작업설명5' ,to_date('2021-04-04','YYYY-MM-DD'), to_date('2021-04-05','YYYY-MM-DD'),sysdate, sysdate, 0.2, 2, 3);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '프로젝트/리스크', '작업설명6' ,to_date('2021-04-05','YYYY-MM-DD'), to_date('2021-04-06','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 13);
+(z_job_no_seq.nextval, 5, '프로젝트/리스크', '작업설명6' ,to_date('2021-04-05','YYYY-MM-DD'), to_date('2021-04-06','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 7);
 INSERT INTO Z_JOB VALUES
-(z_job_no_seq.nextval, 1, '프로젝트/간트차트', '작업설명7' ,to_date('2021-04-07','YYYY-MM-DD'), to_date('2021-04-07','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 14);
+(z_job_no_seq.nextval, 5, '프로젝트/간트차트', '작업설명7' ,to_date('2021-04-07','YYYY-MM-DD'), to_date('2021-04-07','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 8);
+INSERT INTO Z_JOB VALUES
+(z_job_no_seq.nextval, 5, '프로젝트/기본정보', '작업설명8' ,to_date('2021-04-07','YYYY-MM-DD'), to_date('2021-04-08','YYYY-MM-DD'),sysdate, sysdate, 0.2, 1, 9);
 
 -- 조회
 SELECT * FROM Z_JOB;
@@ -285,6 +288,7 @@ SELECT z_job_no_seq.CURRVAL FROM DUAL;
 DROP TABLE Z_JOB CASCADE CONSTRAINTS;
 DROP SEQUENCE z_job_no_seq;
 
+----------------------------------------------------------------
 
 ----------------------------------------------------------------
 ----------------------------------------------------------------

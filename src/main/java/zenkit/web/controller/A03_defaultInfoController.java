@@ -2,6 +2,9 @@ package zenkit.web.controller;
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import zenkit.web.service.A03_defaultInfoService;
 import zenkit.web.vo.Department;
+import zenkit.web.vo.User;
 
 @Controller
 public class A03_defaultInfoController {
@@ -29,8 +33,12 @@ public class A03_defaultInfoController {
 	*/
 	// http://localhost:7080/zenkit/proInfo.do
 	@RequestMapping("proInfo.do")
-	public String proInfo(Model d) {
-		d.addAttribute("proInfo",service.proInfo(1));
+	public String proInfo(Model d, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+//		int a = Integer.parseInt((String) session.getAttribute("p_no"));
+		int a = (int)session.getAttribute("p_no");
+		
+		d.addAttribute("proInfo",service.proInfo(a));
 		return "a03_project\\a02_defaultInfo";
 	}
 	
@@ -55,6 +63,7 @@ public class A03_defaultInfoController {
 	public ArrayList<Department> getDepartments(){
 		return service.getDepartments();
 	}
+	
 	// http://localhost:7080/zenkit/jsonUser.do?d_no=2
 	@RequestMapping("/jsonUser.do")
 	public String jsonUser(@RequestParam("d_no") int d_no, Model d) {

@@ -29,7 +29,7 @@
         				<div class="dropdown bootstrap-select">
         					<form:select value="${sch.pro_name}" path="pro_name" class="selectpicker" data-size="7" data-style="btn btn-primary">
         						<option class="bs-title-option" value="">프로젝트를 선택하세요</option>
-        						<form:options items="${pros}"/>
+        						<form:options items="${pmPros}"/>
         					</form:select>
         				</div>
         			</div>

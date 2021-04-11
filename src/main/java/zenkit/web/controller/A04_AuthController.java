@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import zenkit.web.service.A04_AuthService;
 import zenkit.web.vo.AuthInfo;
+import zenkit.web.vo.User;
 
 @Controller
 public class A04_AuthController {
@@ -22,34 +24,39 @@ public class A04_AuthController {
 	
 	// http://localhost:7080/zenkit/authIng.do
 	@RequestMapping("authIng.do")
-	public String authIngList(@ModelAttribute("sch") AuthInfo sch, Model d) {
+	public String authIngList(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
+		System.out.println("유저번호, 이름 : " + user.getU_no() + user.getU_name());
+		sch.setRes_no(user.getU_no());
 		sch.setA_name("승인중");
-		d.addAttribute("authList", service.authList(sch));
+		d.addAttribute("authList", service.authListPm(sch));
 		
 		return "a04_auth\\authIng";
 	}
 	
 	// http://localhost:7080/zenkit/authApp.do
 	@RequestMapping("authApp.do")
-	public String authAppList(@ModelAttribute("sch") AuthInfo sch, Model d) {
+	public String authAppList(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
+		sch.setRes_no(user.getU_no());
 		sch.setA_name("승인완료");
-		d.addAttribute("authList", service.authList(sch));
+		d.addAttribute("authList", service.authListPm(sch));
 		
 		return "a04_auth\\authAppReject";
 	}
 	
 	// http://localhost:7080/zenkit/authRej.do
 	@RequestMapping("authRej.do")
-	public String authRejList(@ModelAttribute("sch") AuthInfo sch, Model d) {
+	public String authRejList(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
+		sch.setRes_no(user.getU_no());
 		sch.setA_name("반려");
-		d.addAttribute("authList", service.authList(sch));
+		d.addAttribute("authList", service.authListPm(sch));
 		
 		return "a04_auth\\authAppReject";
 	}
 	
 	// http://localhost:7080/zenkit/authReq.do
 	@GetMapping("authReq.do")
-	public String authReqList(@ModelAttribute("sch") AuthInfo sch, Model d) {
+	public String authReqList(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
+		sch.setReq_no(user.getU_no());
 		if(sch.getA_name()==null) {
 			sch.setA_name("");
 		}	
@@ -59,7 +66,8 @@ public class A04_AuthController {
 	}
 	
 	@PostMapping("authReq.do")
-	public String authReqList2(@ModelAttribute("sch") AuthInfo sch, Model d) {
+	public String authReqList2(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
+		sch.setReq_no(user.getU_no());
 		d.addAttribute("authList", service.authList(sch));
 		return "a04_auth\\authReq";
 	}
@@ -74,9 +82,14 @@ public class A04_AuthController {
 		return "pageJsonReport";
 	}
 	
+	@ModelAttribute("pmPros")
+	public ArrayList<String> getPmPros(@SessionAttribute("sesMem") User user) {
+		return service.getPmPros(user.getU_no());
+	}
+	
 	@ModelAttribute("pros")
-	public ArrayList<String> getPros() {
-		return service.getPros();
+	public ArrayList<String> getPros(@SessionAttribute("sesMem") User user) {
+		return service.getPros(user.getU_no());
 	}
 	
 	// http://localhost:7080/zenkit/retire.do?a_no=1

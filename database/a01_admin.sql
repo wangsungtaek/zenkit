@@ -27,6 +27,10 @@ SELECT * FROM Z_RESOURCE;
 SELECT * FROM z_job;
 SELECT * FROM Z_OUTPUTS;
 
+INSERT INTO Z_USER
+		VALUES(15, '210410-16', 'JcYRBvVXoA', '왕성택',
+				'tjdxorv@naver.com', NULL, NULL, NULL,
+				NULL, NULL);
 
 SELECT * FROM  Z_USER;
 SELECT u.u_id, u.u_name, d.d_name, r.r_name, p.pos_name
@@ -94,7 +98,15 @@ INSERT INTO Z_USER VALUES
 							'hwan@google.com','01055198510','img/user/19IT574_유성환.jpg',5,10,06);
 INSERT INTO Z_USER VALUES
 (14, '210410-14','sdfj12','왕성택',NULL,NULL,NULL,NULL,NULL,NULL);
-						
+			
+SELECT rownum rn, LEVEL, j_no, j_refno, d.P_NAME AS j_pname, j_name, j_content, j_startD, j_endD, j_regD, j_uptD, c.u_name j_charger, j_completeR, d.p_no, b.u_no
+  FROM z_job a, z_resource b, z_user c, Z_PROJECT d
+  WHERE d.p_no = 1 AND a.u_no = b.u_no AND b.u_no = c.u_no AND a.p_no = b.p_no AND b.p_no =d.p_no
+START WITH j_refno = 0
+CONNECT BY PRIOR j_no = j_refno
+ORDER siblings BY j_no DESC;
+
+SELECT * FROM z_user;
 SELECT *
   FROM Z_USER;
 SELECT * FROM Z_PROJECT zp ;
@@ -144,6 +156,11 @@ SELECT * FROM Z_USER;
 SELECT * FROM Z_DEPARTMENT;
 SELECT * FROM Z_POSITION;
 SELECT * FROM Z_RANK;
+SELECT * FROM Z_PROJECT;
 
 SELECT * FROM Z_USER;
 SELECT max(u_no) FROM Z_USER;
+SELECT max(p_no) p_no FROM Z_PROJECT;
+SELECT * FROM Z_RESOURCE zr ;
+SELECT * FROM Z_DEPARTMENT zd ;
+

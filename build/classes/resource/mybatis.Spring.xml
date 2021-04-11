@@ -17,6 +17,8 @@
 		<typeAlias alias="authinfo" type="zenkit.web.vo.AuthInfo"/>
 		<typeAlias alias="output" type="zenkit.web.vo.Output"/>
 		<typeAlias alias="risk" type="zenkit.web.vo.Risk"/>
+		<typeAlias alias="resourcename" type="zenkit.web.dto.ResourceName"/>
+		<typeAlias alias="jobInfo" type="zenkit.web.vo.JobInfo"/>
 	</typeAliases>
 	
 	<mappers>
@@ -31,6 +33,7 @@
 		<mapper resource="resource/A04_AuthMapper.xml"/>		
 		<mapper resource="resource/JobMapper.xml" />
 		<mapper resource="resource/A03_riskMapper.xml"/>
+		<mapper resource="resource/A02_MyTaskMapper.xml"/>
 	</mappers>
 
 </configuration>

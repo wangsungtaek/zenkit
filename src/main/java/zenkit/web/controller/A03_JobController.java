@@ -23,13 +23,6 @@ public class A03_JobController {
 	@Autowired(required = false)
 	A03_JobService service;
 
-	@ModelAttribute
-	public void p_no(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		session.setAttribute("p_no", "1");
-		session.setAttribute("u_no", "3");
-	}
-
 	@ModelAttribute("completeN")
 	public List<Double> rate() {
 		return Arrays.asList(0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0);

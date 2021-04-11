@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-
+import zenkit.web.service.A01_utilService;
 import zenkit.web.service.A03_riskService;
+import zenkit.web.vo.Position;
 import zenkit.web.vo.Risk;
 import zenkit.web.vo.User;
 
@@ -21,6 +22,9 @@ import zenkit.web.vo.User;
 
 @Controller
 public class A03_riskController {
+	
+	@Autowired(required = false)
+	private A01_utilService utilService;
 	
 	@Autowired(required = false)
 	private A03_riskService service;
@@ -56,13 +60,16 @@ public class A03_riskController {
 		   return "a00_login//a01_login";
 	   }
 	  
-	    @PostMapping(params="method=login")
+	   @PostMapping(params="method=login")
 	   public String login(User mem, HttpServletRequest request) {
 	    	System.out.println("아이디:"+mem.getU_id());
 	    	
 	    	User ckDB=service.login(mem);
 	    	if(ckDB!=null) {//해당 값이 있으면
 	    		HttpSession session=request.getSession();
+	    		Position position = utilService.getPosList().get(ckDB.getPos_no()-1);
+	    		
+	    		session.setAttribute("position", position.getPos_name());
 	    		session.setAttribute("sesMem",ckDB);
 	    		request.setAttribute("loginSucc","Y");
 	    	}else {

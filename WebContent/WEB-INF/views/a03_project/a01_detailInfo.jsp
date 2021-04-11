@@ -42,17 +42,17 @@
 							<div class="card-body">
 								<div class="row mb-2">
 									<div class="col-md-12">
-										<h4>프로젝트명</h4>
+										<h4>${proInfo.p_name}</h4>
 									</div>
 								</div>
 								<div class="row mb-4">
 									<div class="col-md-3">
 										<h5>시작일</h5>
-										<div class="btn btn-info btn-sm">2021-03-23</div>
+										<div class="btn btn-info btn-sm">${proInfo.p_startD_s}</div>
 									</div>
 									<div class="col-md-3">
 										<h5>종료일</h5>
-										<div class="btn btn-danger btn-sm">2021-04-21</div>
+										<div class="btn btn-danger btn-sm">${proInfo.p_endD_s}</div>
 									</div>
 									<div class="col-md-6">
 										<h5 class="mb-2">Progress</h5>
@@ -71,7 +71,7 @@
 								<div class="row mb-2">
 									<div class="col-md-12">
 										<h5>PM</h5>
-										<p>홍길동과장</p>
+										<p>${proInfo.p_pm}</p>
 									</div>
 								</div>
 							</div>
@@ -90,96 +90,18 @@
 										<thead>
 											<tr>
 												<th>이름</th>
-												<th>직급</th>
 												<th>직책</th>
+												<th>직급</th>
 											</tr>
 										</thead>
 										<tbody>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
+											<c:forEach var="resource" items="${resourceList}">
+												<tr>
+													<td>${resource.u_name}</td>
+													<td>${resource.pos_name}</td>
+													<td>${resource.r_name}</td>
+												</tr>												
+											</c:forEach>										
 										</tbody>
 									</table>
 								</div>
