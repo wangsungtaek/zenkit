@@ -144,7 +144,7 @@
 							<div class="modal-body">
 								
 								<div class="row">
-									<label class="col-sm-2 col-form-label">
+									<label class="col-sm-2 col-form-label text-right">
 										아이디
 									</label>
 									<div class="col-sm-9">
@@ -155,7 +155,7 @@
 									</div>
 								</div>
 								<div class="row">
-									<label class="col-sm-2 col-form-label">
+									<label class="col-sm-2 col-form-label text-right">
 										이름
 									</label>
 									<div class="col-sm-9">
@@ -168,7 +168,7 @@
 								
 								<!-- 부서 -->
 								<div class="row">
-									<label class="col-sm-2 col-form-label">
+									<label class="col-sm-2 col-form-label text-right">
 										부서
 									</label>
 									<div class="col-sm-5">
@@ -183,7 +183,7 @@
 								
 								<!-- 직책 -->
 								<div class="row">
-									<label class="col-sm-2 col-form-label">
+									<label class="col-sm-2 col-form-label text-right">
 										직책
 									</label>
 									<div class="col-sm-5">
@@ -198,7 +198,7 @@
 								
 								<!-- 직급 -->
 								<div class="row">
-									<label class="col-sm-2 col-form-label">
+									<label class="col-sm-2 col-form-label text-right">
 										직급
 									</label>
 									<div class="col-sm-5">

@@ -42,8 +42,8 @@
 			<ul class="navbar-nav ml-auto">
 				<li class="nav-item d-flex align-items-center">
 					<div>
-					 	<strong>${!empty sesMem.u_name}</strong>
-						<span id="pos">(${!empty position})</span>
+					 	<strong>${sesMem.u_name}</strong>
+						<span id="pos">(${position})</span>
 					</div>
 				</li>
 				<li class="dropdown nav-item">
@@ -68,10 +68,10 @@
 	</div>
 </nav>
 
-<%-- <script>
+<script>
 	var session = "${sesMem.u_name}";
 	if(session == "" || session == null){
 		alert("로그인 시간이 만료되었습니다. 로그인 페이지로 이동합니다.");
 		location.href="${path}/zenkit.do?method=login";
 	}
-</script> --%>
+</script>

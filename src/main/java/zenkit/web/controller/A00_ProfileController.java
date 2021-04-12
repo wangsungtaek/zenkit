@@ -11,9 +11,8 @@ import zenkit.web.vo.User;
 @Controller
 public class A00_ProfileController {
 
-	@Autowired(required=false)
-	//http://localhost:7080/zenkit/profile.do
 	
+	//http://localhost:7080/zenkit/profile.do
 	@RequestMapping("profile.do")
 	public String profile(@ModelAttribute("pro") User pro, Model d ) {
 		

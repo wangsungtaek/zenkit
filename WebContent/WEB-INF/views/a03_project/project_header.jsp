@@ -48,14 +48,7 @@
 	        				<i class="tim-icons icon-badge"></i> 배정현황
 	      			</a>
 	        		</li>
-	        		
-	        		<!-- 리스크 -->
-					<li class="nav-item mr-1">
-	          		<a class="btn ${(fileName=='/WEB-INF/views/a03_project/a06_riskList.jsp')?'btn-primary':''}"
-							href="${path}/riskList.do">
-	        				<i class="tim-icons icon-alert-circle-exc"></i> 리스크
-	      			</a>
-	      		</li>
+
 	      </ul>
 	    </div>
 	  </div>
