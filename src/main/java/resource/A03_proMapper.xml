@@ -77,6 +77,15 @@
 										WHERE r.p_no = #{p_no})
 	</select>
 	
+	<resultMap type="job" id="jobListMap"/>
+	<select id="getJobList" resultMap="jobListMap" parameterType="hashmap">
+		SELECT *
+		  FROM Z_JOB
+		 WHERE p_no = #{p_no}
+		   AND u_no = #{u_no}
+	</select>
+	
+	
 	<!-- 프로젝트 등록 -->
 	<insert id="projectReg" parameterType="project">
 		INSERT INTO Z_PROJECT

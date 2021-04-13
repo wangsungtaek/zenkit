@@ -3,7 +3,7 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 
-	<typeAliases>
+	<typeAliases>													
 		<typeAlias alias="department" type="zenkit.web.vo.Department"/>
 		<typeAlias alias="position" type="zenkit.web.vo.Position"/>
 		<typeAlias alias="rank" type="zenkit.web.vo.Rank"/>
@@ -20,10 +20,12 @@
 		<typeAlias alias="resourcename" type="zenkit.web.dto.ResourceName"/>
 		<typeAlias alias="addResource" type="zenkit.web.dto.AddResource"/>
 		<typeAlias alias="jobInfo" type="zenkit.web.vo.JobInfo"/>
+		<typeAlias alias="userInfoDetail" type="zenkit.web.vo.UserInfoDetail"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="resource/JobMapper.xml"/>
+		<mapper resource="resource/A00_loginMapper.xml"/>
 		<mapper resource="resource/A01_deptMapper.xml"/>
 		<mapper resource="resource/A01_userMapper.xml"/>
 		<mapper resource="resource/A01_utilMapper.xml"/>

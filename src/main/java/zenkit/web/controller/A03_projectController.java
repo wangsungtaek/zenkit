@@ -52,7 +52,11 @@ public class A03_projectController {
 		// 프로젝트 번호 session으로 받기
 		HttpSession session = req.getSession();
 		int p_no = (int)session.getAttribute("p_no");
+		User u_no = (User)session.getAttribute("sesMem");
 
+		
+		// 본인의 작업 리스트
+		m.addAttribute("jobList",service.getJobList(p_no, u_no.getU_no()));
 		// 프로젝트 기본정보
 		m.addAttribute("proInfo",service.getProjectInfo(p_no));
 		// 프로젝트 참여인원

@@ -19,10 +19,5 @@
  sysdate, #{r_send}, #{r_receive},#{r_rcontent},#{r_file},#{j_no},#{rs_name})
  </insert>
  
- <select id="login" resultType="user">
- select * from Z_USER
- where u_id=#{u_id} and
-       u_pass=#{u_pass}
- </select>
 
 </mapper>

@@ -74,4 +74,9 @@
 		</property>
 	</bean>
 		
+	<!-- 2. 파일 업로드 뷰 viewer -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 1024(1KB) * 1024(1KB) * 300 = 300(MB) 업로드 가능 메모리 -->
+		<property name="maxUploadSize" value="314572800"/>
+	</bean>
 </beans>

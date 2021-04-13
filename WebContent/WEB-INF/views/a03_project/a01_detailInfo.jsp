@@ -36,66 +36,129 @@
 
 					<div class="col-lg-6 col-md-6">
 						<div class="card card-tasks">
-							<div class="card-header">
+							<div class="card-header mb-4">
 								<h4 class="title">프로젝트 정보</h4>
 							</div>
 							<div class="card-body">
-								<div class="row mb-2">
-									<div class="col-md-12">
-										<h4>${proInfo.p_name}</h4>
+							
+							<!-- 프로젝트 정보 -->
+								<div class="row mb-4 text-right">
+								<label class="col-sm-2 col-form-label title">
+									진행률 :
+								</label>
+								<div class="col-md-10">
+									<div class="progress-container progress-primary pr-5 pt-3">
+										<div class="progress">
+											<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
+												<span class="progress-value text-primary" style="top: 13px; right:12px;">
+													20%
+												</span>
+			                        </div>
+			                      </div>
+			                    </div>
 									</div>
 								</div>
-								<div class="row mb-4">
-									<div class="col-md-3">
-										<h5>시작일</h5>
-										<div class="btn btn-info btn-sm">${proInfo.p_startD_s}</div>
-									</div>
-									<div class="col-md-3">
-										<h5>종료일</h5>
-										<div class="btn btn-danger btn-sm">${proInfo.p_endD_s}</div>
-									</div>
-									<div class="col-md-6">
-										<h5 class="mb-2">Progress</h5>
-										<div class="progress-container">
-											<span class="progress-badge">&nbsp</span>
-											<div class="progress">
-												<div class="progress-bar" role="progressbar"
-													aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-													style="width: 25%;">
-													<span class="progress-value">25%</span>
-												</div>
-											</div>
+							
+								<!-- 프로젝트 정보 -->
+								<div class="row mb-4 text-right">
+									<label class="col-sm-2 col-form-label title">
+										프로젝트 명 :
+									</label>
+									<div class="col-sm-10">
+										<div class="form-group pr-5">
+											<input type="text" class="form-control" disabled 
+		                        		value="${proInfo.p_name}" style="color: gray;">
 										</div>
 									</div>
 								</div>
-								<div class="row mb-2">
-									<div class="col-md-12">
-										<h5>PM</h5>
-										<p>${proInfo.p_pm}</p>
+								
+								<!-- 담당 부서 정보 -->
+								<div class="row mb-4 text-right">
+									<label class="col-sm-2 col-form-label title">
+										담당 부서 :
+									</label>
+									<div class="col-sm-10">
+										<div class="form-group pr-5">
+											<input type="text" class="form-control" disabled 
+		                        		value="${sesMem.d_name}" style="color: gray;">
+										</div>
 									</div>
 								</div>
+								
+								<!-- PM 정보 -->
+								<div class="row mb-4 text-right">
+									<label class="col-sm-2 col-form-label title">
+										PM :
+									</label>
+									<div class="col-sm-10">
+										<div class="form-group pr-5">
+											<input type="text" class="form-control" disabled 
+		                        		value="${proInfo.p_pm}" style="color: gray;">
+										</div>
+									</div>
+								</div>
+								
+								<!-- 시작일, 종료일-->
+								<div class="row mb-4">
+									<label class="col-sm-2 col-form-label text-right title">
+										시작일 :
+									</label>
+									<div class="col-sm-4">
+										<div class="form-group pr-5">
+											<h3 class="form-control text-center title	" style="color: white; background: #1D8CF7;">
+												${proInfo.p_startD_s}
+											</h3>
+										</div>
+									</div>
+									<label class="col-sm-2 col-form-label text-right title">
+										종료일 :
+									</label>
+									<div class="col-sm-4">
+										<div class="form-group pr-5">
+											<h3 class="form-control text-center title	" style="color: white; background: #FE5D93;">
+												${proInfo.p_endD_s}
+											</h3>
+										</div>
+									</div>
+								</div>
+								
 							</div>
 						</div>
 					</div>
 
 					<div class="col-lg-6 col-sm-6 text-center">
 						<div class="card card-tasks text-left">
-							<div class="card-header">
+							<div class="card-header mb-4">
 								<h4 class="title">참여인원</h4>
 							</div>
 							<div class="card-body">
 								<div class="table-full-width table-responsive"
-									style="overflow: auto; max-height: 380px;">
-									<table class="table">
+									style="overflow: auto; max-height: 350px;">
+									<table class="table text-center mr-auto ml-auto" style="width: 90%">
 										<thead>
 											<tr>
-												<th>이름</th>
-												<th>직책</th>
-												<th>직급</th>
+												<th><h4 class="p-0 m-0 text-info">이 름</h4></th>
+												<th><h4 class="p-0 m-0 text-info">직 책</h4></th>
+												<th><h4 class="p-0 m-0 text-info">직 급</h4></th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:forEach var="resource" items="${resourceList}">
+												<tr>
+													<td>${resource.u_name}</td>
+													<td>${resource.pos_name}</td>
+													<td>${resource.r_name}</td>
+												</tr>												
+												<tr>
+													<td>${resource.u_name}</td>
+													<td>${resource.pos_name}</td>
+													<td>${resource.r_name}</td>
+												</tr>												
+												<tr>
+													<td>${resource.u_name}</td>
+													<td>${resource.pos_name}</td>
+													<td>${resource.r_name}</td>
+												</tr>												
 												<tr>
 													<td>${resource.u_name}</td>
 													<td>${resource.pos_name}</td>
@@ -114,48 +177,28 @@
 				<div class="row">
 					<div class="col-md-12">
 						<div class="card">
-							<div class="card-header">
+							<div class="card-header m-10">
 								<h4 class="title">주요 작업 현황</h4>
 							</div>
-
-							<div class="card-body row p-4 m-0">
-								<div class="col-md-2 bg-warning p-3">
-									<div class="progress-container">
-										<h4>요구사항 정의</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
-											</div>
+							<div class="card-body">
+								<div class="row">
+								<c:forEach var="job" items="${jobList}">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<c:set var="input" value="${job.j_completeR * 100}"/>
+											<c:set var="color" value="${(input<30)?'#FE5D93':(input<60)?'#FF8779':'#1D8CF7'}"/>
+											<h3 class="form-control text-center title	mb-1"
+												style="color: white; background: ${color}; height: 40px; overflow: auto;">
+												${job.j_name}
+											</h3>
 										</div>
+										<h4 class="text-center title"style="color: white;">
+											${job.j_completeR * 100} %
+										</h4>
 									</div>
+								</c:forEach>
 								</div>
-								<div class="col-md-2 bg-info p-3">
-									<div class="progress-container">
-										<h4>유스케이스 설계</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="col-md-2 bg-danger p-3">
-									<div class="progress-container">
-										<h4>데이터베이스 설계</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
+							</div>	
 							<!-- End of card-body -->
 
 						</div>

@@ -1,30 +1,20 @@
 package zenkit.web.controller;
 
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import zenkit.web.service.A01_utilService;
 import zenkit.web.service.A03_riskService;
-import zenkit.web.vo.Position;
 import zenkit.web.vo.Risk;
-import zenkit.web.vo.User;
 
 
 
 @Controller
 public class A03_riskController {
-	
-	@Autowired(required = false)
-	private A01_utilService utilService;
 	
 	@Autowired(required = false)
 	private A03_riskService service;
@@ -45,7 +35,6 @@ public class A03_riskController {
 		return "a03_project//a06_riskInsert";
 	}
 
-	
 	//http://localhost:7080/zenkit/riskDetail.do
 	@RequestMapping("riskDetail.do")
 	public String riskDetail(@ModelAttribute("risk")Risk detail, Model d){
@@ -53,34 +42,4 @@ public class A03_riskController {
 		d.addAttribute("riskDetail");
 		return "a03_project//a06_riskDetail";
 	}
-	
-	 //http://localhost:7080/zenkit/zenkit.do?method=login
-	   @GetMapping(params="method=login")
-	   public String login() {
-		   return "a00_login//a01_login";
-	   }
-	  
-	   @PostMapping(params="method=login")
-	   public String login(User mem, HttpServletRequest request) {
-	    	System.out.println("아이디:"+mem.getU_id());
-	    	
-	    	User ckDB=service.login(mem);
-	    	if(ckDB!=null) {//해당 값이 있으면
-	    		HttpSession session=request.getSession();
-	    		Position position = utilService.getPosList().get(ckDB.getPos_no()-1);
-	    		
-	    		session.setAttribute("position", position.getPos_name());
-	    		session.setAttribute("sesMem",ckDB);
-	    		request.setAttribute("loginSucc","Y");
-	    	}else {
-	    		request.setAttribute("loginSucc","N");
-	    	}
-	    	return "a00_login//a01_login";
-	    }
-	    
-	    @RequestMapping(params="method=logout")
-	    public String logout(HttpServletRequest request) {
-	          request.getSession().invalidate();
-	       return "redirect:/dashboard.do?method=personalList";
-	    }
-	 }
+}

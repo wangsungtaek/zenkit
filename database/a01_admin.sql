@@ -164,3 +164,19 @@ SELECT max(p_no) p_no FROM Z_PROJECT;
 SELECT * FROM Z_RESOURCE zr ;
 SELECT * FROM Z_DEPARTMENT zd ;
 
+SELECT u.*, d.d_name, pos.pos_name, r.r_name
+  FROM Z_USER u, Z_DEPARTMENT d, Z_POSITION pos, Z_RANK r
+ WHERE u.d_no = d.d_no
+ 	AND u.pos_no = pos.pos_no
+   AND u.r_no = r.r_no
+   AND u.u_id = '02MA064'
+   AND u.u_pass = 'kangny56';
+   
+UPDATE Z_USER
+   SET u_email = 'neeyonee@google.com',
+		 u_phone = '010-1234-5678',
+		 u_img = 'aaa'
+ WHERE u_id = '02MA064';
+ 
+ SELECT * FROM Z_USER;
+

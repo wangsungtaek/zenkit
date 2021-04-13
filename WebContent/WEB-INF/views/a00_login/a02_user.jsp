@@ -6,8 +6,7 @@
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="kor">
 <head>
 <%@ include file="../a01_main/bootstrapTop.jsp"%>
 </head>
@@ -21,24 +20,33 @@
 			
 			<div class="content">
 				<div class="row">
-					<div class="col-md-7">
+					<div class="col-md-5">
 						<div class="card card-user">
+						
+							<form method="post" enctype="multipart/form-data" id="profileForm">
+							<input type="hidden" value="${sesMem.u_id}" name="u_id"/>
+							<input type="hidden" value="${sesMem.u_img}" name="currImg"/>
 							<div class="card-body">
+							
+								<!-- 유저이름 -->
 								<p class="card-text">
 									<div class="author">
 										<div class="block block-one"></div>
 										<div class="block block-two"></div>
 										<div class="block block-three"></div>
 										<div class="block block-four"></div>
-										<a href="javascript:void(0)"> <img class="avatar"
-											src="${path}/assets/img/mike.jpg" alt="...">
-											<h3 class="title">${sesMem.u_name} <span id="r_no"></span></h3>
-										</a>
-										<h4 class="title" id="d_name"></h4>
+										<img class="avatar" src="${path}/${sesMem.u_img}" alt="..."
+											onerror="this.src='${path}/z04_img/defailtProfile.png'">
+										<h3 class="title mb-2">
+											${sesMem.u_name} ${sesMem.r_name}
+										</h3>
+										<h4 class="title">${sesMem.d_name}</h4>
 									</div>
 								</p>
+								
+								<!-- 사원번호 -->
 								<div class="row justify-content-center">
-									<label class="col-sm-3 col-form-label text-right title">
+									<label class="col-sm-2 col-form-label text-right title">
 										사원번호
 									</label>
 									<div class="col-sm-8">
@@ -48,127 +56,109 @@
 										</div>
 									</div>
 								</div>
+								
+								<!-- 직책 -->
 								<div class="row justify-content-center">
-									<label class="col-sm-3 col-form-label text-right title">
+									<label class="col-sm-2 col-form-label text-right title">
 										직책
 									</label>
 									<div class="col-sm-8">
 										<div class="form-group">
-											<input type="text" class="form-control" disabled 
-		                        		value="${sesMem.pos_no}" style="color: gray;">
+											<input type="text" class="form-control" disabled
+		                        		value="${sesMem.pos_name}" style="color: gray;">
 										</div>
 									</div>
 								</div>
+								
+								<!-- 이메일 -->
 								<div class="row justify-content-center">
-									<label class="col-sm-3 col-form-label text-right title">
-										직급
-									</label>
-									<div class="col-sm-8">
-										<div class="form-group">
-											<input type="text" class="form-control" disabled 
-		                        		value="${sesMem.r_no}" style="color: gray;">
-										</div>
-									</div>
-								</div>
-								<div class="row justify-content-center">
-									<label class="col-sm-3 col-form-label text-right title">
+									<label class="col-sm-2 col-form-label text-right title">
 										이메일
 									</label>
 									<div class="col-sm-8">
 										<div class="form-group">
-											<input type="email" class="form-control" 
-		                        		value="${sesMem.u_email}">
+											<input type="email" class="form-control" name="u_email"
+		                        		value="${sesMem.u_email}" placeholder="exam@gmail.com">
 										</div>
 									</div>
 								</div>
+								
+								<!-- 핸드폰 -->
 								<div class="row justify-content-center">
-									<label class="col-sm-3 col-form-label text-right title">
-										기존 비밀번호
+									<label class="col-sm-2 col-form-label text-right title">
+										핸드폰
 									</label>
 									<div class="col-sm-8">
 										<div class="form-group">
-											<input type="password" class="form-control" 
-		                        		value="" style="color: gray;">
+											<input type="text" class="form-control" name="u_phone"
+		                        		value="${sesMem.u_phone}">
 										</div>
 									</div>
 								</div>
-								<form id="RegisterValidation">
+								
+								<!-- 프로필 이미지 -->
 								<div class="row justify-content-center">
-									<label class="col-sm-3 col-form-label text-right title">
-										새 비밀번호
+									<label class="col-sm-2 col-form-label text-right title">
+										프로필 변경
 									</label>
 									<div class="col-sm-8">
-										<div class="form-group">
-											<input type="password" class="form-control"  id="registerPassword" required>
+										<div class="form-control" style="overflow: hidden;">
+											<input type="file" id="profileFile" accept="image/png, image/jpeg"
+												name="u_img" placeholder="jpg, png">
 										</div>
 									</div>
 								</div>
-								<div class="row justify-content-center">
-									<label class="col-sm-3 col-form-label text-right title">
-										새 비밀번호 확인
-									</label>
-									<div class="col-sm-8">
-										<div class="form-group">
-											<input type="password" class="form-control"  id="registerPasswordConfirmation" equalto="#registerPassword" required>
-										</div>
-									</div>
-								</div>
-								</form>
-								<div class="row justify-content-end mr-3 mt-1">
-									<button type="submit" class="btn btn-fill btn-primary">
+								
+							</div>
+							<!-- end of card-body -->
+							</form>
+							
+							<div class="card-footer">
+								<div class="row justify-content-end mr-5 mb-2">
+									<button class="btn btn-fill btn-primary" id="modifyBtn">
 										수 정
 									</button>
 								</div>
 							</div>
+							
 						</div>
+						<!-- end of card-user -->
 					</div>
+					<!-- end of col -->
 				</div>
+				<!-- end of row -->
 			</div>
-
+			<!-- end of content -->
 		</div>
+		<!-- end of main panel -->
 	</div>
-	<script src="${path}/assets/js/core/jquery.min.js"></script>
-	<script>
-		$.ajax({
-			type:"post",
-			url:"${path}/user.do?method=model",
-			dataType:"json",
-			success:function(data){
-				console.log(data);
-				var deptList = data.deptList;
-				var posList = data.posList;
-				var rankList = data.rankList;
-				
-				$("#d_name").text(deptList["${sesMem.d_no}"-1].d_name);
-				$("#r_no").text(rankList["${sesMem.r_no}"-1].r_name);
-				console.log(posList["${sesMem.pos_no}"-1]);
-			},
-			error:function(err){
-				console.log(err);
-			}
-		});
-	</script>
+	<!-- end of wrapper -->
+	
 	<%@ include file="../a01_main/plugin.jsp"%>
 	<%@ include file="../a01_main/bootstrapBottom.jsp"%>
+	<script>
+		$('#modifyBtn').on("click",function(){
+			const swalWithBootstrapButtons = Swal.mixin({
+				customClass: {
+					confirmButton: 'btn btn-success',
+					cancelButton: 'btn btn-danger'
+				},
+				buttonsStyling: false
+				})
+		      swalWithBootstrapButtons.fire({
+					title: '정말 수정하시겠습니까?',
+		       	text: "프로필 이미지 변경은 약간의 시간을 소요합니다.",
+		       	type: 'warning',
+		       	showCancelButton: true,
+		       	confirmButtonText: '수정',
+					cancelButtonText: '취소',
+					reverseButtons: true
+		      }).then((result) => {
+				if (result.value) {
+					$('#profileForm').submit();       
+				} 
+	      })
+		});
+	</script>
 </body>
-<script>
-function setFormValidation(id) {
-    $(id).validate({
-      highlight: function(element) {
-        $(element).closest('.form-group').removeClass('has-success').addClass('has-danger');
-        $(element).closest('.form-check').removeClass('has-success').addClass('has-danger');
-      },
-      success: function(element) {
-        $(element).closest('.form-group').removeClass('has-danger').addClass('has-success');
-        $(element).closest('.form-check').removeClass('has-danger').addClass('has-success');
-      },
-      errorPlacement: function(error, element) {
-        $(element).closest('.form-group').append(error);
-      },
-    });
-  }
-    $(document).ready(function() {
-      setFormValidation('#RegisterValidation');
-    });
-    </script>
 </html>

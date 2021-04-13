@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import zenkit.web.dao.A03_riskDao;
 import zenkit.web.vo.Risk;
-import zenkit.web.vo.User;
 
 @Service
 public class A03_riskService {
@@ -23,8 +22,5 @@ public void insertRisk(Risk insert) {
 }
 public void detailRisk(Risk detail) {
 	dao.detailRisk(detail);
-}
-public User login(User mem) {
-	return dao.login(mem);
 }
 }

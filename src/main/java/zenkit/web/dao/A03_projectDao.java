@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import zenkit.web.dto.AddResource;
 import zenkit.web.dto.ResourceName;
+import zenkit.web.vo.Job;
 import zenkit.web.vo.Project;
 
 @Repository
@@ -21,4 +22,5 @@ public interface A03_projectDao {
 	public ArrayList<ResourceName> getDeptResource(HashMap<String, Integer> member);
 	public void addUser(AddResource adduser);
 	public void delUser(AddResource deluser);
+	public ArrayList<Job> getJobList(HashMap<String, Integer> userPro); // 회원이 담당하는 프로젝트의 작업 건
 }

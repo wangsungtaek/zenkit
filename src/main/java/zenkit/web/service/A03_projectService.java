@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import zenkit.web.dao.A03_projectDao;
 import zenkit.web.dto.ResourceName;
 import zenkit.web.dto.AddResource;
+import zenkit.web.vo.Job;
 import zenkit.web.vo.Project;
 
 @Service
@@ -94,6 +95,17 @@ public class A03_projectService {
 		hm.put("p_no", p_no);
 		
 		return dao.getDeptResource(hm);
+	}
+	
+	// 회원의 해당프로젝트의 작업 건 가져오기
+	public ArrayList<Job> getJobList(int p_no, int u_no){
+		
+		HashMap<String, Integer> hm = new HashMap<String, Integer>();
+		
+		hm.put("p_no", p_no);
+		hm.put("u_no", u_no);
+		
+		return dao.getJobList(hm);
 	}
 	
 }

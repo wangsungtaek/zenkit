@@ -43,13 +43,14 @@
 				<li class="nav-item d-flex align-items-center">
 					<div>
 					 	<strong>${sesMem.u_name}</strong>
-						<span id="pos">(${position})</span>
+						<span id="pos">(${sesMem.pos_name})</span>
 					</div>
 				</li>
 				<li class="dropdown nav-item">
 					<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
 						<div class="photo">
-							<img src="${path}/assets/img/mike.jpg" alt="Profile Photo">
+							<img src="${path}/${sesMem.u_img}" alt="Profile Photo"
+								onerror="this.src='${path}/z04_img/defailtProfile.png'">
 						</div>
 						<b class="caret d-none d-lg-block d-xl-block"></b>
 						<p class="d-lg-none">Log out</p>
