@@ -15,7 +15,7 @@
 			        </li>
 			        <li class="nav-item mr-1">
 			          <a class="btn ${(fileName=='/mytask.do?method=outputs')?'btn-primary':''}" 
-			          	href="${path}/mytask.do?method=outputs">
+			          	href="${path}/output.do?method=outputs">
 			        		<i class="tim-icons icon-attach-87"></i> 산출물
 			      		</a>
 			        </li>		

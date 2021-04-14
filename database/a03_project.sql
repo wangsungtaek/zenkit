@@ -119,6 +119,7 @@ INSERT INTO Z_RESOURCE
 VALUES (16, 6);
 SELECT * FROM Z_AUTH;
 
+SELECT * FROM Z_JOB;
 SELECT * FROM Z_USER zu ;
 SELECT * FROM Z_RESOURCE zr ;
 INSERT INTO Z_JOB VALUES
@@ -187,3 +188,92 @@ SELECT * FROM Z_USER zu ;
 SELECT u_no
   FROM Z_USER
  WHERE u_name = '정택진';
+ 
+SELECT * FROM z_user;
+SELECT * FROM z_jo	b;
+
+-- 회원이 담당하는 프로젝트의 작업 건
+SELECT *
+  FROM Z_JOB
+ WHERE p_no = 1
+   AND u_no = 2;
+
+SELECT c1.cnt1, c2.cnt2, c3.cnt3
+  FROM (
+  	SELECT count(*) cnt1
+	  FROM Z_JOB
+ 	 WHERE p_no = 1
+		AND j_completer = 0
+  ) c1, (
+ 	SELECT count(*) cnt2
+ 	  FROM Z_JOB
+	 WHERE p_no = 1
+		AND j_completer > 0 
+		AND j_completer < 1  
+  ) c2, (
+	SELECT count(*) cnt3
+	  FROM Z_JOB
+	 WHERE p_no = 1
+	   AND j_completer = 1
+  ) c3;
+
+ SELECT * FROM Z_JOB
+ WHERE p_no = 1;
+SELECT * FROM Z_RISK_STATE zrs ;
+
+-- 프로젝트 리스크 카운트
+SELECT c1.cnt1, c2.cnt2, c3.cnt3
+  FROM (
+	SELECT count(*) cnt1
+	  FROM Z_RISK r
+	 WHERE j_no IN (
+		SELECT j_no FROM Z_JOB WHERE p_no = 1
+	 ) AND rs_name = '오픈'
+	)c1 ,(
+	SELECT count(*) cnt2
+	  FROM Z_RISK r
+	 WHERE j_no IN (
+		SELECT j_no FROM Z_JOB WHERE p_no = 1
+	 ) AND rs_name = '진행'
+	)c2 ,(
+	SELECT count(*) cnt3
+	  FROM Z_RISK r
+	 WHERE j_no IN (
+		SELECT j_no FROM Z_JOB WHERE p_no = 1
+	 ) AND rs_name = '조치완료'
+	)c3;
+
+
+SELECT *
+  FROM Z_RISK r
+ WHERE j_no IN (
+	SELECT j_no
+ 	  FROM Z_JOB
+ 	 WHERE p_no = 1
+ );
+
+
+SELECT *
+ 	  FROM Z_JOB
+ 	 WHERE p_no = 1 ;
+ 	
+SELECT * FROM Z_RISK zr ;
+SELECT * FROM Z_USER zu ;
+   
+ SELECT * FROM Z_JOB
+ WHERE p_no = 27;
+ 
+SELECT u_name
+  FROM Z_PROJECT p, Z_USER u
+ WHERE p.p_pm = u.u_id
+   AND p_no = 26;
+   
+ SELECT * FROM Z_Project;
+SELECT * FROM Z_RESOURCE zr ;
+ SELECT * FROM Z_USER zu ;
+SELECT * FROM z_job;
+
+SELECT *
+  FROM Z_JOB
+ WHERE p_no = 1
+   AND u_no = 4;

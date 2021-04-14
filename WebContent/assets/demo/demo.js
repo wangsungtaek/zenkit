@@ -415,7 +415,6 @@ demo = {
 
     var ctx = document.getElementById("PieChartGradient").getContext("2d");
 
-
     var myChart = new Chart(ctx, {
       type: 'pie',
       data: {

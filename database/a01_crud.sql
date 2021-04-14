@@ -416,8 +416,8 @@ CREATE SEQUENCE Z_OUTPUTS_NO_SEQ
 -- 데이터
 INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '요구사항정의서 완료 사진', '/z01_upload/img/1.png', '작업 완료했습니다.', 1);
 INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '완료', '/z01_upload/img/2.png', '작업 완료했습니다.', 2);
-INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '사진', '/z01_upload/img/3.png', '작업 완료했습니다.', 3);
-INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '사진', '/z01_upload/img/3.png', '작업 완료했습니다.', 21);
+INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '사진', '/z01_upload/img/3.png', '작업 완료했습니다.', 4);
+INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '사진', '/z01_upload/img/3.png', '작업 완료했습니다.', 5);
 
 -- 조회
 SELECT * FROM Z_OUTPUTS;

@@ -21,6 +21,10 @@
 		<typeAlias alias="addResource" type="zenkit.web.dto.AddResource"/>
 		<typeAlias alias="jobInfo" type="zenkit.web.vo.JobInfo"/>
 		<typeAlias alias="userInfoDetail" type="zenkit.web.vo.UserInfoDetail"/>
+		<typeAlias alias="jobStateCnt" type="zenkit.web.dto.JobStateCnt"/>
+		<typeAlias alias="riskStateCnt" type="zenkit.web.dto.RiskStateCnt"/>
+		<typeAlias alias="upOutput" type="zenkit.web.dto.UpOutput"/>
+		<typeAlias alias="outputSch" type="zenkit.web.dto.OutputSch"/>
 	</typeAliases>
 	
 	<mappers>
@@ -37,6 +41,7 @@
 		<mapper resource="resource/JobMapper.xml" />
 		<mapper resource="resource/A03_riskMapper.xml"/>
 		<mapper resource="resource/A02_MyTaskMapper.xml"/>
+		<mapper resource="resource/A02_OutputMapper.xml"/>
 	</mappers>
 
 </configuration>

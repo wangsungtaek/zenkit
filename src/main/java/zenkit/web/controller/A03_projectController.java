@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import zenkit.web.dto.AddResource;
 import zenkit.web.dto.ResourceName;
+import zenkit.web.service.A03_JobService;
 import zenkit.web.service.A03_projectService;
+import zenkit.web.vo.Job;
 import zenkit.web.vo.Project;
 import zenkit.web.vo.User;
 
@@ -27,7 +29,10 @@ import zenkit.web.vo.User;
 public class A03_projectController {
 	
 	@Autowired
-	A03_projectService service;
+	private A03_projectService service;
+	
+	@Autowired
+	private A03_JobService jobService;
 	
 	// http://localhost:7080/zenkit/project.do?method=form
 	@GetMapping(params = "method=form")
@@ -59,9 +64,14 @@ public class A03_projectController {
 		m.addAttribute("jobList",service.getJobList(p_no, u_no.getU_no()));
 		// 프로젝트 기본정보
 		m.addAttribute("proInfo",service.getProjectInfo(p_no));
+		// 프로젝트 PM
+		m.addAttribute("pm",service.getPM(p_no));
 		// 프로젝트 참여인원
 		m.addAttribute("resourceList",service.getProjectResource(p_no));
-
+		// 프로젝트 작업 상태 가져오기(카운트 값)
+		m.addAttribute("jobStatuCnt",service.getJobState(p_no));
+		// 프로젝트 리스크 상태 가져오기(카운트 값)
+		m.addAttribute("riskStatuCnt",service.getRiskState(p_no));
 		
 		return "/a03_project/a01_detailInfo";
 	}
@@ -143,4 +153,25 @@ public class A03_projectController {
 		d.addAttribute("projectList", service.getProList(userNo));
 		return "pageJsonReport";
 	}
+	
+	// http://localhost:7080/zenkit/project.do?method=jobdata
+	@RequestMapping(params = "method=jobdata")
+	public String getjobData(HttpServletRequest request, Model m) {
+		HttpSession session = request.getSession();
+		int p_no = (int)session.getAttribute("p_no");
+		User user = (User)session.getAttribute("sesMem");
+		System.out.println(p_no);
+		
+		m.addAttribute("userJob", service.getJobListJson(p_no, user.getU_no()));
+		m.addAttribute("totProgress", service.getTotProgress(p_no));
+		return "pageJsonReport";
+	}
+	// http://localhost:7080/zenkit/project.do?method=userJob
+	@RequestMapping(params = "method=userJob")
+	public String getUserJob(@RequestParam("p_no") int p_no, Model m) {
+		
+		m.addAttribute("jobList", jobService.jobList2(p_no));
+		return "pageJsonReport";
+	}
+	
 }

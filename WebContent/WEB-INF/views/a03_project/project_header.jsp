@@ -28,7 +28,7 @@
 					<li class="nav-item mr-1">
 						<a class="btn ${(fileName=='/WEB-INF/views/a03_project/a03_resource.jsp')?'btn-primary':''}"
 							href="${path}/project.do?method=detail_3">
-		        			<i class="tim-icons icon-single-02"></i> 리소스
+		        			<i class="tim-icons icon-single-02"></i> 인원관리
 						</a>
 					</li>
 					</c:if>

@@ -49,9 +49,10 @@
 								<div class="col-md-10">
 									<div class="progress-container progress-primary pr-5 pt-3">
 										<div class="progress">
-											<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;">
-												<span class="progress-value text-primary" style="top: 13px; right:12px;">
-													20%
+											<div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"
+												id ="totProgressBar" style="width: 0%;">
+												<span class="progress-value text-primary" style="top: 13px; right:12px;" id="totProgress">
+													0%
 												</span>
 			                        </div>
 			                      </div>
@@ -93,7 +94,7 @@
 									<div class="col-sm-10">
 										<div class="form-group pr-5">
 											<input type="text" class="form-control" disabled 
-		                        		value="${proInfo.p_pm}" style="color: gray;">
+		                        		value="${pm}" style="color: gray;">
 										</div>
 									</div>
 								</div>
@@ -149,21 +150,6 @@
 													<td>${resource.pos_name}</td>
 													<td>${resource.r_name}</td>
 												</tr>												
-												<tr>
-													<td>${resource.u_name}</td>
-													<td>${resource.pos_name}</td>
-													<td>${resource.r_name}</td>
-												</tr>												
-												<tr>
-													<td>${resource.u_name}</td>
-													<td>${resource.pos_name}</td>
-													<td>${resource.r_name}</td>
-												</tr>												
-												<tr>
-													<td>${resource.u_name}</td>
-													<td>${resource.pos_name}</td>
-													<td>${resource.r_name}</td>
-												</tr>												
 											</c:forEach>										
 										</tbody>
 									</table>
@@ -175,10 +161,83 @@
 				<!-- End of row -->
 
 				<div class="row">
+				
+					<!-- 작업 진행 상태 -->
+					<div class="col-md-6">
+						<div class="card card-chart card-chart-pie">
+							<div class="card-header">
+								<h4 class="title">작업 진행 상태</h4>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-6">
+										<div class="chart-area">
+											<canvas id="jobChart"></canvas>
+										</div>
+									</div>
+									<div class="col-6">
+										<h4 class="card-title">
+											<i class="tim-icons  icon-tag text-danger "></i>
+											<span class="title text-danger">시작전 - ${jobStatuCnt.cnt1} 건</span>
+										</h4>
+										<h4 class="card-title">
+											<i class="tim-icons  icon-tag text-warning "></i>
+											<span class="title text-warning">진행중 - ${jobStatuCnt.cnt2} 건</span>
+										</h4>
+										<h4 class="card-title">
+											<i class="tim-icons  icon-tag text-info "></i>
+											<span class="title text-info">완료 - ${jobStatuCnt.cnt3} 건</span>
+										</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<!-- 리크스 현황 -->
+					<div class="col-md-6">
+						<div class="card card-chart card-chart-pie">
+							<div class="card-header">
+								<h4 class="title">리스크 현황</h4>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-6">
+										<div class="chart-area">
+											<canvas id="riskChart"></canvas>
+										</div>
+									</div>
+									<div class="col-6">
+										<h4 class="card-title">
+											<i class="tim-icons  icon-tag text-danger "></i>
+											<span class="title text-danger">오픈 - ${riskStatuCnt.cnt1} 건</span>
+										</h4>
+										<h4 class="card-title">
+											<i class="tim-icons  icon-tag text-warning "></i>
+											<span class="title text-warning">진행 - ${riskStatuCnt.cnt2} 건</span>
+										</h4>
+										<h4 class="card-title">
+											<i class="tim-icons  icon-tag text-info "></i>
+											<span class="title text-info">조치완료 - ${riskStatuCnt.cnt3} 건</span>
+										</h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+				<!-- End of row -->
+				
+				<c:if test="${sesMem.pos_no == 4}">
+				<div class="row">
 					<div class="col-md-12">
 						<div class="card">
-							<div class="card-header m-10">
-								<h4 class="title">주요 작업 현황</h4>
+							<div class="card-header mb-4" style="align-items: center;">
+								<h4 class="title mr-3" style="display: inline;">내 주요 작업 현황</h4>
+								<span class="badge badge-danger">진행 전</span>
+								<span class="badge badge-warning">진행 중</span>
+								<span class="badge badge-info">진행완료</span>
 							</div>
 							<div class="card-body">
 								<div class="row">
@@ -186,7 +245,7 @@
 									<div class="col-sm-2">
 										<div class="form-group">
 											<c:set var="input" value="${job.j_completeR * 100}"/>
-											<c:set var="color" value="${(input<30)?'#FE5D93':(input<60)?'#FF8779':'#1D8CF7'}"/>
+											<c:set var="color" value="${(input==0)?'#FE5D93':(input==100)?'#0175FA':'#FF8D72'}"/>
 											<h3 class="form-control text-center title	mb-1"
 												style="color: white; background: ${color}; height: 40px; overflow: auto;">
 												${job.j_name}
@@ -204,83 +263,25 @@
 						</div>
 					</div>
 				</div>
+				</c:if>
 				<!-- End of row -->
 
+				<c:if test="${sesMem.pos_no == 4}">
 				<div class="row">
-					<div class="col-md-6">
-						<div class="card card-chart card-chart-pie">
-							<div class="card-header">
-								<h4 class="title">프로젝트 태스크 진행상태</h4>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-6">
-										<div class="chart-area">
-											<canvas id="PieChartGradient"></canvas>
-										</div>
-									</div>
-									<div class="col-6">
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 시작전 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 진행중 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 완료 - 5 건
-										</h4>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-					<div class="col-md-6">
-						<div class="card card-chart card-chart-pie">
-							<div class="card-header">
-								<h4 class="title">프로젝트 태스크 진행상태</h4>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-6">
-										<div class="chart-area">
-											<canvas id="PieChartGradient2"></canvas>
-										</div>
-									</div>
-									<div class="col-6">
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 시작전 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 진행중 - 5 건
-										</h4>
-										<h4 class="card-title">
-											<i class="tim-icons  icon-tag text-warning "></i> 완료 - 5 건
-										</h4>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-
-				</div>
-				<!-- End of row -->
-
-				<div class="row">
-				
 					<div class="col-md-12">
 						<div class="card">
 							<div class="card-header">
-								<h4 class="title">담당영역</h4>
+								<h4 class="title">내 담당 영역</h4>
 							</div>
 							<div class="card-body p-4">
 								<div id="gantt_here" style="width:100%; height:500px;"></div>
 							</div>
 						</div>
 					</div>
-					
 				</div>
+				</c:if>
 				<!-- End of row -->
+				
 				
 			</div>
 			<!-- End Content -->
@@ -290,23 +291,157 @@
 	<%@ include file="../a01_main/bootstrapBottom.jsp"%>
 	
 	<script>
-	$(document).ready(function() {
-	      // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
-	    	demo.initChartPageCharts();
-	    });
 		
-		gantt.init("gantt_here");
+		var pos = "${sesMem.pos_no}";
 		
-		gantt.parse({
-			data: [
-				{ id: 1, text: "요구사항 정의", start_date: "01-04-2021", duration: 18, progress: 0.4, open: true },
-				{ id: 2, text: "화면설계", start_date: "02-04-2021", duration: 8, progress: 0.6, parent: 1 },
-				{ id: 3, text: "화면구현", start_date: "11-04-2021", duration: 8, progress: 0.6, parent: 1 }
-			],
-			links: [
-				{id: 1, source: 1, target: 2, type: "1"},
-				{id: 2, source: 2, target: 3, type: "0"}
-			]
+		if(pos == 4){
+			gantt.init("gantt_here");
+		}
+		
+			$.ajax({
+				type:"post",
+				url:"${path}/project.do?method=jobdata",
+				dataType:"json",
+				success:function(data){
+					var totProgress = data.totProgress;
+					var data = data.userJob;
+					console.log(data);
+					
+					if(totProgress == "NaN")
+						totProgress = 0;
+					$('#totProgress').text(Math.round(totProgress)+"%");
+					$('#totProgressBar').css("width",totProgress+"%");
+					if(pos == 4){
+						gantt.parse({
+							data
+						});
+					}
+				},
+				error:function(err){
+					console.log(err);
+				}
+			})			
+		if(pos == 4){	
+			$('.gantt_add').css("display", "none");
+			$('.gantt_grid_head_add').css("display", "none");
+		}
+		// 작업 차트
+		var ctx = document.getElementById("jobChart").getContext("2d");
+
+		var myChart = new Chart(ctx, {
+			type: 'pie',
+			data: {
+				labels: [1, 2, 3],
+				datasets: [{
+					label: "Emails",
+					pointRadius: 0,
+					pointHoverRadius: 0,
+					backgroundColor: ['#FE5D93', '#FF8D72', '#0175FA'],
+					borderWidth: 0,
+					data: ['${jobStatuCnt.cnt1}', '${jobStatuCnt.cnt2}', '${jobStatuCnt.cnt3}']
+				}]
+			},
+			options: {
+				cutoutPercentage: 70,
+				legend: {
+				display: false
+			},
+			tooltips: {
+				backgroundColor: '#f5f5f5',
+				titleFontColor: '#333',
+				bodyFontColor: '#666',
+				bodySpacing: 4,
+				xPadding: 12,
+				mode: "nearest",
+				intersect: 0,
+				position: "nearest"
+			},
+			scales: {
+				yAxes: [{
+					display: 0,
+					ticks: {
+						display: false
+	            },
+	            gridLines: {
+						drawBorder: false,
+						zeroLineColor: "transparent",
+						color: 'rgba(255,255,255,0.05)'
+	            }
+				}],
+
+				xAxes: [{
+					display: 0,
+	            barPercentage: 1.6,
+	            gridLines: {
+						drawBorder: false,
+						color: 'rgba(255,255,255,0.1)',
+						zeroLineColor: "transparent"
+	            },
+	            ticks: {
+						display: false,
+	            }
+				}]
+			},
+	      }
+		});
+		// 리스크 차트
+		var ctx = document.getElementById("riskChart").getContext("2d");
+
+		var myChart = new Chart(ctx, {
+			type: 'pie',
+			data: {
+				labels: [1, 2, 3],
+				datasets: [{
+					label: "Emails",
+					pointRadius: 0,
+					pointHoverRadius: 0,
+					backgroundColor: ['#FE5D93', '#FF8D72', '#0175FA'],
+					borderWidth: 0,
+					data: ['${riskStatuCnt.cnt1}', '${riskStatuCnt.cnt2}', '${riskStatuCnt.cnt3}']
+				}]
+			},
+			options: {
+				cutoutPercentage: 70,
+				legend: {
+				display: false
+			},
+			tooltips: {
+				backgroundColor: '#f5f5f5',
+				titleFontColor: '#333',
+				bodyFontColor: '#666',
+				bodySpacing: 4,
+				xPadding: 12,
+				mode: "nearest",
+				intersect: 0,
+				position: "nearest"
+			},
+			scales: {
+				yAxes: [{
+					display: 0,
+					ticks: {
+						display: false
+	            },
+	            gridLines: {
+						drawBorder: false,
+						zeroLineColor: "transparent",
+						color: 'rgba(255,255,255,0.05)'
+	            }
+				}],
+
+				xAxes: [{
+					display: 0,
+	            barPercentage: 1.6,
+	            gridLines: {
+						drawBorder: false,
+						color: 'rgba(255,255,255,0.1)',
+						zeroLineColor: "transparent"
+	            },
+	            ticks: {
+						display: false,
+	            }
+				}]
+			},
+	      }
 		});
   </script>
 </body>
