@@ -1,6 +1,6 @@
 package zenkit.web.dto;
 
-public class OutputSch {
+public class OutputSch{
 	private int p_no;
 	private int u_no;
 	private int j_no;

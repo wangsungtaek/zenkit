@@ -34,8 +34,18 @@ SELECT p.p_no, p.p_name, j.j_name, o.*
 ORDER BY o_no DESC;
 
 
+ROUND(MOD((trunc(sysdate-P_STARTD))/(trunc(zp.P_ENDD-zp.P_STARTD)),1)*100,0) percent
 
-
-SELECT * FROM Z_JOB WHERE u_no = 3;
+SELECT * FROM Z_JOB WHERE u_no = 4;
 SELECT * FROM Z_USER zu ;
 SELECT * FROM Z_PROJECT zp ;
+SELECT * FROM Z_OUTPUTS zo ;
+
+SELECT * FROM Z_RISK;
+SELECT * FROM Z_OUTPUTS zo ;
+
+INSERT INTO Z_OUTPUTS
+VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '1111', '', '', 6);
+
+SELECT max(o_no) AS o_no
+  FROM Z_OUTPUTS;

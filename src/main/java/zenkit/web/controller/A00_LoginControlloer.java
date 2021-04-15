@@ -2,18 +2,24 @@ package zenkit.web.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Locale;
 
+import javax.mail.MessagingException;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.LocaleResolver;
 
 import zenkit.web.service.A00_loginService;
 import zenkit.web.vo.User;
@@ -28,8 +34,13 @@ public class A00_LoginControlloer {
 	@Autowired(required = false)
 	private ServletContext ctx;
 
+	// 업로드 경로
 	@Value("${upload}")
 	String uploadPath;
+	
+	// 다국어 처리
+	@Autowired(required = false)
+	private LocaleResolver localResovler;
 	
 	// http://localhost:7080/zenkit/zenkit.do?method=login
 	@GetMapping(params = "method=login")
@@ -96,7 +107,7 @@ public class A00_LoginControlloer {
 			
 			File realSavePath = new File(upPath); // 물리적 경로
 			
-			// 업로드하기 위한 경로가 없을 경우 생성
+			// 업로드하기 위한 경로가 없을 경우 디렉토리 생성
 			if(!realSavePath.exists())
 				realSavePath.mkdirs();
 			
@@ -119,4 +130,49 @@ public class A00_LoginControlloer {
 		service.updateUserInfo(mem);
 		return "redirect:/profile.do";
 	}
+	
+	// 다국어 처리
+	@RequestMapping("choiceLan.do")
+	public String choiceLan(@RequestParam("lang") String lang,
+				HttpServletRequest request,
+				HttpServletResponse response) {
+		System.out.println("선택한 언어:"+lang);
+		Locale locale = new Locale(lang);
+		localResovler.setLocale(request, response, locale);
+		
+		return "a00_login//a01_login";
+	}
+	// 다국어 처리
+	@RequestMapping("choiceLan1.do")
+	public String choiceLan1(@RequestParam("lang") String lang,
+			HttpServletRequest request,
+			HttpServletResponse response) {
+		System.out.println("선택한 언어:"+lang);
+		Locale locale = new Locale(lang);
+		localResovler.setLocale(request, response, locale);
+		
+		return "a00_login//a01_findPwd";
+	}
+	
+	// 비밀번호 찾기
+	@GetMapping("findPwd.do")
+	public String findPwdForm() {
+		return "a00_login/a01_findPwd";
+	}
+	
+	// 유저 찾기
+	@PostMapping("findPwd.do")
+	public String findPwd(User user, Model m) throws MessagingException {
+		User userInfo = service.getUserInfo(user);
+		if(userInfo == null) {
+			m.addAttribute("userInfo", "N");
+		} else {
+			service.sendMail(userInfo);
+			m.addAttribute("userInfo", "Y");
+		}
+		return "a00_login/a01_findPwd";
+	}
+	
+	
+	
 }

@@ -7,6 +7,7 @@ public class UpOutput extends Output{
 	private String p_name;
 	
 	private String j_name;
+	private String f_name;
 	
 	public int getP_no() {
 		return p_no;
@@ -26,4 +27,12 @@ public class UpOutput extends Output{
 	public void setJ_name(String j_name) {
 		this.j_name = j_name;
 	}
+	public String getF_name() {
+		return f_name;
+	}
+	public void setF_name(String f_name) {
+		this.f_name = f_name;
+	}
+	
+	
 }

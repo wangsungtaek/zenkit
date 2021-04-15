@@ -4,6 +4,7 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="zenkit.web.dao.A00_LoginDao">
 	
+	<!-- 유저 정보 -->
 	<select id="login" resultType="userInfoDetail" parameterType="user">
 		SELECT u.*, d.d_name, pos.pos_name, r.r_name
 		  FROM Z_USER u, Z_DEPARTMENT d, Z_POSITION pos, Z_RANK r
@@ -14,6 +15,15 @@
 		   AND u.u_pass = #{u_pass}
 	</select>
 	
+	<!-- 유저 유무 -->
+	<select id="getUserInfo" resultType="user" parameterType="user">
+		SELECT *
+		  FROM Z_USER
+		 WHERE u_id = #{u_id}
+		   AND u_email = #{u_email}
+	</select>
+		
+	<!-- 유저 정보 업데이트 -->
 	<update id="updateUserInfo" parameterType="user">
 		UPDATE Z_USER
 		   SET u_email = #{u_email},
@@ -21,5 +31,12 @@
 				 u_img = #{u_img}
 		 WHERE u_id = #{u_id}
 	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePwd" parameterType="user">
+		UPDATE Z_USER
+		   SET u_pass = #{u_pass}
+		 WHERE u_id = #{u_id}
+	</update>	
 	
 </mapper>

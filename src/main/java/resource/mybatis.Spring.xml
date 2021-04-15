@@ -43,5 +43,5 @@
 		<mapper resource="resource/A02_MyTaskMapper.xml"/>
 		<mapper resource="resource/A02_OutputMapper.xml"/>
 	</mappers>
-
+	
 </configuration>

@@ -360,12 +360,11 @@ DROP TABLE Z_RISK_STATE CASCADE CONSTRAINTS;
 CREATE TABLE z_risk (
 	r_no NUMBER CONSTRAINT z_risk_no_pk PRIMARY KEY, --리스크 번호
 	r_name VARCHAR2(100) CONSTRAINT z_risk_name_nn NOT NULL, --리스크명
-	r_content VARCHAR2(500) CONSTRAINT z_risk_content_nn NOT NULL, --리스크 내용
+	r_content VARCHAR2(500) CONSTRAINT z_risk_content_nn NULL, --리스크 내용
 	r_regdate DATE CONSTRAINT z_risk_regdate_nn NOT NULL, --등록일
 	r_send VARCHAR2(100) CONSTRAINT z_risk_send_nn NOT NULL, --제기자
-	r_receive VARCHAR2(100) CONSTRAINT z_risk_receive_nn NOT NULL, --조치자
-	r_rcontent VARCHAR2(500) CONSTRAINT z_risk_rcontent_nn NOT NULL, --조치내용
-	r_file VARCHAR2(300) CONSTRAINT z_risk_file_nn NOT NULL, --첨부파일
+	r_rcontent VARCHAR2(500) CONSTRAINT z_risk_rcontent_nn NULL, --조치내용
+	r_file VARCHAR2(300) CONSTRAINT z_risk_file_nn NULL, --첨부파일
 	j_no NUMBER CONSTRAINT z_job_j_no_fk REFERENCES Z_JOB(j_no) ON DELETE CASCADE, --작업번호
 	rs_name VARCHAR2(20) CONSTRAINT z_risk_state_rs_name_fk REFERENCES Z_RISK_STATE(rs_name) ON DELETE CASCADE --상태명
 );
@@ -397,21 +396,69 @@ select * from z_risk;
 select z_risk_no_seq.currval from dual;
 
 --삭제
-drop table z_risk;
+drop table z_risk CASCADE CONSTRAINTS;
 drop sequence z_risk_no_seq;
 
+리스크발생 등록
+
+데이터베이스 에러 발생했습니다.
+
+서비스 단
+2020 - 11 -03 데이터베이스 서버 점검 했다 	조치자:왕성택
+2020 - 11 -02 데이터베이스 서버 점검 했다 	조치자:왕성택
+2020 - 11 -02 데이터베이스 서버 점검 했다 	조치자:왕성택
+2020 - 11 -01 데이베이스문제 인식 	조치자: 왕성택
+
+
+
+
 ----------------------------------------------------------------
+-- 조치이력 테이블
+CREATE TABLE Z_RISK_ACTION(
+	ac_no NUMBER CONSTRAINT z_risk_action_no_pk PRIMARY KEY, -- pk
+	ac_receive VARCHAR2(100) CONSTRAINT z_risk_receive_nn NOT NULL, -- 조치자
+	ac_name VARCHAR2(500) CONSTRAINT z_risk_action_name_nn NOT NULL, -- 조치내용
+	ac_date DATE CONSTRAINT z_risk_action_date_nn NOT NULL, -- 조치일
+	ac_state VARCHAR2(50) CONSTRAINT z_risk_action_state_nn NOT NULL, -- 조치상태
+	r_no NUMBER CONSTRAINT z_risk_action_r_no_fk REFERENCES Z_RISK(r_no) ON DELETE CASCADE -- 리스크 번호
+);
+create sequence Z_RISK_ACTION_SEQ
+	start with 1
+	increment by 1;
+
+INSERT INTO Z_RISK_ACTION
+VALUES(Z_RISK_ACTION_SEQ.NEXTVAL,'02MA064','데이터베이스 서버점검 중', SYSDATE, '진행', 1);
+INSERT INTO Z_RISK_ACTION
+VALUES(Z_RISK_ACTION_SEQ.NEXTVAL,'02MA064','데이터베이스 테이블 점검 중', SYSDATE, '진행', 1);
+INSERT INTO Z_RISK_ACTION
+VALUES(Z_RISK_ACTION_SEQ.NEXTVAL,'02MA064','데이터베이스 서버점검 완료 하였습니다.', SYSDATE, '조치완료', 1);
+
+-- 조회
+SELECT * FROM Z_RISK_ACTION;
+SELECT * FROM Z_USER zu ;
+-- 삭제
+DROP TABLE Z_RISK_ACTION CASCADE CONSTRAINTS;
+DROP SEQUENCE Z_RISK_ACTION_SEQ;
+
+----------------------------------------------------------------
+
+
+
 -- 산출물 테이블 ##########
 CREATE TABLE Z_OUTPUTS(
 	o_no NUMBER CONSTRAINT z_outputs_no_pk PRIMARY KEY,
 	o_name VARCHAR2(100) CONSTRAINT z_outputs_name_nn NOT NULL,
-	o_path VARCHAR2(500) CONSTRAINT z_outputs_path_nn NOT NULL,
-	o_content VARCHAR2(1000) CONSTRAINT z_outputs_content_nn NOT NULL,
+	o_path VARCHAR2(500) NULL,
+	o_content VARCHAR2(1000) NULL,
 	j_no NUMBER CONSTRAINT z_output_j_no_fk REFERENCES Z_JOB(j_no) ON DELETE CASCADE
 );
 CREATE SEQUENCE Z_OUTPUTS_NO_SEQ
 	START WITH 1
 	INCREMENT BY 1;
+SELECT * FROM ALL_CONSTRAINTS
+WHERE CONSTRAINT_NAME LIKE 'Z_OUTPUTS%';
+--NOT NULL 제거(변경)
+ALTER TABLE Z_OUTPUTS MODIFY o_path VARCHAR2(500) NULL;
 
 -- 데이터
 INSERT INTO Z_OUTPUTS VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '요구사항정의서 완료 사진', '/z01_upload/img/1.png', '작업 완료했습니다.', 1);
@@ -425,5 +472,6 @@ SELECT Z_OUTPUTS_NO_SEQ.CURRVAL FROM DUAL;
 -- 삭제
 DROP TABLE Z_OUTPUTS CASCADE CONSTRAINTS;
 DROP SEQUENCE Z_OUTPUTS_NO_SEQ;
+
 
 
