@@ -55,6 +55,7 @@
 													<td>${resource.pos_name}</td>
 													<td>${resource.r_name}</td>
 												</tr>
+												<input type="hidden" value="${resource.u_no}" >
 											</c:forEach>
 										</tbody>
 									</table>
@@ -136,10 +137,12 @@
 		// 제거 할 인원 선택
 		var selectMember = "";
 		var selectMemberPos = "";
+		var selectU_no = "";
 		$(".resource-item").on("click", function(){
 			$(".resource-item").css("background", "#26293D");
 			selectMember = $(this).children().eq(0).text();
 			selectMemberPos = $(this).children().eq(1).text();
+			selectU_no = $(this).next().val();
 			$("#select-member").val(selectMember);
 			$(this).css("background", "#1E1E28");
 		});
@@ -179,8 +182,47 @@
 					timer: 1500
 				});			
 			} else {
-				$('[name=btnState]').val('del');
-				$('#memberForm').submit();
+				$.ajax({
+					type:"post",
+					url:"${path}/project.do?method=jobCnt&u_no="+selectU_no,
+					dataType:"json",
+					success:function(data){
+						console.log(data);
+						var jobCnt = data.jobCnt;
+						if(jobCnt != 0){
+							const swalWithBootstrapButtons = Swal.mixin({
+								customClass: {
+									confirmButton: 'btn btn-warning'
+								},
+								buttonsStyling: false
+								})
+								swalWithBootstrapButtons.fire({
+									title: '담당 중인 '+jobCnt+'건이 작업이 존재합니다.',
+									text: '해당 작업은 담당자가 PM으로 변경됩니다.',
+									type: 'warning',
+									confirmButtonText: '확인'
+								}).then((result) => {
+								if (result.value) {
+									// 담당자가 없어진 작업은 PM으로 변경
+									$.ajax({
+										type:"post",
+										url:"${path}/project.do?method=updateManager&u_no="+selectU_no,
+										dataType:"json",
+									});
+									$('[name=btnState]').val('del');
+									$('#memberForm').submit();
+								}
+							})
+						} else {
+							$('[name=btnState]').val('del');
+							$('#memberForm').submit();
+						}
+					},
+					error:function(err){
+						console.log(err);
+					}
+				});
+			
 			}
 		});
 		

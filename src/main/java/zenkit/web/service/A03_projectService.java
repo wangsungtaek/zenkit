@@ -185,4 +185,21 @@ public class A03_projectService {
 		return dao.getRiskState(p_no);
 	}
 	
+	// 특정 회원의 프로젝트 참여 건수
+	public int getJobCnt(int p_no, int u_no) {
+		HashMap<String, Integer> hm = new HashMap<String, Integer>();
+		hm.put("p_no", p_no);
+		hm.put("u_no", u_no);
+		
+		return dao.getJobCnt(hm);
+	}
+	
+	// 작업의 담당자가 없어질 경우, 담당자 PM으로 변경
+	public void updateManager(int p_no, int u_no) {
+		HashMap<String, Integer> hm = new HashMap<String, Integer>();
+		hm.put("p_no", p_no);
+		hm.put("u_no", u_no);
+		
+		dao.updateManager(hm);
+	}
 }

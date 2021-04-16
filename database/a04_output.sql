@@ -49,3 +49,8 @@ VALUES(Z_OUTPUTS_NO_SEQ.NEXTVAL, '1111', '', '', 6);
 
 SELECT max(o_no) AS o_no
   FROM Z_OUTPUTS;
+  
+SELECT *
+  FROM Z_USER
+ WHERE u_id = ''
+   AND u_email = '';

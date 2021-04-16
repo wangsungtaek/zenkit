@@ -32,7 +32,7 @@
 	<!-- 프로젝트 별 참여인원 -->
 	<resultMap type="resourcename" id="resourceMap"></resultMap>
 	<select id="getResource" resultMap="resourceMap" parameterType="int">
-		SELECT u.u_name, ra.r_name, pos.pos_name
+		SELECT u.u_name, ra.r_name, pos.pos_name, u.u_no
 		  FROM Z_RESOURCE r, Z_USER u, Z_RANK ra, Z_POSITION pos
 		 WHERE r.u_no = u.u_no
 		   AND u.r_no = ra.r_no
@@ -155,4 +155,31 @@
 		INSERT INTO Z_RESOURCE
 		VALUES (#{p_no}, #{u_no})
 	</insert>
+	
+	<!-- 특정 회원의 참여한 작업 카운트 -->
+	<select id="getJobCnt" resultType="int" parameterType="hashmap">
+		SELECT count(*) cnt
+		  FROM Z_JOB
+		 WHERE u_no = #{u_no}
+		   AND p_no = #{p_no}
+	</select>
+	
+	<!-- 작업의 담당자가 없어질 경우, 담당자 PM으로 변경 -->
+	<update id="updateManager" parameterType="hashmap">
+		UPDATE Z_JOB
+		   SET u_no = (
+		   	SELECT u_no
+				  FROM Z_USER
+				 WHERE u_id = (
+				 	SELECT p_pm FROM Z_PROJECT WHERE p_no = #{p_no}
+				 )
+		   )
+		 WHERE j_no IN (
+		 	SELECT j_no
+			  FROM Z_JOB
+			 WHERE u_no = #{u_no}
+			   AND p_no = #{p_no}
+		 )
+	</update>
+	
 </mapper>

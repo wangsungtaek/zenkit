@@ -174,4 +174,26 @@ public class A03_projectController {
 		return "pageJsonReport";
 	}
 	
+	// http://localhost:7080/zenkit/project.do?method=jobCnt
+	@RequestMapping(params = "method=jobCnt")
+	public String getJobCnt(@RequestParam("u_no") int u_no, HttpServletRequest request, Model m) {
+		
+		// 프로젝트 번호 세션으로 받기
+		HttpSession session = request.getSession();
+		int p_no = (int)session.getAttribute("p_no");
+		
+		m.addAttribute("jobCnt", service.getJobCnt(p_no, u_no));
+		return "pageJsonReport";
+	}
+	
+	// http://localhost:7080/zenkit/project.do?method=updateManager
+	@RequestMapping(params = "method=updateManager")
+	public void updateManager(@RequestParam("u_no") int u_no, HttpServletRequest request) {
+		
+		// 프로젝트 번호 세션으로 받기
+		HttpSession session = request.getSession();
+		int p_no = (int)session.getAttribute("p_no");
+		
+		service.updateManager(p_no, u_no);
+	}
 }
