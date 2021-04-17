@@ -6,16 +6,38 @@
 
 	<!-- 회원별 프로젝트 -->
 	<resultMap type="project" id="proListMap"/>
-	<select id="getProList" resultMap="proListMap" parameterType="int">
+	<select id="getProList" resultMap="proListMap" parameterType="schProject">
 		SELECT *
-		  FROM Z_PROJECT
-		 WHERE p_no IN (
-		 	SELECT p_no
-		  	  FROM Z_RESOURCE
-		 	 WHERE u_no = #{u_no}
-		 )
+		  FROM (
+			SELECT ROWNUM num, p.*
+			  FROM (
+				 	SELECT *
+					  FROM Z_PROJECT
+					 WHERE p_no IN (
+							SELECT p_no FROM Z_RESOURCE WHERE u_no = #{u_no}
+					 )			AND p_name LIKE '%'||#{schWord, jdbcType=VARCHAR}||'%'
+						 ORDER BY p_no DESC
+				) p
+			)
+		WHERE num BETWEEN #{startNum} AND #{endNum}
 	</select>
 	
+	<!-- 회원별 프로젝트 총 합계 -->
+	<select id="getProListCnt" resultType="int" parameterType="schProject">
+		SELECT count(*) cnt
+		  FROM (
+			SELECT ROWNUM num, p.*
+			  FROM (
+				 	SELECT *
+					  FROM Z_PROJECT
+					 WHERE p_no IN (
+							SELECT p_no FROM Z_RESOURCE WHERE u_no = #{u_no}
+					 )			AND p_name LIKE '%'||#{schWord, jdbcType=VARCHAR}||'%'
+						 ORDER BY p_no DESC
+				) p
+			)
+	</select>
+
 	<!-- 마지막 프로젝트 번호 -->
 	<select id="get_LastPno" resultType="int">
 		SELECT max(p_no) p_no
@@ -78,7 +100,7 @@
 	</select>
 	
 	<!-- 개인 작업 리스트 -->
-	<resultMap type="job" id="jobListMap"/>
+	<resultMap type="job2" id="jobListMap"/>
 	<select id="getJobList" resultMap="jobListMap" parameterType="hashmap">
 		SELECT *
 		  FROM Z_JOB

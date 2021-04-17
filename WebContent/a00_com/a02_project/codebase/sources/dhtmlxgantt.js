@@ -6513,7 +6513,6 @@ module.exports = function () {
             { name: "end_date", align: "center", resize: true ,width: 150},
             { name: "charger", align: "center" ,width: 100},
             { name: "progress", align: "center" ,width: 100},
-            { name: "add", width: 44 }
         ],
         /*scale*/
         scale_offset_minimal: true,
@@ -37437,8 +37436,8 @@ var locale = {
         icon_delete: "Delete",
         confirm_closing: "",
         confirm_deleting: "Task will be deleted permanently, are you sure?",
-        section_description: "Description",
-        section_time: "Time period",
+        section_description: "작업명",
+        section_time: "시작날짜",
         section_type: "Type",
         /* grid columns */
         column_wbs: "WBS",
@@ -37447,7 +37446,7 @@ var locale = {
         column_end_date: "종료날짜",
         column_charger: "담당자",
         column_progress: "완료율",
-        column_add: "",
+        column_button: "",
         /* link confirmation */
         link: "Link",
         confirm_link_deleting: "will be deleted",

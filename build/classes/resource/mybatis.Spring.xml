@@ -9,6 +9,7 @@
 		<typeAlias alias="rank" type="zenkit.web.vo.Rank"/>
 		<typeAlias alias="usersch" type="zenkit.web.dto.UserSch"/>
 		<typeAlias alias="job" type="zenkit.web.vo.Job"/>
+		<typeAlias alias="job2" type="zenkit.web.vo.Job2"/>
 		<typeAlias alias="user" type="zenkit.web.vo.User"/>
 		<typeAlias alias="project" type="zenkit.web.vo.Project"/>
 		<typeAlias alias="calen" type="zenkit.web.vo.Calendar2"/>
@@ -25,8 +26,18 @@
 		<typeAlias alias="riskStateCnt" type="zenkit.web.dto.RiskStateCnt"/>
 		<typeAlias alias="upOutput" type="zenkit.web.dto.UpOutput"/>
 		<typeAlias alias="outputSch" type="zenkit.web.dto.OutputSch"/>
+		<typeAlias alias="schProject" type="zenkit.web.dto.SchProject"/>
+		<typeAlias alias="projDash" type="zenkit.web.vo.ProjDashBoard"/> 
+		<typeAlias alias="allDash" type="zenkit.web.vo.AllDashBoard"/>
+		<typeAlias alias="jobSch" type="zenkit.web.dto.JobSch"/>
+		<typeAlias alias="auth" type="zenkit.web.vo.Auth"/>
+		<typeAlias alias="authsch" type="zenkit.web.dto.AuthSch"/>
+      <typeAlias alias="mytasksch" type="zenkit.web.dto.MyTaskSch"/>
+      
 	</typeAliases>
-	
+      
+      
+
 	<mappers>
 		<mapper resource="resource/JobMapper.xml"/>
 		<mapper resource="resource/A00_loginMapper.xml"/>
@@ -42,6 +53,8 @@
 		<mapper resource="resource/A03_riskMapper.xml"/>
 		<mapper resource="resource/A02_MyTaskMapper.xml"/>
 		<mapper resource="resource/A02_OutputMapper.xml"/>
+		<mapper resource="resource/A01_ProjDashMapper.xml"/>
+		<mapper resource="resource/A01_AllDashMapper.xml"/>	
 	</mappers>
 	
 </configuration>

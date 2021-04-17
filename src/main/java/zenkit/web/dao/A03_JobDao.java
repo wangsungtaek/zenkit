@@ -4,13 +4,22 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import zenkit.web.dto.JobSch;
 import zenkit.web.vo.Job;
+import zenkit.web.vo.Job2;
 import zenkit.web.vo.Project;
 
 @Repository
 public interface A03_JobDao {
+	// Gantt에 표시할 내용.2
+	public ArrayList<Job> jobList2(JobSch sch);
+	
+	// 특정 작업 총 갯수2
+	public int totcount(JobSch sch);
+
 	// Gantt에 표시할 내용.
 	public ArrayList<Job> jobList(int p_no);
+	public ArrayList<Job2> jobList3(int p_no);
 	
 	// 상위 작업명 데이터 조회
 	public Job parentjob(int j_no);

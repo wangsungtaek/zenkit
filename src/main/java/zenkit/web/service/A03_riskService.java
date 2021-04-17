@@ -17,10 +17,20 @@ public ArrayList<Risk> riskList(Risk sch){
    return  dao.riskList(sch);
 }
 
-public void insertRisk(Risk insert) {
-	dao.insertRisk(insert);
+public void riskInsert(Risk insert) {
+	dao.riskInsert(insert);
 }
-public void detailRisk(Risk detail) {
-	dao.detailRisk(detail);
+public Risk getRisk(int r_no) {
+	Risk risk=dao.getRisk(r_no);
+	return risk;
+}
+
+public void updateRisk(Risk upt) {
+	// TODO Auto-generated method stub
+	dao.updateRisk(upt);
+}
+
+public void deleteRisk(int r_no) {
+	dao.deleteRisk(r_no);
 }
 }

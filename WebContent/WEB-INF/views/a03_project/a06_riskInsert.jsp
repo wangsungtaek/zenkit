@@ -15,6 +15,8 @@
  <%@ include file="../a01_main/bootstrapTop.jsp" %>
 </head>
 
+
+
 <body class="sidebar-mini ">
 
   <div class="wrapper">
@@ -43,7 +45,8 @@
           </div>
          
           <div class="col-md-12">
-           
+            <form:form modelAttribute="risk" action="${path}/zenkit.do?method=riskInsert" method="post"
+            class="form-horizontal">
               <div class="card">
                
                 <div class="card-header">
@@ -51,8 +54,19 @@
                 </div>
                 <div class="card-body">
                
-            <form:form modelAttribute="risk" action="${path}/riskInsert.do" method="post"
-            id="TypeValidation" class="form-horizontal">
+                    <div class="row">
+                    <label class="col-sm-2 col-form-label">작업번호</label>
+                    <div class="col-sm-7">
+                      <div class="form-group">
+                       <form:input path="j_no" class="form-control mr-sm-2" />
+                      
+                      </div>
+                    </div>
+                    <label class="col-sm-3 label-on-right">
+                      <code></code>
+                    </label>
+                  </div>
+                     
                    
                     <div class="row">
                     <label class="col-sm-2 col-form-label">리스크명</label>
@@ -66,7 +80,7 @@
                       <code></code>
                     </label>
                   </div>
-                     <!--  
+          
                      <div class="row">
                     <label class="col-sm-2 col-form-label">프로젝트 명</label>
                     <div class="col-sm-7">
@@ -80,13 +94,12 @@
                       <code>*필수</code>
                     </label>
                   </div>
-                 -->
+                 
                    <div class="row">
                     <label class="col-sm-2 col-form-label">리스크 내용</label>
                     <div class="col-sm-7">
                       <div class="form-group">
-                        <form:textarea path="r_content" rows="10" 
-                        class="form-control" 
+                        <form:input path="r_content" class="form-control" 
                         />
                       </div>
                     </div>
@@ -94,19 +107,9 @@
                       <code></code>
                     </label>
                   </div>
-                   
-                     <div class="row">
-                    <label class="col-sm-2 col-form-label">첨부파일</label>
-                    <div class="col-sm-7">
-                      <div class="form-group">
-                        <input class="form-control" type="text" name="name"  required placeholder="첨부파일등록"/>
-                      </div>
-                    </div>
-                    <label class="col-sm-3 label-on-right">
-                      <code></code>
-                    </label>
-                  </div>
-                  
+                
+                
+                
                   <div class="row">
                     <label class="col-sm-2 col-form-label">등록자</label>
                     <div class="col-sm-7">
@@ -120,17 +123,8 @@
                     </label>
                   </div>
                   
-                   <div class="row">
-                    <label class="col-sm-2 col-form-label">등록일</label>
-                    <div class="col-sm-7">
-                      <div class="form-group">
-                         <form:input path="r_regdate" class="form-control datetimepicker" value="${risk.r_regdate }"/>
-                      </div>
-                    </div>
-                    <label class="col-sm-3 label-on-right">
-                      <code>*필수</code>
-                    </label>
-                  </div>
+                  
+                
                   <div class="row">
                     <label class="col-sm-2 col-form-label">리스크 상태</label>
                     <div class="col-sm-3">
@@ -144,15 +138,18 @@
                     </label>
                     
                   </div>
-                  </form:form>
+                 
                 </div>
                 <div class="card-footer text-center">
+                  
                   <button type="submit" id="saveBtn" class="btn btn-primary">저장</button>
                   &nbsp; &nbsp;    
-                  <a href="${path}/riskInsert.do">
-                   <button type="button" class="btn btn-primary">취소</button></a>
+                
+                   <button type="button" class="btn btn-primary">취소</button>
                 </div>
+                
               </div>   
+               </form:form>
             
           </div>
           <div class="col-md-12">
@@ -160,7 +157,7 @@
           </div>
         </div>
       </div>
-      
+     
     </div>
   </div>
   <%@ include file="../a01_main/plugin.jsp" %>
@@ -169,11 +166,15 @@
   <script type="text/javascript">
  
   $(document).ready(function(){
-	  $("#saveBtn").click(function(){
-		  location.href="${path}/riskList.do";
-	  });
+
+     var isInsert="${param.r_name}";
+     if(isInsert!=""){
+    	 alert("등록 완료!!\n리스크 목록 화면으로 이동합니다.");
+    		 $(location).attr("href","${path}/zenkit.do?method=riskList");
+    	 }
   });
   
+ 
  
   </script>
 </body>

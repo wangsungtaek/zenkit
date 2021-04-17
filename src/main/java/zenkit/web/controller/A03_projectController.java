@@ -18,9 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import zenkit.web.dto.AddResource;
 import zenkit.web.dto.ResourceName;
+import zenkit.web.dto.SchProject;
 import zenkit.web.service.A03_JobService;
 import zenkit.web.service.A03_projectService;
-import zenkit.web.vo.Job;
+import zenkit.web.vo.Job2;
 import zenkit.web.vo.Project;
 import zenkit.web.vo.User;
 
@@ -36,7 +37,20 @@ public class A03_projectController {
 	
 	// http://localhost:7080/zenkit/project.do?method=form
 	@GetMapping(params = "method=form")
-	public String projectListForm() {
+	public String projectListForm(HttpServletRequest request, Model m) {
+		
+		// 프로젝트 번호 session으로 받기
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("sesMem");
+		
+		SchProject sch = new SchProject();
+		sch.setU_no(user.getU_no());
+		sch.setSchWord("");
+		sch.setCurrPage(1);
+		sch.setCount(service.getProListCnt(sch));
+		
+		m.addAttribute("schObject", sch);
+		
 		return "/a03_project/a00_projectList";
 	}
 	// http://localhost:7080/zenkit/project.do?method=form
@@ -145,12 +159,23 @@ public class A03_projectController {
 	
 	// http://localhost:7080/zenkit/project.do?method=data
 	@RequestMapping(params = "method=data")
-	public String projectList(HttpServletRequest req, Model d) {
+	public String projectList(HttpServletRequest req, Model d, SchProject sch) {
+		// session 값 받기 (user)
 		HttpSession session = req.getSession();
 		User user = (User)session.getAttribute("sesMem");
-		int userNo = user.getU_no();
 		
-		d.addAttribute("projectList", service.getProList(userNo));
+		sch.setU_no(user.getU_no());
+		sch.setSchWord("");
+		sch.setStartNum(0);
+		sch.setEndNum(99999);
+		System.out.println(sch);
+		System.out.println("u_no = " + sch.getU_no());
+		System.out.println("schWord = " + sch.getSchWord());
+		System.out.println("StartNum = " + sch.getStartNum());
+		System.out.println("EndNum = " + sch.getEndNum());
+		
+		
+		d.addAttribute("projectList", service.getProList(sch));
 		return "pageJsonReport";
 	}
 	
@@ -170,7 +195,7 @@ public class A03_projectController {
 	@RequestMapping(params = "method=userJob")
 	public String getUserJob(@RequestParam("p_no") int p_no, Model m) {
 		
-		m.addAttribute("jobList", jobService.jobList2(p_no));
+		m.addAttribute("jobList", jobService.jobList3(p_no));
 		return "pageJsonReport";
 	}
 	

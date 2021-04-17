@@ -12,8 +12,8 @@ public class A02_CalendarService {
 	@Autowired(required=false)
 	private A02_CalenDao dao;
 	
-	public ArrayList<Calendar2> calenList(){
-		return dao.calenList();
+	public ArrayList<Calendar2> calenList(int u_no){
+		return dao.calenList(u_no);
 	}
 	
 	public void insertCalendar(Calendar2 ins) {

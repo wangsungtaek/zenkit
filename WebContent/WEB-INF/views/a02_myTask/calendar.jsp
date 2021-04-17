@@ -106,6 +106,16 @@
 		background-color:#525f7f;
 		border-radius: 0.4285rem;
 	}
+	button{
+		color:white;
+		background-color:#e14eca;
+		border-radius: 0.4285rem;
+		border-color:#e14eca;
+	}
+	.ui-dialog-titlebar-close{
+		background-color:white;
+		color:#e14eca;
+	}
 </style>
 <script type="text/javascript">
 <%--
@@ -158,7 +168,6 @@
 		  		
 		  		console.log("## 매개변수 arg의 속성"); // console을 통해서
 		  		console.log(arg); //console을 통해서 해당 속성 확인
-		  		
 	    	  	// 화면에 보이는 형식 설정
 		      	// 클릭한 날짜를 전역변수에 할당/시작일과 마지막을 date형식으로 할당.
 	    		// 위에 선언한 전역변수에 날짜 시간 정보를 할당함으로
@@ -172,8 +181,15 @@
 		    			var sch=callSch(); // 리턴값이 입력된 객체 데이터
 		    			console.log("## 등록할 데이터 ##");
 		    			console.log(sch);
+		    			if(sch.title=="" || sch.title==null){
+		    				alert("제목을 입력해주세요");
+		    				return false;
+		    			} else if(sch.content=="" || sch.content==null){
+		    				alert("내용을 입력해주세요");
+		    				return false;
+		    			}
 		    			// 화면에 출력
-		    			if(sch.c_title){
+		    			if(sch.title){
 			    			// 화면에 처리할 이벤트 할당
 			    			calendar.addEvent(sch);
 			    			calendar.unselect();
@@ -253,8 +269,8 @@
 	          	// 삭제 1 : 화면에서 삭제
 	          	// arg.event : 해당 상세 정보를 가지고 있다.
 	          	/*  event의 날짜 저장*/
-	          	date.start=arg.event.c_start;
-		      	date.end=arg.event.c_end;
+	          	date.start=arg.event.start;
+		      	date.end=arg.event.end;
 	          	/* 각 form에 값 추가 */
 	          	// 1. 화면 로딩
 	          	//	2번이상 중복된 함수 사용이 필요한 부분은 모듈로 분리 처리
@@ -269,32 +285,31 @@
 		          	 	console.log(sch);
 		          		// 1. 화면단  변경
 		          		// 현재 캘린더 api의 속성 변경하기
-		          		var event = calendar.getEventById(sch.c_no);
+		          		var event = calendar.getEventById(sch.id);
 		          		// 속성값 변경 setProp
-		          		event.setProp("c_title",sch.c_title);
-		          		event.setProp("c_textColor",sch.c_textColor);
-		          		event.setProp("c_backgroundColor",sch.c_backgroundColor);
-		          		event.setProp("c_borderColor",sch.c_borderColor);
+		          		event.setProp("title",sch.title);
+		          		event.setProp("textColor",sch.textColor);
+		          		event.setProp("backgroundColor",sch.backgroundColor);
+		          		event.setProp("borderColor",sch.borderColor);
 						// 확장 속성 : 	writer [입력]
 		          		// 			content [입력]
-		          		event.setExtendedProp("c_writer",sch.c_writer);
-		          		event.setExtendedProp("c_content",sch.c_content);
-		          		event.setAllDay(sch.c_allDay);
+		          		event.setExtendedProp("content",sch.content);
+		          		event.setAllDay(sch.allDay);
 		          		  
 		          		/* 2. DB 변경*/
 		          		updateCall(sch);
 		          		$("#schDialog").dialog("close");
 					},
 		          	"삭제":function(){
-		          		var c_noVal=$("[name=id]").val();
+		          		var idVal=$("[name=id]").val();
 		          		// 화면에서 삭제 처리
-		          		var event=calendar.getEventById(c_noVal);
+		          		var event=calendar.getEventById(idVal);
 		          		event.remove();
 		          		// DB 삭제 처리
 		          		$.ajax({
 		          			type:"post",
 		          			url:"calendar.do?method=delete",
-		    			    data:{c_no:c_noVal},
+		    			    data:{id:idVal},
 		    			    dataType:"json",
 		    			    success:function(data){
 		    			    	if(data.success=="Y"){
@@ -331,7 +346,7 @@
 	    		  	dataType:"json",
 	    		  	success:function(data){
 	    				console.log(data.list);
-	    			  	successCallback(data.list);
+	    				successCallback(data.list);
 	    		  	},
 	    		  	error:function(err){
 	    			  	console.log(err);
@@ -344,48 +359,47 @@
 	// form 하위 요소객체에서 사용할 데이터를 json 형식을 만들어 준다.
 	function callSch(){
 		var sch={};
-		sch.c_no=$("[name=id]").val();
-		sch.c_title=$("[name=title]").val();
-		sch.c_writer=$("[name=writer]").val();
-		sch.c_content=$("[name=content]").val();
+		sch.id=$("[name=id]").val();
+		sch.title=$("[name=title]").val();
+		sch.content=$("[name=content]").val();
 		// Date 타입은 화면에서 사용되는 형식으로 설정하여야 한다.
 		// 전역변수에 할당한 date.start// date.end의 ISO형태로 속성 할당
 		// calendar api에서 사용되는 날짜 처리 방식이 ISO문자열 형식이기 때문이다.
 		// ex) Date ==> toISOString() 형식
-		sch.c_start=date.start.toISOString();
-		sch.c_end=date.end.toISOString();
+		sch.start=date.start.toISOString();
+		sch.end=date.end.toISOString();
 		// alert("등록할 시작일:"+sch.start)
 		// sch.allDay : calendar로 처리할 데이터 boolean 형식으로 true/false
 		// 으로 처리되어야 하는데, 화면에 보이는 내용은 문자열로 되어 있다.
 		// <option value="true"> 이 선택되어 졌을 때는
 		// == 비교 연산을 통해서 true로 boolean값을 넘기고,
 		// 그 외는 false를 boolean값으로 전달.
-		sch.c_allDay=$("[name=allDay]").val()=="true"; 
+		sch.allDay=$("[name=allDay]").val()=="true"; 
 		// 문자열이 "true"일 때, 그 외는 false
-		sch.c_backgroundColor=$("[name=backgroundColor]").val(); // 배경색상
-		sch.c_textColor=$("[name=textColor]").val();
-		sch.c_borderColor=$("[name=borderColor]").val();
+		sch.backgroundColor=$("[name=backgroundColor]").val(); // 배경색상
+		sch.textColor=$("[name=textColor]").val();
+		sch.borderColor=$("[name=borderColor]").val();
+		sch.u_no=${sesMem.getU_no()};
 		return sch;
 	}
 	function detail(event){
 		// event안에 기본 속성값이 초기에 데이터 로딩시, 가지고 있음
 		// 상세한 내용을 event의 속성값으로 form 객체 하위에 표현하기 위하여 사용한다.
 		// form 하위 객체에 할당
-		$("[name=id]").val(event.c_no);
-		$("[name=title]").val(event.c_title);
+		$("[name=id]").val(event.id);
+		$("[name=title]").val(event.title);
 		// calendar에서 추가된 속성들
 		// ex) event.extendtedProps
 		//	calendar api 자체에서 지원되는 기본적인 속성이 아니고,
 		//  사용자에 의해서 DB 관리가 필요한 속성을 처리할 떄, 사용된다.
 		var exProps = event.extendedProps;
-		$("[name=writer]").val(exProps.c_writer);
-		$("[name=content]").val(exProps.c_content);
-		$("[name=start]").val(event.c_start.toLocaleString());
-		$("[name=end]").val(event.c_end.toLocaleString());
-		$("[name=allDay]").val(""+event.c_allDay);
-		$("[name=backgroundColor]").val(event.c_backgroundColor);
-		$("[name=textColor]").val(event.c_textColor);
-		$("[name=borderColor]").val(event.c_borderColor);
+		$("[name=content]").val(exProps.content);
+		$("[name=start]").val(event.start.toLocaleString());
+		$("[name=end]").val(event.end.toLocaleString());
+		$("[name=allDay]").val(""+event.allDay);
+		$("[name=backgroundColor]").val(event.backgroundColor);
+		$("[name=textColor]").val(event.textColor);
+		$("[name=borderColor]").val(event.borderColor);
 	}
 	// 수정 처리 ajax
 	function updateCall(sch){
@@ -412,15 +426,15 @@
 	}
 	function eventUpt(event){
 		var sch={};
-		sch.c_no=event.c_no;
-		sch.c_title=event.c_title;
-		sch.c_start=event.c_start.toISOString();
-		sch.c_end=event.c_end.toISOString();
-		sch.c_content=event.extendedProps.c_content;
-		sch.c_textColor=event.c_textColor;
-		sch.c_backgroundColor=event.c_backgroundColor;
-		sch.c_borderColor=event.c_borderColor;
-		sch.c_allDay=event.c_allDay;
+		sch.id=event.id;
+		sch.title=event.title;
+		sch.start=event.start.toISOString();
+		sch.end=event.end.toISOString();
+		sch.content=event.extendedProps.content;
+		sch.textColor=event.textColor;
+		sch.backgroundColor=event.backgroundColor;
+		sch.borderColor=event.borderColor;
+		sch.allDay=event.allDay;
 		console.log("# 이벤트에 의한 수정 #");
 		console.log(sch);
 		updateCall(sch);
@@ -450,12 +464,6 @@
 												<span class="input-group-text">제목</span>
 											</div>
 											<input class="form-control" name="title" type="text"/>
-										</div>
-										<div class="input-group mb-3">
-											<div class="input-group-prepend">
-												<span class="input-group-text">작성자</span>
-											</div>
-											<input class="form-control" name="writer" type="text"/>
 										</div>
 										<div class="input-group mb-3">
 											<div class="input-group-prepend">

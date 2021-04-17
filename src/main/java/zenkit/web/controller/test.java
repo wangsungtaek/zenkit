@@ -1,15 +1,16 @@
 package zenkit.web.controller;
 
+import java.io.File;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class test {
 
 	public static void main(String[] args) {
-		String filename = "/z03_upload/output/19/user.png";
+		String filename = "/Users/wangsungtaek/taek/workspace/zenkit/WebContent/z03_upload/output/28";
 		
-		Path p = Paths.get(filename);
-		String nn = p.getFileName().toString();
-		System.out.println(nn);
+		File f = new File(filename);
+		
+		System.out.println(f.exists());
 	}
 }

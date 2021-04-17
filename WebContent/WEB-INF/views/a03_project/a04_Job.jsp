@@ -46,7 +46,7 @@ html, body {
 				<div class="row">
 					<div class="col" style="height: 700px;">
 						<div class="card" style="width: 100%; height: 100%;">
-							<%@ include file="ganttTest.jsp"%>
+							<%@ include file="a04_gantt.jsp"%>
 							<div align="right" style="margin-top: 10px; margin-right: 10px;">
 								<button class="btn" id="jobCRUD">작업관리</button>
 							</div>

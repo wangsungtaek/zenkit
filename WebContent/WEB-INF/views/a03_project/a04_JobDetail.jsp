@@ -15,39 +15,60 @@
 <%@ include file="../a01_main/bootstrapTop.jsp"%>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$("#backBtn").on("click",function(){
-			location.href="${path}/job.do?method=list";
+
+		var pm = "${project.p_pm}";
+		var user = "${sesMem.u_id}";
+		if (pm != user) {
+			$("#uptBtn").css("display", "none");
+			$("#delBtn").css("display", "none");
+		}
+
+		$("#backBtn").on("click", function() {
+			location.href = "${path}/job.do?method=list";
 			return false;
 		});
-		
-		$("#uptBtn").on("click",function(){
-			var pr
-			if(confirm("수정하시겠습니까??")){
+
+		$("#uptBtn").on("click", function() {
+
+			if (confirm("수정하시겠습니까??")) {
 				$("[name=j_refno]").removeAttr("disabled");
-				$("form").attr("action","${path}/job.do?method=update");
+				$("form").attr("action", "${path}/job.do?method=update");
 				$("[name=proc]").val("update");
 				$("form").submit();
 			}
-		})
-		
-		$("#delBtn").on("click",function(){
-			$("form").attr("action", "${path}/job.do?method=delete");
-			$("form").submit();
-		})
-		
-		var proc="${proc}";
-		
-		if(proc == "insert"){
-			if(!confirm("등록 완료!! \n 계속 등록하시겠습니까??")){
-				location.href="${path}/job.do?method=list";	
+			;
+		});
+
+		$("#delBtn").on("click", function() {
+			if (confirm("삭제하시겠습니까??")) {
+				$("form").attr("action", "${path}/job.do?method=delete");
+				$("[name=proc]").val("delete");
+				$("form").submit();
 			}
-		};
-		
-		if(proc == "update"){
+			;
+		});
+
+		var proc = "${proc}";
+
+		if (proc == "insert") {
+			if (!confirm("등록 완료!! \n 계속 등록하시겠습니까??")) {
+				location.href = "${path}/job.do?method=list";
+			}
+		}
+		;
+		if (proc == "delete") {
+			alert("삭제 완료하였습니다. 조회페이지로 이동합니다.");
+			location.href = "${path}/job.do?method=list";
+		}
+		;
+
+		if (proc == "update") {
 			alert("수정완료");
-			location.href="${path}/job.do?method=list";	
-		};
+			location.href = "${path}/job.do?method=list";
+		}
+		;
 		$("#jobBtn").attr("class", "btn btn-primary");
+
 	});
 </script>
 <style>
@@ -82,7 +103,7 @@
 							</div>
 							<div class="card-body">
 								<form method="post" class="form-horizontal">
-									<input type="hidden" name="proc"/>
+									<input type="hidden" name="proc" />
 									<div class="row">
 										<label class="col-sm-2 col-form-label"> <i
 											class="tim-icons icon-button-power"></i> 작업번호
@@ -98,7 +119,11 @@
 										</label>
 										<div class="col-sm-2">
 											<div class="form-group">
-												<select class="selectpicker" name="j_refno" disabled="disabled">
+												<select class="selectpicker" name="j_refno"
+													disabled="disabled">
+													<c:if test="${jobdetail.j_refno == 0}">
+														<option value="0">최상위 작업</option>
+													</c:if>
 													<option value="${jobdetail.j_refno}">${parentJob.j_name}</option>
 												</select>
 											</div>
@@ -119,7 +144,7 @@
 										<div class="col-sm-2">
 											<div class="form-group">
 												<input type="text" class="form-control" readonly="readonly"
-													value="${jobdetail.j_regD }">
+													value="${jobdetail.j_regD_s }">
 											</div>
 										</div>
 									</div>
@@ -139,7 +164,7 @@
 										<div class="col-sm-2">
 											<div class="form-group">
 												<input type="text" class="form-control" readonly="readonly"
-													value="${jobdetail.j_uptD}">
+													value="${jobdetail.j_uptD_s}">
 											</div>
 										</div>
 										<label class="col-sm-2 col-form-label"> <i
@@ -151,8 +176,7 @@
 													<c:forEach var="pp" items="${people}">
 														<option value="${pp.u_no}"
 															<c:if test="${jobdetail.u_no eq pp.u_no}">selected</c:if>>
-																${pp.u_name}
-														</option>
+															${pp.u_name}</option>
 													</c:forEach>
 												</select>
 											</div>
@@ -188,12 +212,11 @@
 										<label class="col-sm-2 col-form-label">완료율</label>
 										<div class="col-sm-1">
 											<div class="form-group">
-												<select class="selectpicker" name="j_completeR" >
+												<select class="selectpicker" name="j_completeR">
 													<c:forEach var="complete" items="${completeN }">
-														<option value="${complete}" 
+														<option value="${complete}"
 															<c:if test="${jobdetail.j_completeR eq complete}">selected</c:if>>
-																${complete*100}%
-														</option>
+															${complete*100}%</option>
 													</c:forEach>
 												</select>
 											</div>

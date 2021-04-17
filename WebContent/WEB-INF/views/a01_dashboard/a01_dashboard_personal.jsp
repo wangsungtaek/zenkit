@@ -60,38 +60,10 @@
               </div>
             </div>
           </div>
-          <!-- 
+
           <div class="col-lg-3 col-md-6">
             <div class="card card-stats">
-              <div class="card-body" OnClick="location.href =''">
-                <div class="row">
-                  <div class="col-5">
-                    <div class="info-icon text-center icon-primary">
-                      <i class="tim-icons icon-app"></i>
-                    </div>
-                  </div>
-                  <div class="col-7">
-                    <div class="numbers">
-                      <p class="card-category" style="font-weight:550;">리스크</p>
-                      <h3 class="card-title">2</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="card-footer">
-                <hr>
-                <div class="stats">
-                  <a href="##" style="color:#a9a9b1; font-weight:500;">
-	                 View More <i class="tim-icons icon-minimal-right"></i> 
-	              </a> 
-                </div>
-              </div>
-            </div>
-          </div>
-            -->
-          <div class="col-lg-3 col-md-6">
-            <div class="card card-stats">
-              <div class="card-body" OnClick="location.href =''">
+              <div class="card-body" OnClick="location.href ='${path}/project.do?method=form'">
                 <div class="row">
                   <div class="col-5">
                     <div class="info-icon text-center icon-success">
@@ -285,11 +257,11 @@
                           ${project.d_name}
                         </td>
                         <td class="text-center">
-                          진행
+                          ${project.progress}
                         </td>
                         <td class="text-center">
                         <!-- <fmt:formatDate value="${project.p_endD}"/> -->
-                          <fmt:formatDate value="${project.p_startD}"/>
+                         <fmt:formatDate value="${project.p_startD}"/>
                         </td>
                         <td class="text-center">
                          <fmt:formatDate value="${project.p_endD}"/>
@@ -315,37 +287,44 @@
       </div>
 	</c:if>
 	<c:if test="${sesMem.pos_no < 3}">
-	<div class="content">           
+	
+	
+	<!-- selectProgress	selectDname	year1	year2 -->
+	<div class="content">
+		<div class="row" style="margin-bottom:30px;">
+              <div class="col-md-3 " style="float:right;">
+              	 <input type="hidden" name="d_no" value=""/>
+                  <select class="selectpicker" data-size="5" data-style="btn btn-primary" 
+				        title="부서 선택" id="deptSelect" style="width:50px;">
+                       <c:forEach var="sd" items="${selectDname}">
+                    	  <option value="${sd.d_no}">${sd.d_name}</option>
+                      </c:forEach>
+                   </select>
+             </div>
+        </div>     	             
         <div class="row">
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
                 <h4 class="title"  style="margin-bottom:-30px;">주요프로젝트 현황</h4>
-                <div class="col-md-3 " style="float:right;">
-                        <select class="selectpicker" data-size="5" data-style="btn btn-primary" title="Single Select">
-                          <option disabled selected>진행상태</option>
-                          <option value="2">시작 전</option>
-                          <option value="3">완료</option>
-                          <option value="4">진행</option>
+                  <div class="col-md-3 " style="float:right;">
+                  		<input type="hidden" name="progress" value=""/>
+                        <select class="selectpicker" data-size="5" data-style="btn btn-primary" 
+                        	title="진행상태 선택" id="proSelect">
+	                          <c:forEach var="sp" items="${selectProgress}">
+					             <option>${sp.progress}</option>
+					          </c:forEach>
                         </select>
                   </div>
                   <div class="col-md-3 " style="float:right;">
-                        <select class="selectpicker" data-size="5" data-style="btn btn-primary" title="Single Select">
-                          <option disabled selected>연도</option>
-                          <option value="2">2021</option>
-                          <option value="3">2020</option>
-                          <option value="4">2019</option>
+                  		<input type="hidden" name="pYear1" value=""/>
+                        <select class="selectpicker" data-size="5" data-style="btn btn-primary"
+                        	title="연도 선택" id="year1Select">
+                         	  <c:forEach var="year" items="${year1}">
+					             <option value="${year.pYear1}">${year.pYear1}</option>
+					      	 </c:forEach>
                         </select>
                  </div>
-                 <div class="col-md-3 " style="float:right;">
-                        <select class="selectpicker" data-size="7" data-style="btn btn-primary" title="Single Select">
-                          <option disabled selected>부서</option>
-                          <option value="2">IT팀</option>
-                          <option value="3">경영지원팀</option>
-                          <option value="4">인사팀</option>
-                          <option value="5">전략기획</option>
-                        </select>
-               	</div>
               </div>
               <div class="card-body">
                 <div class="table-responsive">
@@ -380,140 +359,46 @@
                           산출물
                         </th>
                         <th class="text-center">
-                          이슈
+                          리스크
                         </th>
                       </tr>
                     </thead>
                     <tbody>
+                    <!-- 모델명 : allProjInfo -->
+                    <c:forEach var="info" items="${allProjInfo}">
                       <tr>
                         <td class="text-center">
-                          ECOBEAN
+                          ${info.p_name}
                         </td>
                         <td class="text-center">
-                         SE-2020-03
+                         ${info.p_no}
                         </td>
                         <td class="text-center">
-                          한지혜
+                          ${info.pmName}
                         </td>
                         <td class="text-center">
-                          IT팀
+                          ${info.d_name}
                         </td>
                         <td class="text-center">
-                          완료
+                          ${info.progress}
                         </td>
                         <td class="text-center">
-                          2020-11-13
+                         <fmt:formatDate value="${info.p_startD}"/>
                         </td>
                         <td class="text-center">
-                          2020-12-15
+                         <fmt:formatDate value="${info.p_endD}"/>
                         </td>
                         <td class="text-center">
-                          35%
+                          ${info.percent}%
                         </td>
                         <td class="text-center">
-                          10
+                          ${info.poCnt}
                         </td>
                         <td class="text-center">
                           2
                         </td>
                       </tr>
-                      <tr>
-                        <td class="text-center">
-                          GAMEFLIX
-                        </td>
-                        <td class="text-center">
-                         SE-2021-01
-                        </td>
-                        <td class="text-center">
-                          한지혜
-                        </td>
-                        <td class="text-center">
-                          IT팀
-                        </td>
-                        <td class="text-center">
-                          진행
-                        </td>
-                        <td class="text-center">
-                          2020-11-24
-                        </td>
-                        <td class="text-center">
-                          2021-01-30
-                        </td>
-                        <td class="text-center">
-                          90%
-                        </td>
-                        <td class="text-center">
-                          15
-                        </td>
-                        <td class="text-center">
-                          6
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="text-center">
-                          PLO
-                        </td>
-                        <td class="text-center">
-                         SE-2021-03
-                        </td>
-                        <td class="text-center">
-                          김나영
-                        </td>
-                        <td class="text-center">
-                          마케팅팀
-                        </td>
-                        <td class="text-center">
-                          완료
-                        </td>
-                        <td class="text-center">
-                          2021-02-01
-                        </td>
-                        <td class="text-center">
-                          2021-03-15
-                        </td>
-                        <td class="text-center">
-                          95%
-                        </td>
-                        <td class="text-center">
-                          30
-                        </td>
-                        <td class="text-center">
-                          10
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="text-center">
-                          ZENKIT
-                        </td>
-                        <td class="text-center">
-                         SE-2021-04
-                        </td>
-                        <td class="text-center">
-                          한지혜
-                        </td>
-                        <td class="text-center">
-                          IT팀
-                        </td>
-                        <td class="text-center">
-                          진행
-                        </td>
-                        <td class="text-center">
-                          2021-03-22
-                        </td>
-                        <td class="text-center">
-                          2021-04-30
-                        </td>
-                        <td class="text-center">
-                          10%
-                        </td>
-                        <td class="text-center">
-                          5
-                        </td>
-                        <td class="text-center">
-                          0
-                        </td>
-                      </tr>
-                      
+                      </c:forEach>
                     </tbody>
                   </table>
                 </div>
@@ -522,24 +407,20 @@
           </div>
         </div>
       <div class="row">
-          <div class="col-md-12">
+      
+          <div class="col-md-6">
             <div class="card">
               <div class="card-header">
-                <h4 class="title" style="margin-bottom:-30px;">프로젝트 수행지표</h4>
-                  <div class="col-md-3 " style="float:right;">
-                        <select class="selectpicker" data-size="7" data-style="btn btn-primary" title="Single Select">
-                          <option disabled selected>연도</option>
-                          <option value="2">2021</option>
-                          <option value="3">2020</option>
-                          <option value="3">2019</option>
-                        </select>
-                  </div>
+                <h4 class="title" id="joddd">프로젝트 수행지표</h4>             
               </div>
               <div class="card-body">
                 <div class="table-responsive">
                   <table class="table">
                     <thead class="text-primary">
                       <tr>
+                      	<th class="text-left">
+                          부서번호
+                        </th>
                       	<th class="text-left">
                           부서
                         </th>
@@ -550,7 +431,7 @@
                           시작 전
                         </th>
                         <th class="text-center">
-                          정상
+                          진행
                         </th>
                         <th class="text-center">
                           지연
@@ -560,118 +441,47 @@
                         </th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
+                    <!-- 모델명 allCnts -->
+                    
+                    <tbody id="dInfo">                   
+                    <c:forEach var="ac" items="${allCnts}">
+                    <input type="hidden" name="d_no" value="${ac.d_no}" id="selectDno" />
+                      <tr>                     
+                      	<td class="text-left">
+                          ${ac.d_no}
+                        </td>
                         <td class="text-left">
-                          IT팀
+                          ${ac.d_name}
+                          
                         </td>
                         <td class="text-center">
-                          160
+                          ${ac.allCnt}
                         </td>
                         <td class="text-center">
-                          21
+                          ${ac.before_Cnt}
                         </td>
                         <td class="text-center">
-                          7
+                          ${ac.ongoing_Cnt}
                         </td>
                         <td class="text-center">
-                          13
+                          ${ac.late_Cnt}
                         </td>
                         <td class="text-center">
-                          117
+                          ${ac.complete_Cnt}
                         </td>
                       </tr>
-                      <tr>
-                        <td class="text-left">
-                          &nbsp;&nbsp; - ECOBEAN
-                        </td>
-                        <td class="text-center">
-                          30
-                        </td>
-                        <td class="text-center">
-                          3
-                        </td>
-                        <td class="text-center">
-                          2
-                        </td>
-                        <td class="text-center">
-                          5
-                        </td>
-                        <td class="text-center">
-                          20
-                        </td>
+                      <tr id="projDtlList">
                       </tr>
-                       <tr>
-                        <td class="text-left">
-                          &nbsp;&nbsp; - GAMEFLIX
-                        </td>
-                        <td class="text-center">
-                          40
-                        </td>
-                        <td class="text-center">
-                          3
-                        </td>
-                        <td class="text-center">
-                          1
-                        </td>
-                        <td class="text-center">
-                          1
-                        </td>
-                        <td class="text-center">
-                          35
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">
-                          &nbsp;&nbsp; - PLO
-                        </td>
-                        <td class="text-center">
-                          70
-                        </td>
-                        <td class="text-center">
-                          5
-                        </td>
-                        <td class="text-center">
-                          1
-                        </td>
-                        <td class="text-center">
-                          4
-                        </td>
-                        <td class="text-center">
-                          60
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="text-left">
-                          &nbsp;&nbsp; - ZENKIT
-                        </td>
-                        <td class="text-center">
-                          20
-                        </td>
-                        <td class="text-center">
-                          10
-                        </td>
-                        <td class="text-center">
-                          5
-                        </td>
-                        <td class="text-center">
-                          3
-                        </td>
-                        <td class="text-center">
-                          2
-                        </td>
-                      </tr>
-                      
+                      </c:forEach>
+                     
                     </tbody>
                   </table>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        
-        <div class="row">
-       	 <div class="col-md-6">
+          
+           <div class="col-md-6">
             <div class="card card-chart card-chart-pie"> 
               <div class="card-header">
                 <h4 class="title">리스크 현황</h4>
@@ -697,30 +507,8 @@
                 </div>
               </div>
             </div>
-          </div>
-          <div class="col-md-6">
-            <div class="card card-chart">
-              <div class="card-header" style="margin-bottom:50px;">
-                <h4 class="title" style="margin-bottom:-45px;">진행 현황</h4>
-                	<div class="col-md-3 " style="float:right; ">
-                        <select class="selectpicker" data-size="7" data-style="btn btn-primary" title="Single Select">
-                          <option disabled selected>프로젝트</option>
-                          <option value="2">ECOBEAN</option>
-                          <option value="3">GAMEFLIX</option>
-                          <option value="4">PLO</option>
-                          <option value="5">ZENKIT</option>
-                        </select>
-                 	</div>
-              </div>             
-              <div class="card-body" >
-                <div class="chart-area">
-                  <canvas id="MultipleBarsChart2"></canvas>
-                </div>
-              </div>
-            </div>
-          </div>               
-        </div>
-        
+          </div>         
+        </div>       
       </div>
 	</c:if>
 	
@@ -733,9 +521,53 @@
 
   <script>
     $(document).ready(function() {
+    	
+    	// 수행지표 tr 클릭 시 해당부서의 프로젝트 리스트 뜨게
+    	// 모델명 deptProjCnt
+    	/*
+         $("#dInfo").on("click", "tr", function(){
+        	 alert("부서번호 : "+ $(this).find("td:eq(0)").text() );
+		 });
+		*/
+      /*
+      $('#dInfo').click(function(){			
+			$.ajax({
+				type:"post",
+				url:"${path}/jsonAlist.do?d_no="+$(this).attr("option","selected").val(),
+				dataType:"json",
+				success:function(data){
+					
+					
+					// 종합 대시보드 프로젝트 수행지표 리스트 (부서 내 프로젝트별)
+					// 모델명 deptProjList
+					var list = data.deptProjList;	
+					console.log(list);
+					$.each(list, function(idx, pro, arry){
+						var pName = $("#pName").text(pro.p_name);
+						var pmName = $("#pmName").text(pro.p_pm);
+						var startD = $("#startD").text(pro.p_startD_s);
+						var endD = $("#endD").text(pro.p_endD_s);				
+						var progress = $("#progress").text(pro.percent+"%");
+						var progressbar = $("#progressbar").css("width",pro.percent+"%");
+						var p_name = $("#p_name").text();
+					});		
+										 
+
+				},					
+				error:function(err){
+					alert("에러발생");
+					console.log(err);
+				}					 
+			});						
+					
+		});
+       */
+         
+         
       // Javascript method's body can be found in assets/js/demos.js
       demo.initChartPageCharts();
 
+     
       
 
     });

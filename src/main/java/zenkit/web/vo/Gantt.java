@@ -1,5 +1,7 @@
 package zenkit.web.vo;
 
+import java.util.Date;
+
 public class Gantt {
 	private int id;
 	private String text;
@@ -8,7 +10,30 @@ public class Gantt {
 	private double progress;
 	private int parent;
 	private String charger;
+	private String pname;
+	private String jcontent;
+	private int u_no;
 	
+	
+	
+	public int getU_no() {
+		return u_no;
+	}
+	public void setU_no(int u_no) {
+		this.u_no = u_no;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+	public String getJcontent() {
+		return jcontent;
+	}
+	public void setJcontent(String jcontent) {
+		this.jcontent = jcontent;
+	}
 	public String getCharger() {
 		return charger;
 	}

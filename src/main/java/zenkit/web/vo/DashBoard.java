@@ -17,14 +17,16 @@ public class DashBoard {
 	private int poCnt;
 	private int dDay;
 	private int percent;
+	private String progress;
 	
 	
 	public DashBoard() {
 		super();
 	}
 	
+	
 	public DashBoard(int p_no, int d_no, int u_no, int j_no, int o_no, String p_name, String p_pm, String d_name,
-			Date p_startD, Date p_endD, int poCnt, int dDay, int percent) {
+			Date p_startD, Date p_endD, int poCnt, int dDay, int percent, String progress) {
 		super();
 		this.p_no = p_no;
 		this.d_no = d_no;
@@ -39,7 +41,9 @@ public class DashBoard {
 		this.poCnt = poCnt;
 		this.dDay = dDay;
 		this.percent = percent;
+		this.progress = progress;
 	}
+
 
 	public int getP_no() {
 		return p_no;
@@ -122,6 +126,16 @@ public class DashBoard {
 
 	public void setPercent(int percent) {
 		this.percent = percent;
+	}
+
+
+	public String getProgress() {
+		return progress;
+	}
+
+
+	public void setProgress(String progress) {
+		this.progress = progress;
 	}
 	
 

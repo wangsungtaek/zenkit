@@ -25,6 +25,7 @@
         	<div class="card">
         		<div class="card-header">
         			<form:form modelAttribute="sch" method="post" class="form-row">
+        				<form:hidden path="curPage"/>
         			<div class="col-md-3">
         				<div class="dropdown bootstrap-select">
         					<form:select value="${sch.pro_name}" path="pro_name" class="selectpicker" data-size="7" data-style="btn btn-primary">
@@ -75,7 +76,7 @@
         						<td style="padding-left:20px;">
         							<a href="javascript:void(0)" class="jno_${auth.j_no}" id="btnWorkTab" data-toggle="modal" data-target=".bd-example-modal-lg">${auth.job_name}</a>
         						</td>
-        						<td style="padding-left:20px;"><a href="#">${auth.pro_name}</a></td>
+        						<td style="padding-left:20px;"><a href="javascript:goProject(${auth.p_no})">${auth.pro_name}</a></td>
          						<td class="text-center">
          							<c:choose>
          								<c:when test="${'반려' eq auth.a_name}"><span class="badge badge-danger">${auth.a_name}</span></c:when>
@@ -89,21 +90,28 @@
         					</c:if>
         				</tbody>
         			</table>
+        			<c:if test="${!empty authList}">
         			<nav aria-label="...">
   						<ul class="pagination">
-							<li class="page-item disabled">
-								<a class="page-link" href="#" tabindex="-1">Previous</a>
+							<li class="page-item">
+								<a class="page-link" href="javascript:goPage(${sch.startBlock-1})" tabindex="-1">Previous</a>
 							</li>
-							<li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
+							<c:forEach var="cnt" begin="${sch.startBlock}" end="${sch.endBlock}">
+								<li class="page-item ${sch.curPage==cnt ? 'active':''}">
+									<a class="page-link" href="javascript:goPage(${cnt})">${cnt} ${sch.curPage==cnt ? '<span class="sr-only">(current)</span>':''}</a>
+								</li>
+							</c:forEach>
+<!-- 							<li class="page-item active"><a class="page-link" href="#">1 <span class="sr-only">(current)</span></a></li>
 							<li class="page-item">
 								<a class="page-link" href="#">2</a>
 							</li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li> -->
 							<li class="page-item">
-								<a class="page-link" href="#">Next</a>
+								<a class="page-link" href="javascript:goPage(${sch.endBlock+1})">Next</a>
 							</li>
 						</ul>
 					</nav>
+					</c:if>
         		</div>
         	</div>
         </div>
@@ -215,6 +223,10 @@
 	}
 	if(currpath=='authRej.do') {
 		$('.navbar-brand').text('결재반려함');
+	}
+	function goPage(page) {
+		$("[name=curPage]").val(page);
+		$("form").submit();
 	}
 </script>
 </body>

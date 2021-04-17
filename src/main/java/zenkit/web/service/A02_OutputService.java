@@ -63,6 +63,9 @@ public class A02_OutputService {
 			
 			File realSavePath = new File(upPath); // 물리적 경로
 			
+			System.out.println("upPath"+upPath);
+			System.out.println("dbPath"+dbPath);
+			
 			// 업로드하기 위한 경로가 없을 경우 디렉토리 생성
 			if(!realSavePath.exists())
 				realSavePath.mkdirs();

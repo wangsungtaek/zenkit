@@ -37,20 +37,46 @@
            
           </div>
          
-          <div class="col-md-12">
-            <form id="TypeValidation" class="form-horizontal"  method="post" enctype="multipart/form-data">
+          <div class="col-md-12"> <!-- id="TypeValidation" -->
+            <form  class="form-horizontal"  method="post" >
+              <input type="hidden" name="proc"/>
               <div class="card">
                 <div class="card-header">
-                  <h4 class="card-title">리스크 상세 정보</h4>
+                  <h4 class="card-title">리스크 상세 정보[${param.r_no}]</h4>
                 </div>
                 <div class="card-body">
+                 
+                 <div class="row">
+                    <label class="col-sm-2 col-form-label">리스크번호</label>
+                    <div class="col-sm-7">
+                      <div class="form-group">
+                        <input name="r_no" class="form-control" value="${risk.r_no }" >
+                                              
+                      </div>
+                    </div>
+                    <label class="col-sm-3 label-on-right">
+                      <code>*필수</code>
+                    </label>
+                  </div>
+                  <div class="row">
+                    <label class="col-sm-2 col-form-label">작업번호</label>
+                    <div class="col-sm-7">
+                      <div class="form-group">
+                        <input name="j_no" class="form-control" value="${risk.j_no }" >
+                                              
+                      </div>
+                    </div>
+                    <label class="col-sm-3 label-on-right">
+                      <code>*필수</code>
+                    </label>
+                  </div>
                
                   <div class="row">
                     <label class="col-sm-2 col-form-label">제목</label>
                     <div class="col-sm-7">
                       <div class="form-group">
-                        <input class="form-control" value="${riskDetail.name }">
-                       
+                        <input name="r_name" class="form-control" value="${risk.r_name }">
+                                              
                       </div>
                     </div>
                     <label class="col-sm-3 label-on-right">
@@ -59,10 +85,10 @@
                   </div>
                   
                      <div class="row">
-                    <label class="col-sm-2 col-form-label">프로젝트 명</label>
+                    <label class="col-sm-2 col-form-label">등록자</label>
                     <div class="col-sm-7">
                       <div class="form-group">
-                       <input class="form-control" value="${riskDetail.j_name }">
+                       <input name="r_send" class="form-control" value="${risk.r_send }">
                       </div>
                     </div>
                     <label class="col-sm-3 label-on-right">
@@ -74,56 +100,21 @@
                     <label class="col-sm-2 col-form-label">리스크 내용</label>
                     <div class="col-sm-7">
                       <div class="form-group">
-                        <input class="form-control" type="text" name="content" value="${riskDetail.r_content }"/>
+                       <textarea name="r_content" rows="10" class="form-control" placeholder="내용을 입력하세요">
+                        ${risk.r_content }</textarea>
                       </div>
                     </div>
                     <label class="col-sm-3 label-on-right">
                       <code></code>
                     </label>
                   </div>
-                  <div class="row">
-                    <label class="col-sm-2 col-form-label">첨부파일</label>
-                    <div class="col-sm-7">
-                      <div class="form-group">
-                        <input class="form-control" type="url" name="name"  value="${riskDetail.r_file }"
-                        required placeholder="첨부파일등록"/>
-                      </div>
-                    </div>
-                    <label class="col-sm-3 label-on-right">
-                      <code></code>
-                    </label>
-                  </div>
-                  <div class="row">
-                    <label class="col-sm-2 col-form-label">조치자</label>
-                    <div class="col-sm-7">
-                      <div class="form-group">
-                        <input class="form-control" type="url" name="name" value="${riskDetail.r_send }"/>
-                     
-                      </div>
-                    </div>
-                    <label class="col-sm-3 label-on-right">
-                      <code>*필수</code>
-                    </label>
-                  </div>
-                  
-                   <div class="row">
-                    <label class="col-sm-2 col-form-label">조치 내용</label>
-                    <div class="col-sm-7">
-                      <div class="form-group">
-                        <input class="form-control" type="url" name="name" value="${riskDetail.r_rcontent }"/>
-                     
-                      </div>
-                    </div>
-                    <label class="col-sm-3 label-on-right">
-                      <code>*필수</code>
-                    </label>
-                  </div>
-                  
+                
                    <div class="row">
                     <label class="col-sm-2 col-form-label">등록일</label>
                     <div class="col-sm-7">
                       <div class="form-group">
-                         <input type="text" class="form-control datetimepicker" value="${riskDetail.r_regdate}" >
+                    
+                         <input type="text" name="r_regdate" class="form-control" value="<fmt:formatDate value="${risk.r_regdate}"/>" />
                       </div>
                     </div>
                     <label class="col-sm-3 label-on-right">
@@ -134,7 +125,7 @@
                     <label class="col-sm-2 col-form-label">리스크 상태</label>
                     <div class="col-sm-3">
                       <div class="form-group">
-                        <input class="form-control" type="url" name="name" value="${riskDetail.rs_name }"/>
+                        <input class="form-control" type="text" name=rs_name value="${risk.rs_name }"/>
                       </div>
                     </div>
                     
@@ -146,27 +137,73 @@
                   </div>
                   
                 </div>
-                </form>
+               
                 <div class="card-footer text-center">
-                  <button type="submit" class="btn btn-primary">수정</button>
+                    <button type="submit" id="insBtn" class="btn btn-primary">조치내용 등록</button>
                   &nbsp; &nbsp;    
-                  <a href="a03_riskInsert.jsp">
-                   <button type="submit" class="btn btn-primary">삭제</button></a>
+                 
+                  <button type="submit" id="uptBtn" class="btn btn-primary">수정</button>
+                  &nbsp; &nbsp;    
+                 
+                   <button  id="delBtn" class="btn btn-primary">삭제</button>
                 </div>
               </div>
+              </form>
             </div>
+             
           </div>
           <div class="col-md-12">
           
           </div>
+          
         </div>
+         
       </div>
       
-    </div>
-  </div>
+   
   <%@ include file="../a01_main/plugin.jsp" %>
  <%@ include file="../a01_main/bootstrapBottom.jsp" %>
+ <script type="text/javascript">
  
+ $(document).ready(function(){
+	 $("#insBtn").click(function(){
+		 	alert("조치내용 등록 화면으로 이동합니다.");
+	 });
+	 
+	 
+    $("#uptBtn").click(function(){
+    	var r_send = $("[name=r_send]").val();
+    	if(confirm("수정하시겠습니까?")){
+    		$("[name=proc]").val("upt");
+    		$("form").attr("action","${path}/zenkit.do?method=update");
+    		$("form").submit();
+    	}
+    });
+    
+    $("#delBtn").click(function(){
+    	var r_send = $("[name=r_send]").val();
+    	
+    	if(confirm("삭제하시겠습니까?")){
+    	$("[name=proc]").val("del");
+    	//   alert($("[name=r_no]").val());
+    	
+    	 $("form").attr("action","${path}/zenkit.do?method=delete");
+    	 $("form").submit();
+    	}
+    });
+    
+   var proc="${param.proc}";
+    if(proc=="upt"){
+    	if(confirm("수정되었습니다.\n 조회 화면으로 이동하시겠습니까?")){
+    		$(location).attr("href","${path}/zenkit.do?method=riskList");
+    	}
+    }
+    if(proc=="del"){
+    	alert("삭제되었습니다.\n 조회화면으로 이동합니다.");
+	   $(location).attr("href","${path}/zenkit.do?method=riskList");
+      }
+ });
+ 
+ </script>
 </body>
-
 </html>

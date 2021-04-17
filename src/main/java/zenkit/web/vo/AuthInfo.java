@@ -3,10 +3,12 @@ package zenkit.web.vo;
 
 // zenkit.web.vo.AuthInfo
 public class AuthInfo extends Auth {
+	private int cnt;
 	private int req_no;
 	private String req_name;
 	private int res_no;
 	private String res_name;
+	private int p_no;
 	private String pro_name;
 	private String job_name;
 	
@@ -18,7 +20,12 @@ public class AuthInfo extends Auth {
 		this.pro_name = pro_name;
 		this.job_name = job_name;
 	}
-
+	public int getCnt() {
+		return cnt;
+	}
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 	public int getReq_no() {
 		return req_no;
 	}
@@ -54,11 +61,15 @@ public class AuthInfo extends Auth {
 	public String getPro_name() {
 		return pro_name;
 	}
-
+	public int getP_no() {
+		return p_no;
+	}
+	public void setP_no(int p_no) {
+		this.p_no = p_no;
+	}
 	public void setPro_name(String pro_name) {
 		this.pro_name = pro_name;
 	}
-
 	public String getJob_name() {
 		return job_name;
 	}

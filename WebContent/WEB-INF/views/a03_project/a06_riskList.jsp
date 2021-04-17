@@ -37,7 +37,7 @@
 
       <!-- End Navbar -->
       <div class="content">
-     <%@ include file="project_header.jsp"%>
+      
         <div class="col-md-8 ml-auto mr-auto">
         
           <h2 class="text-center"></h2>
@@ -45,9 +45,9 @@
            
             <a href="#" target="_blank"></a>
                     
-          <a href="${path}/riskInsert.do">
+         
            <button type="button" id="insertBtn" class="btn btn-primary">
-            리스크 등록</button></a>
+            리스크 등록</button>
             
           </p>
         </div>
@@ -57,7 +57,7 @@
               <div class="card-body">
                 <div class="toolbar">
                   <!--        Here you can write extra buttons/actions for the toolbar              -->
-                  <!-- 영문을 모르겠어서 한땀한땀  -->
+                  <!-- 영문을 모르겠어서 한땀한땀 
                   <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
                    <div class="row">
                     <div class="dataTables_length" id="datatable_length">
@@ -76,7 +76,7 @@
                    </div>
                   </div>
                 </div>
-                
+                 -->
                 
                 <div class="col-sm-12 col-md-6">
                  <div id="datatable_filter" class="dataTables_filter">
@@ -90,34 +90,33 @@
                 </div>
                 <table id="datatable" class="table table-striped">
                   <thead>
-                    <tr>
+                    <tr class="text-center data" >
                      
                       <th>제목(리스크명)</th>
-                      <th>프로젝트 명</th>
                       <th>리스크 상태</th>
-                      <th>제기자</th>
-                      <th>조치자</th>
+                      <th>등록자</th>
                       <th>등록일</th>
-                      <th></th>
+                     
                     </tr>
                   </thead>
                   <tbody>
+                 
                   <c:forEach var="risk" items="${riskList }">
-                    <tr>
+                    <tr class="text-center data" id="${risk.r_no}">
+                    
+                      <td>${risk.r_name}</td>
+                      <td>${risk.rs_name }</td>
+                      <td>${risk.r_send}</td>            
+                      <td><fmt:formatDate value="${risk.r_regdate}"/>
+                      </td>
                      
-                      <td><a href="${path}/riskDetail.do?R_NO=21">${risk.r_name}</a></td>
-                      <td><a href="${path}/riskDetail.do">${risk.j_name }</a></td> 
-                      <td><a href="${path}/riskDetail.do">${risk.rs_name }</a></td>
-                      <td><a href="${path}/riskDetail.do">${risk.r_send}</a></td>
-                      <td><a href="${path}/riskDetail.do">${risk.r_receive}</a></td>
-                      <td><a href="${path}/riskDetail.do"><fmt:formatDate value="${risk.r_regdate}"/>
-                      </a></td>
-                      <td><a href="${path}/riskDetail.do">삭제</a>
                     </tr>
+                    
                     </c:forEach>
                    
-                
+                </tbody>
                 </table>
+                
               </div>
               <!-- end content-->
             </div>
@@ -132,13 +131,20 @@
   </div>
  <%@ include file="../a01_main/plugin.jsp" %>
  <%@ include file="../a01_main/bootstrapBottom.jsp" %>
+
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#insertBtn").click(function(){
-		location.href="${path}/riskInsert"
+		location.href="${path}/zenkit.do?method=riskInsertForm"
 	});
 	$("#detailBtn").click(function(){
 		location.href="${path}/detailRisk"
+	});
+	$(".data").dblclick(function(){
+		var r_no=$(this).attr("id");
+		console.log(r_no);
+		
+		location.href="${path}/zenkit.do?method=detail&r_no="+r_no;
 	});
 });
 </script>

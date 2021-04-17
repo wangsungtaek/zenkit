@@ -10,11 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sun.jdi.Location;
+
+import zenkit.web.dto.JobSch;
 import zenkit.web.service.A03_JobService;
+import zenkit.web.vo.Gantt;
 import zenkit.web.vo.Job;
+import zenkit.web.vo.User;
 
 @Controller
 @RequestMapping("/job.do")
@@ -23,104 +29,107 @@ public class A03_JobController {
 	@Autowired(required = false)
 	A03_JobService service;
 
+	/* 완료율 리스트 생성. */
 	@ModelAttribute("completeN")
 	public List<Double> rate() {
 		return Arrays.asList(0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0);
 	}
 
+	/* 페이지 단위 */
 	@ModelAttribute("pageO")
-	public List<String> tools(){
+	public List<String> tools() {
 		return Arrays.asList("5", "10", "15", "20");
 	}
-	
-	// http://localhost:8080/zenkit/job.do?method=data
+
+	/* Gantt 차트용 json데이터 */
+	// http://localhost:7080/zenkit/job.do?method=data
 	@RequestMapping(params = "method=data")
-	public String jobData(Job job, Model m, HttpServletRequest request) {
+	public String jobData(Model m, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		int p_no = (int)session.getAttribute("p_no");
+		int p_no = (int) session.getAttribute("p_no");
 		m.addAttribute("job", service.jobList(p_no));
 		return "pageJsonReport";
 	}
-	
-	// http://localhost:8080/zenkit/job.do?method=data2
-	@RequestMapping(params = "method=data2")
-	public String jobData2(Job job, Model m, HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int p_no = (int)session.getAttribute("p_no");
-		m.addAttribute("job", service.jobList2(p_no));
-		return "pageJsonReport";
-	}
 
-	// http://localhost:8080/zenkit/job.do?method=job
+	/* 작업 gantt 페이지 */
+	// http://localhost:7080/zenkit/job.do?method=job
 	@RequestMapping(params = "method=job")
 	public String job() {
 		return "a03_project/a04_Job";
 	}
 
-	// http://localhost:8080/zenkit/job.do?method=list
+	/* 작업 게시판 페이지 */
+	// http://localhost:7080/zenkit/job.do?method=list
 	@RequestMapping(params = "method=list")
-	public String joblist(Model d, HttpServletRequest request) {
+	public String joblist2(@ModelAttribute("sch") JobSch sch, Model d, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		int p_no = (int)session.getAttribute("p_no");
-		d.addAttribute("count", service.jobcount(p_no));
-		d.addAttribute("joblist", service.jobList2(p_no));
+		int p_no = (int) session.getAttribute("p_no");
+		sch.setP_no(p_no);
+		d.addAttribute("people", service.jobPeople(p_no)); // 해당 프로젝트에 참여하고 있는 인원들 데이터
+		d.addAttribute("count", service.totcount(sch)); // 해당 프로젝트별 작업 총 갯수 데이터
+		d.addAttribute("joblist", service.jobList2(sch)); // 게시판용 작업 데이터
 		return "a03_project/a04_JobCRUD";
 	}
 
-	// http://localhost:8080/zenkit/job.do?method=detail
+	/* 작업상세페이지 */
+	// http://localhost:7080/zenkit/job.do?method=detail
 	@RequestMapping(params = "method=detail")
-	public String jobDetail(@RequestParam int no, Model d, HttpServletRequest request) {
+	public String jobDetail(@RequestParam int no, Model d, HttpServletRequest request,
+			@ModelAttribute("sch") JobSch sch) {
 		HttpSession session = request.getSession();
-		int p_no = (int)session.getAttribute("p_no");
-		
-		d.addAttribute("people", service.jobPeople(p_no));
-		
-		d.addAttribute("parentJob", service.parentjob(no));
-		
-		d.addAttribute("joblist", service.jobList2(p_no));
-		
-		d.addAttribute("jobdetail", service.jobDetail(no));
+		int p_no = (int) session.getAttribute("p_no");
+		d.addAttribute("project", service.projectGet(p_no)); // 특정 프로젝트 정보 데이터 (PM인지 예외처리할때 사용)
+		d.addAttribute("people", service.jobPeople(p_no)); // 특정 프로젝트에 참여한 참여인원들의 정보[담당자 select할때 사용(번호,이름)]
+		d.addAttribute("parentJob", service.parentjob(no)); // 특정 작업의 상위작업 데이터 (상위작업 Part에 작업명표시를 위해)
+		d.addAttribute("jobdetail", service.jobDetail(no)); // 특정 작업 데이터
 		return "a03_project/a04_JobDetail";
 	}
 
-	// http://localhost:8080/zenkit/job.do?method=insertForm
+	/* 작업 등록 페이지 */
+	// http://localhost:7080/zenkit/job.do?method=insertForm
 	@RequestMapping(params = "method=insertForm")
-	public String jobInsertF(@ModelAttribute("job") Job job, Model d, HttpServletRequest request) {
+	public String jobInsertF(@ModelAttribute("job") JobSch sch, Model d, HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		int p_no = (int)session.getAttribute("p_no");
-		d.addAttribute("project", service.projectGet(p_no));
-		d.addAttribute("people", service.jobPeople(p_no));
-		d.addAttribute("joblist", service.jobList2(p_no));
+		int p_no = (int) session.getAttribute("p_no");
+		sch.setP_no(p_no);
+		d.addAttribute("project", service.projectGet(p_no)); // 특정 프로젝트 정보 데이터 (PM인지 예외처리할때 사용, 프로젝트명 select을 위해 사용)
+		d.addAttribute("people", service.jobPeople(p_no)); // 특정 프로젝트에 참여한 참여인원들의 정보[담당자 select할때 사용(번호,이름)]
+		d.addAttribute("joblist", service.jobList2(sch)); // 프로젝트의 데이터가져오기( 상위 작업 목록 데이터 select을 위해 사용)
 		return "a03_project/a04_JobInsert";
 	}
 
-	// http://localhost:8080/zenkit/job.do?method=insert
+	/* 작업 등록 처리 */
+	// http://localhost:7080/zenkit/job.do?method=insert
 	@RequestMapping(params = "method=insert")
-	public String jobInsert(@ModelAttribute("job") Job job, Model d, HttpServletRequest request) {
-		System.out.println(job.getJ_startD());
-		System.out.println(job.getJ_endD());
+	public String jobInsert(Job job, Model d, HttpServletRequest request) {
 		service.jobInsert(job);
-		HttpSession session = request.getSession();
-		int p_no = (int)session.getAttribute("p_no");
-		System.out.println("테스트1");
-		d.addAttribute("joblist", service.jobList2(p_no));
-		System.out.println("테스트2");
 		d.addAttribute("proc", "insert");
-		System.out.println("테스트3");
-		return "a03_project/a04_JobInsert";
+		return "forward:/job.do?method=insertForm";
 	}
-	// http://localhost:8080/zenkit/job.do?method=update
+
+	/* 작업 업데이트 처리 */
+	// http://localhost:7080/zenkit/job.do?method=update
 	@RequestMapping(params = "method=update")
-	public String jobUpdate(@ModelAttribute("job") Job job, Model d) {
-		service.jobUpdate(job);
-		service.TopjobcomR(job.getJ_refno());
-		d.addAttribute("proc", "update");
+	public String jobUpdate(Job job, Model d) {
+		service.jobUpdate(job); // 작업데이터 업데이트 처리
+		service.TopjobcomR(job.getJ_refno()); // 업데이트된 완료율 상위작업에 적용 처리
+		d.addAttribute("proc", "update"); // update 처리시 list이동
 		return "a03_project/a04_JobDetail";
 	}
-	// http://localhost:8080/zenkit/job.do?method=update
+
+	/* 작업 삭제처리 */
+	// http://localhost:7080/zenkit/job.do?method=delete
 	@RequestMapping(params = "method=delete")
-	public String jobDelete(Job job) {
-		service.jobDelete(job.getJ_no());
-		return "forward:/job.do?method=list";
+	public String jobDelete(Job job, Model d) {
+		service.jobDelete(job.getJ_no()); // 작업 데이터 삭제 처리
+		d.addAttribute("proc", "delete"); // delete 처리시 list이동
+		return "a03_project/a04_JobDetail";
 	}
+
+	// http://localhost:7080/zenkit/job.do?method=update2
+	@RequestMapping(params = "method=update2")
+	public void jobUpdate2(Gantt g, Model d) {
+		service.jobUpdate2(g);
+	}
+
 }

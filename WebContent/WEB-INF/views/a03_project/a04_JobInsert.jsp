@@ -27,13 +27,71 @@
 </style>
 <script>
 	$(document).ready(function() {
+		
+		var pm = "${project.p_pm}";
+		var user = "${sesMem.u_id}";
+		if(pm != user){
+			alert("작업 등록 권한이 없습니다. \n조회페이지로 이동하겠습니다.");
+			location.href="${path}/job.do?method=list";
+		}
+		
 		$("#backpage").on("click",function(){
 			location.href="${path}/job.do?method=list";
 			return false;
 		});
 		
+		$("[name=j_name]").keyup(function(event){
+			if($("[name=j_name]").val().length > 0){
+				$("[name=j_name]").attr("style", "border-color:none;");
+			}else{
+				$("[name=j_name]").attr("style", "border-color:red;");
+			}
+		});
+		
+		$("[name=j_content]").keyup(function(event){
+			if($("[name=j_content]").val().length > 0){
+				$("[name=j_content]").attr("style", "border-color:none; width: 99%; height: 200px;");
+			}else{
+				$("[name=j_content]").attr("style", "border-color:red; width: 99%; height: 200px;");
+			}
+		});
+		
+		$("[name=j_startD]").keyup(function(event){
+			if($("[name=j_startD]").val().length > 0){
+				$("[name=j_startD]").attr("style", "border-color:none;");
+			}else{
+				$("[name=j_startD]").attr("style", "border-color:red;");
+			}
+		});
+		
+		$("[name=j_endD]").keyup(function(event){
+			if($("[name=j_endD]").val().length > 0){
+				$("[name=j_endD]").attr("style", "border-color:none;");
+			}else{
+				$("[name=j_endD]").attr("style", "border-color:red;");
+			}
+		});
+		
 		$("#regBtn").on("click",function(){
-			$("form").submit();
+			if($("[name=j_name]").val() == "") {
+				alert("작업명을 입력해 주세요");
+				$("[name=j_name]").attr("style", "border-color:red;")
+				return false;
+			}else if($("[name=j_content]").val() == ""){
+				$("[name=j_content]").attr("style", "border-color:red; width: 99%; height: 200px;")
+				alert("작업설명을 입력해 주세요");
+				return false;
+			}else if($("[name=j_startD]").val() == ""){
+				$("[name=j_startD]").attr("style", "border-color:red;")
+				alert("시작일을 선택해 주세요");
+				return false;
+			}else if($("[name=j_endD]").val() == ""){
+				$("[name=j_endD]").attr("style", "border-color:red;")
+				alert("종료일을 선택해 주세요");
+				return false;
+			}else{
+				$("form").submit();	
+			}
 		})
 		
 		var proc="${proc}";
@@ -44,6 +102,7 @@
 			}
 		};
 		$("#jobBtn").attr("class", "btn btn-primary");
+	
 		
 	});
 </script>
@@ -70,6 +129,9 @@
 							</div>
 							<div class="card-body">
 								<form method="post" class="form-horizontal" action="${path}/job.do?method=insert">
+									<c:forEach var="job" items="${joblist}" varStatus="sts" >
+										<input type="hidden" class="a${sts.count}" value="${job.j_no}"/> 
+									</c:forEach>
 									<!-- <input type="hidden" name="status" value=""/> -->
 									<div class="row">
 										<label class="col-sm-2 col-form-label"> 
@@ -77,7 +139,7 @@
 										</label>
 										<div class="col-sm-1">
 											<div class="form-group">
-												<input type="text" class="form-control" readonly="readonly" value="${job.j_no }">
+												<input type="text" class="form-control" value="Auto" readonly>
 											</div>
 										</div>
 										<label class="col-sm-1 col-form-label"> 
@@ -156,13 +218,13 @@
 										<label class="col-sm-3 col-form-label">시작날짜</label>
 										<div class="col-sm-2">
 											<div class="form-group">
-												<input type="text" class="form-control datepicker" name="j_startD" >
+												<input type="text" class="form-control datepicker" name="j_startD" placeholder="시작날짜를 선택해주세요">
 											</div>
 										</div>
 										<label class="col-sm-5 col-form-label">종료날짜</label>
 										<div class="col-sm-2">
 											<div class="form-group">
-												<input type="text" class="form-control datepicker" name="j_endD">
+												<input type="text" class="form-control datepicker" name="j_endD" placeholder="종료날짜를 선택해주세요">
 											</div>
 										</div>
 										<label class="col-sm-2 col-form-label">완료율</label>

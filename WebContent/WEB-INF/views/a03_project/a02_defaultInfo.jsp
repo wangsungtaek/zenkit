@@ -22,9 +22,6 @@
 		$("#uptBtn").click(function(){
 			location.href="${path}/proInfo_Edit.do?p_no="+${proInfo.p_no};
 		});
-		$("#canBtn").click(function(){
-			location.href="";
-		});
 		$("#delBtn").click(function(){
 			if(confirm("프로젝트를 삭제하시겠습니까?")){
 				location.href="${path}/delproInfo.do?p_no="+${proInfo.p_no};
@@ -87,15 +84,15 @@
       						</div>
       				</div>
       				<br><br><br><br>
+      				<c:if test="${sesMem.pos_no == 3}">
       				<div class="card-footer">
       					<button class="btn btn-success" id="uptBtn">
       						<span><i class="tim-icons icon-pencil" style="margin-top:-5px"></i> 수정</span></button>
-      					<button class="btn" id="canBtn">
-      						<i class="tim-icons icon-refresh-01" style="margin-top:-5px"></i> 취소</button>
       					<button class="btn btn-danger" id="delBtn"
       						style="float:right">
       					 	<i class="tim-icons icon-simple-remove"></i> Delete</button>
       				</div>
+      				</c:if>
       			</div>
       		</div>
         </div>

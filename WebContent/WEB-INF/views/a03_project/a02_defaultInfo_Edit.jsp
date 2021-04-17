@@ -20,38 +20,42 @@
 	
 	$(document).ready(function(){
 		$("#canBtn").click(function(){
-			location.href="${path}/proInfo.do?p_no"+${proInfo.p_no};
+			location.href="${path}/proInfo.do?p_no="+${proInfo.p_no};
 		});
 		$("#strBtn").click(function(){
-			location.href="";
+			if(confirm("수정하시겠습니까?")){
+				if($("[name=p_name]").val()=="" || $("[name=p_name]").val()==null ){
+					alert("제목을 입력해주세요");
+					return false;
+				}
+				if($("[name=p_content]").val()=="" || $("[name=p_content]").val()==null){
+					alert("내용을 입력해주세요");
+					return false;
+				}
+				$("[name=proc]").val("upt");
+				$("#frm").attr("action","${path}/uptProInfo.do");
+				$("#frm").submit();
+			}
 		});
+		<%--
+		var proc="${param.proc}";
+		if(proc=="upt"){
+			if(confirm("수정되었습니다!\n 조회화면으로 이동합니다.")){
+				location.href="${path}/proInfo.do?p_no="+${proInfo.p_no};
+			}
+		}
+		--%>
 		$("#delBtn").click(function(){
 			if(confirm("프로젝트를 삭제하시겠습니까?")){
+				$("[name=proc]").val("del");
 				location.href="${path}/delproInfo.do?p_no="+${proInfo.p_no};
 			}
 		});
-		$("#deptselect").change(function(){
-			$.ajax({
-				type:"post",
-				url:"${path}/jsonUser.do?d_no="+$(this).attr("option","selected").val(), 
-				dataType:"json",
-				success:function(data){
-					console.log(data.ulist);
-					var list=data.ulist;
-					var show="";
-					show+="<option disabled selected>사원 선택</option>";
-					$.each(list,function(idx,ul,arry){
-					 	alert(ul.u_no+":"+ul.u_name);
-						show+="<option value='"+ul.u_no+"'>"+ul.u_name+"</option>";
-					});
-					$("#userselect").html(show);
-				},
-				error:function(err){
-					alert("에러발생");
-					console.log(err);
-				}  
-			});
-		});
+		<%--
+		if(proc=="del"){
+			alert("삭제되었습니다!\n 조회화면으로 이동합니다.");
+		}
+		--%>
 	});
 	
 
@@ -74,7 +78,8 @@
       					<h3 class="card-title">프로젝트 등록 정보</h3>
       				</div>
       				<div class="card-body">
-      					<form action="${path}/uptProInfo.do" method="post">
+      					<form method="post" id="frm">
+      						<input type="hidden" name="proc"/>
       						<div class="form-group">
       							<div class="row">
 		      						<label class="col-md-6" style="font-size:14px;">프로젝트명</label>
@@ -82,10 +87,10 @@
 	      						</div>
 	      						<div class="row">
 		      						<div class="col-md-6 form-group">
-		      							<input type="text" class="form-control" value="${proInfo.p_name}" style="color:white;" readonly>
+		      							<input id="p_name" name="p_name" type="text" class="form-control" value="${proInfo.p_name}" style="color:white;">
 		      						</div>
 		      						<div class="col-md-6 form-group">
-		      							<input type="text" class="form-control" value="${proInfo.p_no}" style="color:white;" readonly>
+		      							<input type="text" name="p_no" class="form-control" value="${proInfo.p_no}" style="color:white;" readonly>
 		      						</div>
 	      						</div>
 	      						<div class="row">
@@ -94,28 +99,19 @@
 	      						<div class="row">
 		      						<div class="col-md-3 form-group">
 		      							<div class="dropdown bootstrap-select">
-			      							<select class="selectpicker" data-size="5" data-style="btn btn-primary"
-			      								tabindex="-98" id="deptselect">
-			      								<option disabled selected>부서 선택</option>
-			      								<c:forEach var="d" items="${departments}">
-													<option value="${d.d_no}">${d.d_name}</option>
-												</c:forEach>
-			      							</select>
+			      							<input type="text" name="d_name" class="form-control" value="${proInfo.d_name}" style="color:white;" readonly>
 		      							</div>
 		      						</div>
 		      						<div class="col-md-3 form-group">
 		      							<div class="dropdown bootstrap-select">
-			      							<select class="selectpicker" data-size="5" data-style="btn btn-primary"
-			      								tabindex="-98" id="userselect">
-			      								<option disabled selected>사원 선택</option>
-			      							</select>
+			      							<input type="text" name="u_name" class="form-control" value="${proInfo.u_name}" style="color:white;" readonly>
 		      							</div>
 		      						</div>
 	      						</div>
 	      						<div class="row">
 		      						<label class="col-md-6" style="font-size:14px;">프로젝트 설명</label>
 		      						<div class="form-group col-md-12">
-		      							<textarea class="form-control pinfo_textarea" rows="5"
+		      							<textarea id="p_content" name="p_content" class="form-control pinfo_textarea" rows="5"
 		      								style="max-height: 120px;">${proInfo.p_content}</textarea>
 		      						</div>
 	      						</div>
@@ -124,7 +120,7 @@
       				</div>
       				<br><br><br><br>
       				<div class="card-footer">
-      					<button type="submit" class="btn btn-success" id="strBtn">
+      					<button type="button" class="btn btn-success" id="strBtn">
       						<span><i class="tim-icons icon-check-2" style="margin-top:-5px"></i> 저장</span></button>
       					<button class="btn" id="canBtn">
       						<span><i class="tim-icons icon-refresh-01" style="margin-top:-5px"></i> 취소</span></button>

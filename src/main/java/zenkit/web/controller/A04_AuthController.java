@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import zenkit.web.dto.AuthSch;
 import zenkit.web.service.A04_AuthService;
 import zenkit.web.vo.AuthInfo;
+import zenkit.web.vo.Job;
 import zenkit.web.vo.User;
 
 @Controller
@@ -24,8 +26,7 @@ public class A04_AuthController {
 	
 	// http://localhost:7080/zenkit/authIng.do
 	@RequestMapping("authIng.do")
-	public String authIngList(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
-		System.out.println("유저번호, 이름 : " + user.getU_no() + user.getU_name());
+	public String authIngList(@ModelAttribute("sch") AuthSch sch, @SessionAttribute("sesMem") User user, Model d) {
 		sch.setRes_no(user.getU_no());
 		sch.setA_name("승인중");
 		d.addAttribute("authList", service.authListPm(sch));
@@ -35,7 +36,7 @@ public class A04_AuthController {
 	
 	// http://localhost:7080/zenkit/authApp.do
 	@RequestMapping("authApp.do")
-	public String authAppList(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
+	public String authAppList(@ModelAttribute("sch") AuthSch sch, @SessionAttribute("sesMem") User user, Model d) {
 		sch.setRes_no(user.getU_no());
 		sch.setA_name("승인완료");
 		d.addAttribute("authList", service.authListPm(sch));
@@ -45,7 +46,7 @@ public class A04_AuthController {
 	
 	// http://localhost:7080/zenkit/authRej.do
 	@RequestMapping("authRej.do")
-	public String authRejList(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
+	public String authRejList(@ModelAttribute("sch") AuthSch sch, @SessionAttribute("sesMem") User user, Model d) {
 		sch.setRes_no(user.getU_no());
 		sch.setA_name("반려");
 		d.addAttribute("authList", service.authListPm(sch));
@@ -55,7 +56,7 @@ public class A04_AuthController {
 	
 	// http://localhost:7080/zenkit/authReq.do
 	@GetMapping("authReq.do")
-	public String authReqList(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
+	public String authReqList(@ModelAttribute("sch") AuthSch sch, @SessionAttribute("sesMem") User user, Model d) {
 		sch.setReq_no(user.getU_no());
 		if(sch.getA_name()==null) {
 			sch.setA_name("");
@@ -66,7 +67,7 @@ public class A04_AuthController {
 	}
 	
 	@PostMapping("authReq.do")
-	public String authReqList2(@ModelAttribute("sch") AuthInfo sch, @SessionAttribute("sesMem") User user, Model d) {
+	public String authReqList2(@ModelAttribute("sch") AuthSch sch, @SessionAttribute("sesMem") User user, Model d) {
 		sch.setReq_no(user.getU_no());
 		d.addAttribute("authList", service.authList(sch));
 		return "a04_auth\\authReq";
@@ -77,7 +78,15 @@ public class A04_AuthController {
 	public String ajaxModal(@RequestParam(value="j_no") int j_no,
 					@RequestParam(value="a_no") int a_no, Model d) {
 		d.addAttribute("jobInfo", service.getJobInfo(j_no));
-		d.addAttribute("authInfo", service.getAuthInfo(a_no));
+		AuthInfo auth = service.getAuthInfo(a_no);
+		if(auth.getA_requestN()!=null) {
+			auth.setA_requestN(auth.getA_requestN().replace("\n", "<br>"));
+		}
+		System.out.println(auth.getA_requestN());
+		if(auth.getA_resultN()!=null) {
+			auth.setA_resultN(auth.getA_resultN().replace("\n", "<br>"));
+		}
+		d.addAttribute("authInfo", auth);
 		d.addAttribute("outputs", service.getOutputInfo(j_no));
 		return "pageJsonReport";
 	}
@@ -101,15 +110,15 @@ public class A04_AuthController {
 	
 	// http://localhost:7080/zenkit/apprej.do?a_no=12&a_resultN="승인합니다"&a_name="승인완료"
 	@RequestMapping("apprej.do")
-	public String approve(@RequestParam(value="a_no") int a_no,
-				@RequestParam(value="a_resultN") String a_resultN,
-				@RequestParam(value="a_name") String a_name) {
-		AuthInfo upt = new AuthInfo();
-		upt.setA_no(a_no);
-		upt.setA_resultN(a_resultN);
-		upt.setA_name(a_name);
+	public String approve(AuthInfo upt) {
+		System.out.println("AuthInfo : " + upt.getA_resultN());
 		service.chAppRej(upt);
-		
+		if(upt.getA_name().equals("승인완료")) {
+			Job chJob = new Job();
+			chJob.setJ_no(upt.getJ_no());
+			chJob.setJ_completeR((double)upt.getA_requestP()/100);
+			service.chJobComple(chJob);
+		}
 		return "pageJsonReport";
 	}
 }

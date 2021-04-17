@@ -1,5 +1,8 @@
 package zenkit.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import zenkit.web.service.A02_CalendarService;
 import zenkit.web.vo.Calendar2;
+import zenkit.web.vo.User;
 @Controller
 @RequestMapping("calendar.do")
 public class A02_CalendarController {
@@ -25,8 +29,11 @@ public class A02_CalendarController {
 	
 	// http://localhost:7080/zenkit/calendar.do?method=data 
 	@GetMapping(params="method=data")
-	public String data(Model d) {
-		d.addAttribute("list",service.calenList());
+	public String data(Model d, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("sesMem");
+		d.addAttribute("list",service.calenList(user.getU_no()));
+		
 		return "pageJsonReport";
 	}
 	// 등록 후, 정상된 것을 model로 넘겨준다.

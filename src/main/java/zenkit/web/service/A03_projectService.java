@@ -13,8 +13,9 @@ import zenkit.web.dto.AddResource;
 import zenkit.web.dto.JobStateCnt;
 import zenkit.web.dto.ResourceName;
 import zenkit.web.dto.RiskStateCnt;
+import zenkit.web.dto.SchProject;
 import zenkit.web.vo.Gantt;
-import zenkit.web.vo.Job;
+import zenkit.web.vo.Job2;
 import zenkit.web.vo.Project;
 
 @Service
@@ -27,10 +28,10 @@ public class A03_projectService {
 	A03_JobDao jobDao;
 	
 	// 회원별 프로젝트 리스트
-	public ArrayList<Project> getProList(int u_no){
-		ArrayList<Project> pros = dao.getProList(u_no);
+	public ArrayList<Project> getProList(SchProject sch){
+		ArrayList<Project> pros = dao.getProList(sch);
 		for(Project p : pros) {
-			SimpleDateFormat sDate = new SimpleDateFormat("YYYY/MM/dd");
+			SimpleDateFormat sDate = new SimpleDateFormat("YYYY. MM. dd");
 			String startD = sDate.format(p.getP_startD());
 			String endD = sDate.format(p.getP_endD());
 			
@@ -38,6 +39,10 @@ public class A03_projectService {
 			p.setP_endD_s(endD);
 		}
 		return pros;
+	}
+	// 회원별 프로젝트 리스트 카운트
+	public int getProListCnt(SchProject sch) {
+		return dao.getProListCnt(sch);
 	}
 	
 	// 프로젝트 등록
@@ -111,7 +116,7 @@ public class A03_projectService {
 	}
 	
 	// 회원의 해당프로젝트의 작업 건 가져오기
-	public ArrayList<Job> getJobList(int p_no, int u_no){
+	public ArrayList<Job2> getJobList(int p_no, int u_no){
 		
 		HashMap<String, Integer> hm = new HashMap<String, Integer>();
 		
@@ -133,9 +138,9 @@ public class A03_projectService {
 		hm.put("u_no", u_no);
 		
 		// 작업 리스트 가져오기
-		ArrayList<Job> jobs =  dao.getJobList(hm);
+		ArrayList<Job2> jobs =  dao.getJobList(hm);
 		
-		for (Job j : jobs) {
+		for (Job2 j : jobs) {
 			String startD = sDate.format(j.getJ_startD());
 			String endD = sDate.format(j.getJ_endD());
 
@@ -159,9 +164,9 @@ public class A03_projectService {
 		int parentCnt = 0; // 최상위 작업 카운트
 		double parentProgress = 0; // 최상위 작업 진행률
 		double totProgress = 0; // 진행률
-		ArrayList<Job> jobs = jobDao.jobList(p_no);
+		ArrayList<Job2> jobs = jobDao.jobList3(p_no);
 		
-		for(Job j : jobs) {
+		for(Job2 j : jobs) {
 			// 최상위 작업일때,
 			if(j.getJ_refno() == 0) {
 				parentProgress += (j.getJ_completeR() * 100);

@@ -10,12 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import zenkit.web.service.A03_defaultInfoService;
+import zenkit.web.vo.A03_ProInfo;
 import zenkit.web.vo.Department;
-import zenkit.web.vo.User;
 
 @Controller
 public class A03_defaultInfoController {
@@ -53,12 +54,14 @@ public class A03_defaultInfoController {
 		service.delproInfo(p_no);
 		return "a03_project\\a00_projectList";
 	}
-	/*
 	@PostMapping("uptProInfo.do")
-	public void uptProInfo(@ModelAttribute("upt") A03_ProInfo upt) {
+	public String uptProInfo(A03_ProInfo upt, Model d, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		int a = (int)session.getAttribute("p_no");
 		service.uptProInfo(upt);
+		d.addAttribute("proInfo",service.proInfo(a));
+		return "a03_project\\a02_defaultInfo";
 	}
-	*/
 	@ModelAttribute("departments")
 	public ArrayList<Department> getDepartments(){
 		return service.getDepartments();

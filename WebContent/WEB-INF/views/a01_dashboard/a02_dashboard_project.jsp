@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE html>
@@ -9,18 +10,17 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
-<link rel="icon" type="image/png" href="../assets/img/favicon.png">
+<!-- <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
+<link rel="icon" type="image/png" href="../assets/img/favicon.png"> -->
 <title>zenkit</title>
 <%@ include file="../a01_main/bootstrapTop.jsp"%> 
 <style>
 html, body {
-	/* height: 100%;
-	padding: 0px;
-	margin: 0px;
-	overflow: hidden; */
-}
+	/* height: 100%;	padding: 0px;	margin: 0px;	overflow: hidden; */}
 </style>
+<script type="text/javascript" src="${path}/a00_com/jquery-3.5.1.js"></script>
+
+
 </head>
 <body class="sidebar-mini ">
 	<div class="wrapper">
@@ -28,46 +28,51 @@ html, body {
 		<div class="main-panel">			
 			<%@ include file="../a01_main/header.jsp"%>
 
-			<div class="content">
+			<div class="content">				
 				<div class="row">
 					<div class="col-lg-6 col-md-6">
 						<div class="card card-tasks">
 							<div class="card-header">
 								<h4 class="title" style="margin-bottom:-30px;">프로젝트 정보</h4>
-								<div class="col-md-3 " style="float:right; ">
-			                        <select class="selectpicker" data-size="7" data-style="btn btn-primary" title="Single Select">
-			                          <option disabled selected>프로젝트</option>
-			                          <option value="2">ECOBEAN</option>
-			                          <option value="3">GAMEFLIX</option>
-			                          <option value="4">PLO</option>
-			                          <option value="5">ZENKIT</option>
-			                        </select>
+								<div class="col-md-3 " style="float:right; ">									
+									<input type="hidden" name="p_no" value=""/>
+				                        <select class="selectpicker" data-size="5" data-style="btn btn-primary" 
+				                        	title="프로젝트 선택" id="projSelect" style="width:50px;">
+				                         <!--  <option disabled selected>프로젝트</option> -->
+				                          <c:forEach var="pn" items="${projNameList}">
+				                         	 <option value="${pn.p_no}">${pn.p_name}</option>
+				                          </c:forEach>
+				                        </select>
+			                       
 			                 	</div>
 							</div>
+
+							
 							<div class="card-body">
 								<div class="row mb-2">
 									<div class="col-md-12">
-										<h4>ZENKIT</h4>
+									 	<h3 id="pName"></h3>									 	
 									</div>
 								</div>
 								<div class="row mb-4">
 									<div class="col-md-3">
 										<h5>시작일</h5>
-										<div class="btn btn-info btn-sm">2021-03-23</div>
+										<div class="btn btn-info btn-sm" id="startD">
+										</div>
 									</div>
 									<div class="col-md-3">
 										<h5>종료일</h5>
-										<div class="btn btn-danger btn-sm">2021-04-21</div>
+										<div class="btn btn-danger btn-sm" id="endD">
+										</div>
 									</div>
 									<div class="col-md-6">
 										<h5 class="mb-2">Progress</h5>
 										<div class="progress-container">
 											<span class="progress-badge">&nbsp</span>
 											<div class="progress">
-												<div class="progress-bar" role="progressbar"
-													aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-													style="width: 25%;">
-													<span class="progress-value">25%</span>
+												<div class="progress-bar" role="progressbar" id="progressbar"
+													aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
+													<span class="progress-value" id="progress">%</span>
 												</div>
 											</div>
 										</div>
@@ -76,7 +81,7 @@ html, body {
 								<div class="row mb-2">
 									<div class="col-md-12">
 										<h5>PM</h5>
-										<p>홍길동과장</p>
+										<h5 id="pmName"></h5>										
 									</div>
 								</div>
 							</div>
@@ -92,99 +97,12 @@ html, body {
 								<div class="table-full-width table-responsive"
 									style="overflow: auto; max-height: 380px;">
 									<table class="table">
-										<thead>
+										<thead>							
 											<tr>
-												<th>이름</th>
-												<th>직급</th>
-												<th>직책</th>
-											</tr>
+												<th>이름</th><th>직급</th><th>직책</th>
+											</tr>											
 										</thead>
-										<tbody>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
-											<tr>
-												<td>홍길동</td>
-												<td>대리</td>
-												<td>개발자</td>
-											</tr>
+										<tbody id="resList">								
 										</tbody>
 									</table>
 								</div>
@@ -201,19 +119,9 @@ html, body {
 								<h4 class="title">주요 작업 현황</h4>
 							</div>
 
-							<div class="card-body row p-4 m-0">
-								<div class="col-md-2 bg-warning p-3">
-									<div class="progress-container">
-										<h4>요구사항 정의</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
-											</div>
-										</div>
-									</div>
-								</div>
+							<div class="card-body row p-4 m-0" >	
+							<div id="please" style="width:100%;"></div>								
+								<!-- 
 								<div class="col-md-2 bg-info p-3">
 									<div class="progress-container">
 										<h4>유스케이스 설계</h4>
@@ -226,18 +134,7 @@ html, body {
 										</div>
 									</div>
 								</div>
-								<div class="col-md-2 bg-danger p-3">
-									<div class="progress-container">
-										<h4>데이터베이스 설계</h4>
-										<div class="progress">
-											<div class="progress-bar" role="progressbar"
-												aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
-												style="width: 25%; background: white;">
-												<span class="progress-value">25%</span>
-											</div>
-										</div>
-									</div>
-								</div>
+								 -->
 							</div>
 							<!-- End of card-body -->
 
@@ -382,11 +279,71 @@ html, body {
 	<%@ include file="../a01_main/plugin.jsp"%>
 	<%@ include file="../a01_main/bootstrapBottom.jsp"%>
 	
-	<script>
+<script>
 	$(document).ready(function() {
 	      // Javascript method's body can be found in assets/assets-for-demo/js/demo.js
 	    	demo.initChartPageCharts();
-	    });
+
+			$('#projSelect').change(function(){			
+				$.ajax({
+					type:"post",
+					url:"${path}/jsonPlist.do?p_no="+$(this).attr("option","selected").val(), 
+					dataType:"json",
+					success:function(data){
+						
+						
+						// 프로젝트 대시보드 p_no별 프로젝트정보
+						var list = data.plist;	
+						console.log(list);
+						$.each(list, function(idx, pro, arry){
+							var pName = $("#pName").text(pro.p_name);
+							var pmName = $("#pmName").text(pro.p_pm);
+							var startD = $("#startD").text(pro.p_startD_s);
+							var endD = $("#endD").text(pro.p_endD_s);				
+							var progress = $("#progress").text(pro.percent+"%");
+							var progressbar = $("#progressbar").css("width",pro.percent+"%");
+							var p_name = $("#p_name").text();
+						});		
+						
+						// 프로젝트 대시보드 p_no별 참여인력(리소스) 
+						var rlist = data.rlist;
+						var show = "";
+						$.each(rlist, function(idx, res, arry){
+							show += "<tr><td>"+res.u_name+"</td>";
+							show += "<td>"+res.r_name+"</td>";
+							show += "<td>"+res.pos_name+"</td></tr>";
+						});
+						$('#resList').html(show);
+						
+						// 프로젝트 주요작업 현황 6개 
+						var jlists = data.jlist;
+						
+						console.log(jlists);						
+						for(var idx=0; idx<jlists.length ; idx++){	
+							//console.log(jlists[idx].j_name +" / "+jlists[idx].j_completer);
+							var jShow = "";
+							jShow += '<div class="col-md-2 bg-warning p-3" id="jobList'+idx+'" style="float:left;">';
+							jShow += '<div class="progress-container">';
+							jShow += '<h4>'+jlists[idx].j_name+'</h4>';
+							jShow += '<div class="progress">';
+							jShow += '<div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width:'+jlists[idx].j_completer+'%; background: white;">';
+							jShow += '<span class="progress-value">'+jlists[idx].j_completer+'%</span>';
+							jShow += '</div></div></div></div>';	
+							console.log("jShow : "+jShow);
+							// $('.card-body row p-4 m-0').append(jShow);
+							$("#please").append(jShow);
+						};
+											 
+
+					},					
+					error:function(err){
+						alert("에러발생");
+						console.log(err);
+					}					 
+				});						
+						
+			});
+
 		
 		gantt.init("gantt_here");
 		
@@ -401,6 +358,8 @@ html, body {
 				{id: 2, source: 2, target: 3, type: "0"}
 			]
 		});
+		
+    });
   </script>
 </body>
 

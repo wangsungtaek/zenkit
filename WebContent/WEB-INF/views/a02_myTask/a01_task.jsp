@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE html>
@@ -10,11 +11,20 @@
 <meta charset="utf-8" />
 <title>zenkit</title>
 <%@ include file="../a01_main/bootstrapTop.jsp"%> 
-
 <style>
 #projectRow:hover {
 	background: #1E1E28;
 	cursor: pointer;
+}
+.hidden {
+	display:none;
+	}
+.hjheight, .btn-app {
+	height:40px;
+	margin:0;
+}
+#no_task_tr {
+	height:300px;
 }
 </style>
 </head>
@@ -26,37 +36,40 @@
 			<!-- Start Content -->
 			<div class="content">
 				<%@ include file="my_task_header.jsp"%>
-				<div class="d-flex justify-content-end mb-2">
+				<div class="d-flex justify-content-end mb-3">
 				  <div class="col-md-3 " style="float:right;">
-                        <select class="selectpicker" data-size="5" data-style="btn btn-primary" title="Single Select">
-                          <option disabled selected>진행상태</option>
-                          <option value="2">시작 전</option>
-                          <option value="3">완료</option>
-                          <option value="4">진행</option>
+                        <select id="statesel" class="selectpicker hjheight" data-size="5" data-style="btn btn-primary" title="Single Select">
+                          <option value="" selected>진행상태를 선택하세요</option>
+                          <option>시작전</option>
+                          <option>지연</option>
+                          <option>정상진행</option>
                         </select>
                   </div>
+                  <form:form modelAttribute="sch" method="post" class="hidden">
+                  	<form:hidden path="p_name"/>
+                  	<form:hidden path="j_name"/>
+                  	<form:hidden path="ingstate"/>
+                  	<form:hidden path="curPage"/>
+                  </form:form>
                   <div class="col-md-3 " style="float:right;">
-                        <select class="selectpicker" data-size="5" data-style="btn btn-primary" title="Single Select">
-                          <option disabled selected>프로젝트</option>
-                          <option value="2">2021</option>
-                          <option value="3">2020</option>
-                          <option value="4">2019</option>
+                        <select id="prosel" class="selectpicker hjheight" data-size="5" data-style="btn btn-primary" title="Single Select">
+                          <option value="" selected>프로젝트를 선택하세요.</option>
+                          <c:forEach var="pros" items="${myPros}">
+                          	<option>${pros}</option>
+                          </c:forEach>
                         </select>
                   </div>
-				  <div class="col-sm-3">
-                    <div class="input-group m-0" style="top: 5px;">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
+				  <div class="col-md-3">
+                    <div class="input-group m-0 hjheight">
+                      <div class="input-group-prepend hjheight">
+                        <div class="input-group-text hjheight">
                           <i class="tim-icons icon-zoom-split"></i>
                         </div>
                       </div>
-                      <input type="text" name="firstname"
-                      	class="form-control" placeholder="Search.." />
+                      <input type="text" id="jobNameSch" class="form-control hjheight" placeholder="Search.." />
                     </div>
                   </div>
-					<button class="btn btn-primary" data-toggle="modal" data-target="#noticeModal"> 
-						승인요청
-					</button>
+					<button class="btn btn-primary btn-app" data-toggle="modal">승인요청</button>
 				</div>
 
 				<div class="row">
@@ -96,14 +109,33 @@
 		                    </thead>
 		                    <tbody>
 		                    <c:if test="${empty taskList}">
+		                    	<tr class="text-center" id="no_task_tr">
+        							<td colspan="8">데이터가 없습니다</td>
+        						</tr>
 		                    </c:if>
 		                    <c:if test="${!empty taskList}">
 		                    <c:forEach var="task" items="${taskList}">
-		                    	<tr>
+		                    <fmt:formatDate var="startD" value="${task.j_startD}" pattern="yyyy-MM-dd"/>
+		                    <fmt:formatDate var="endD" value="${task.j_endD}" pattern="yyyy-MM-dd"/>
+							<c:choose>
+			                    <c:when test="${task.ingstate eq '지연'}">
+				                    <c:set var="state" value="<span class='badge badge-danger'>지연</span>"/>
+				                    <tr class="rate">
+			                    </c:when>
+			                    <c:when test="${task.ingstate eq '시작전'}">
+				                    <c:set var="state" value="<span class='badge badge-default'>시작전</span>"/>
+				                    <tr class="nstart">
+			                    </c:when>
+			                    <c:otherwise>
+				                    <c:set var="state" value="<span class='badge badge-success'>정상진행</span>"/>
+				                    <tr class="ing">
+			                    </c:otherwise>   
+							</c:choose>
+
 		                    		<td class="text-center">
 	        							<div class="form-check">
 	        							<label class="form-check-label">
-	        							<input name="checkano" class="form-check-input" type="checkbox" value="${task.j_no}">
+	        							<input name="checkjno" class="form-check-input jnochk" type="checkbox" value="${task.j_no}">
 	        							<span class="form-check-sign">
 											<span class="check"></span>
 										</span>
@@ -113,25 +145,42 @@
 		                    		<td>${task.j_name}</td>
 		                    		<td>${task.p_name}</td>
 		                    		<td class="text-center">${task.pm_name}</td>
-		                    		<td class="text-center task_state">완료</td>
-		                    		<td class="text-center"><fmt:formatDate value="${task.j_startD}"/></td>
-		                    		<td class="text-center"><fmt:formatDate value="${task.j_endD}"/></td>
+		                    		<td class="text-center task_state">${state}</td>
+		                    		<td class="text-center">${startD}</td>
+		                    		<td class="text-center">${endD}</td>
 		                    		<td class="text-center">
-				                     	<input type="number" name="completeRate" class="form-control" 
-				                     		min="0" max="100" step="10" value="${task.j_completeR*100}"/>
+				                     	<input type="number" name="completeRate${task.j_no}" class="form-control" 
+				                     		min="0" max="100" step="10" value="<fmt:parseNumber value='${task.j_completeR*100}' integerOnly='true'/>"/>
 		                    		</td>
 		                    	</tr>
 		                    </c:forEach>
 		                    </c:if>               
 		                    </tbody>
 		                  </table>
+		                 <c:if test="${!empty taskList}">
+	        			<nav aria-label="...">
+	  						<ul class="pagination">
+								<li class="page-item">
+									<a class="page-link" href="javascript:goPage(${sch.startBlock-1})" tabindex="-1">Previous</a>
+								</li>
+								<c:forEach var="cnt" begin="${sch.startBlock}" end="${sch.endBlock}">
+									<li class="page-item ${sch.curPage==cnt ? 'active':''}">
+										<a class="page-link" href="javascript:goPage(${cnt})">${cnt}</a>
+									</li>
+								</c:forEach>
+								<li class="page-item">
+									<a class="page-link" href="javascript:goPage(${sch.endBlock+1})">Next</a>
+								</li>
+							</ul>
+						</nav>
+						</c:if>
 		              </div> <%--card-body --%>
 		            </div>
 		          </div>
 				</div>
 				<!-- end row -->
 					<!-- notice modal -->
-					<div class="modal fade" id="noticeModal" tabindex="-1"
+					<div class="modal fade" id="authModal" tabindex="-1"
 						role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 						<div class="modal-dialog modal-notice">
 							<div class="modal-content">
@@ -150,21 +199,8 @@
 							    </div>	
 							    <div class="modal-footer">
 							       <button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-							       <button type="button" class="btn btn-primary" id="authBtn">저장</button>
+							       <button type="button" class="btn btn-primary" id="authreqBtn">저장</button>
 							    </div>
-							<%-- 	<div class="modal-body">
-									<form method="get" action="/" class="form-horizontal">
-										<p>승인요청 내용</p>
-										<textarea cols="67" rows="5"></textarea>
-										<div class="row">
-											<div class="col-12 text-right">
-												<button type="button" class="btn btn-primary" data-dismiss="modal">
-													승인요청
-												</button>
-											</div>
-										</div>
-									</form>
-								</div>--%>
 							</div>
 						</div>
 					</div>
@@ -175,6 +211,29 @@
 	</div>
 	<%@ include file="../a01_main/plugin.jsp"%>
 	 <%@ include file="../a01_main/bootstrapBottom.jsp"%>
+<script>
+	var path="${path}";
+	var task = {};
+<c:if test="${!empty taskList}">
+<c:forEach var="task" items="${taskList}">
+	var jNo = '${task.j_no}';
+	task[jNo] = {a_requestP:${task.j_completeR*100}};
+</c:forEach>
+</c:if>
+	var schPname="${sch.p_name}";
+	if(schPname!="") {
+		$('#prosel').val(schPname);
+	}
+	var schState="${sch.ingstate}";
+	if(schState!="") {
+		$('#statesel').val(schState);
+	}
+	function goPage(page) {
+		$("[name=curPage]").val(page);
+		$("form").submit();
+	}
+</script>
+<script src="${path}/z02_js/myTask.js"></script>
 </body>
 
 </html>

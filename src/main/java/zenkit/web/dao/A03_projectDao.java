@@ -9,13 +9,16 @@ import zenkit.web.dto.AddResource;
 import zenkit.web.dto.JobStateCnt;
 import zenkit.web.dto.ResourceName;
 import zenkit.web.dto.RiskStateCnt;
-import zenkit.web.vo.Job;
+import zenkit.web.dto.SchProject;
+import zenkit.web.vo.Job2;
 import zenkit.web.vo.Project;
 
 @Repository
 public interface A03_projectDao {
 	// 회원이 참여한 프로젝트 전체 리스트 출력
-	public ArrayList<Project> getProList(int u_no);
+	public ArrayList<Project> getProList(SchProject sch);
+	// 회원이 참여한 프로젝트 전체 리스트 카운트
+	public int getProListCnt(SchProject sch);
 	// 프로젝트 등록하기
 	public void projectReg(Project pro);
 	// 마지막 유저 번호 얻기
@@ -37,7 +40,7 @@ public interface A03_projectDao {
 	// 프로젝트 PM이름
 	public String getPM(int p_no); 
 	// 회원이 담당하는 프로젝트의 작업 건
-	public ArrayList<Job> getJobList(HashMap<String, Integer> userPro); 
+	public ArrayList<Job2> getJobList(HashMap<String, Integer> userPro); 
 	// 프로젝트별 작업 현황(카운트 값)
 	public JobStateCnt getJobState(int p_no); 
 	// 프로젝트별 리스크 현황(카운트 값)

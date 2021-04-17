@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE html>
@@ -35,7 +36,7 @@
                           <i class="tim-icons icon-zoom-split"></i>
                         </div>
                       </div>
-                      <input type="text" name="firstname"
+                      <input type="text" name="schWord" value="${schObject.schWord}"
                       	class="form-control" placeholder="Search.."/>
                     </div>
 					</div>
@@ -84,22 +85,41 @@
 								</table>
 								</form>
 								
+								<!-- 페이징 -->
 								<ul class="pagination justify-content-center">
-									<li class="page-item"><a class="page-link" href="#link"
-										aria-label="Previous"> <span aria-hidden="true"><i
-												class="tim-icons icon-double-left" aria-hidden="true"></i></span>
-									</a></li>
-									<li class="page-item"><a class="page-link" href="#link">1</a>
+								<c:set var="page" value="${(empty schObject.currPage)?1:schObject.currPage}" />
+								<c:set var="startNum" value="${page-(page-1)%5}"/>
+								<c:set var="lastNum" value="${fn:substringBefore(Math.ceil(schObject.count/10), '.')}"/>
+								
+									<!-- 이전 버튼 -->
+									<li class="page-item">
+										<button class="page-link" aria-label="Previous" ${(startNum <= 1)?'disabled':''}>
+											<span aria-hidden="true">
+												<i class="tim-icons icon-double-left" aria-hidden="true"></i>
+											</span>
+										</button>
 									</li>
-									<li class="page-item active"><a class="page-link"
-										href="#link">2</a></li>
-									<li class="page-item"><a class="page-link" href="#link">3</a>
+									
+									<!-- 페이지 버튼 -->
+									<c:forEach begin="${startNum}" end="${startNum+4}" varStatus="status">
+										<li class="page-item ${(page) == (status.current)?'active':''}">
+											<button class="page-link">
+												${status.index}
+											</button>
+										</li>
+									</c:forEach>
+									
+									<!-- 다음 버튼 -->									
+									<li class="page-item">
+										<button class="page-link" aria-label="Next" ${(lastNum <= startNum+4)?'disabled':''}>
+											<span aria-hidden="true">
+												<i class="tim-icons icon-double-right" aria-hidden="true"></i>
+											</span>
+										</button>
 									</li>
-									<li class="page-item"><a class="page-link" href="#link"
-										aria-label="Next"> <span aria-hidden="true"><i
-												class="tim-icons icon-double-right" aria-hidden="true"></i></span>
-									</a></li>
+									
 								</ul>
+								
 							</div>
 							<!-- end content-->
 						</div>
@@ -116,6 +136,8 @@
 	<script src="${path}/assets/js/core/jquery.min.js"></script>
 	<script>
 	// 프로젝트 리스트 읽어오기
+	var sch = $('[name=sch]').val();
+	
 	$.ajax({
 		type:"post",
 		url:"${path}/project.do?method=data",

@@ -3,6 +3,8 @@ package zenkit.web.vo;
 import java.util.Date;
 
 public class Job {
+	
+	private int cnt; // 게시글번호.
 	private int level;
 	private int j_no;
 	private int j_refno;
@@ -17,22 +19,59 @@ public class Job {
 	private String j_startD_s;
 	private String j_endD_s;
 	
-	private String j_regD;
-	private String j_uptD;
+	private Date j_regD;
+	private Date j_uptD;
+	private String j_regD_s;
+	private String j_uptD_s;
+	
 	private String j_charger;
 	private double j_completeR;
 	private int u_no;
 	private String u_name;
 	private int p_no;
-
-	///////
 	
+	public int getCnt() {
+		return cnt;
+	}
 
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
+	}
 
-	/////////////////////////////////
-	
 	public void setU_name(String u_name) {
 		this.u_name = u_name;
+	}
+
+	public String getJ_regD_s() {
+		return j_regD_s;
+	}
+
+	public void setJ_regD_s(String j_regD_s) {
+		this.j_regD_s = j_regD_s;
+	}
+
+	public String getJ_uptD_s() {
+		return j_uptD_s;
+	}
+
+	public void setJ_uptD_s(String j_uptD_s) {
+		this.j_uptD_s = j_uptD_s;
+	}
+
+	public Date getJ_regD() {
+		return j_regD;
+	}
+
+	public void setJ_regD(Date j_regD) {
+		this.j_regD = j_regD;
+	}
+
+	public Date getJ_uptD() {
+		return j_uptD;
+	}
+
+	public void setJ_uptD(Date j_uptD) {
+		this.j_uptD = j_uptD;
 	}
 
 	public Date getJ_startD() {
@@ -93,22 +132,6 @@ public class Job {
 
 	public void setJ_pname(String j_pname) {
 		this.j_pname = j_pname;
-	}
-
-	public String getJ_regD() {
-		return j_regD;
-	}
-
-	public void setJ_regD(String j_regD) {
-		this.j_regD = j_regD;
-	}
-
-	public String getJ_uptD() {
-		return j_uptD;
-	}
-
-	public void setJ_uptD(String j_uptD) {
-		this.j_uptD = j_uptD;
 	}
 
 	public String getJ_content() {

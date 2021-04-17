@@ -24,6 +24,7 @@ public interface A01_DashboardDao {
 	// 개인 대시보드 프로젝트 리스트
 	public ArrayList<DashBoard> projectList(int u_no);
 
+	
 }
 
 

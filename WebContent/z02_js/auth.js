@@ -1,3 +1,4 @@
+// 전체선택 
 $('#checkAll').click(function(){
 	var chk = $(this).is(":checked");
 	if(chk) {
@@ -7,6 +8,7 @@ $('#checkAll').click(function(){
 	}
 });
 
+// 작업승인 or 작업반려 클릭 시
 $('.btn-app').click(function(){
 	if(!$('.form-check-input').is(":checked")) {
 		alert("선택된 작업이 없습니다.");
@@ -17,6 +19,7 @@ $('.btn-app').click(function(){
 	$('#authContentLabel').text($(this).text()+' 내용');
 });
 
+// 작업승인/반려 모달 창에서 저장 클릭 시 체크된 작업마다 ajax로 결재 상태 승인완료/반려 업데이트하기
 $('#authBtn').on('click', function(){
 	var a_resultN = $('#auth_content').val();
 	var a_name = '';
@@ -26,12 +29,15 @@ $('#authBtn').on('click', function(){
 		a_name='반려';
 	}
 	$('input:checkbox[name=checkano]:checked').each(function(){
+		var a_requestP = $(this).data('compler');
+		var j_no = $(this).data('jno');
+		//console.log(j_completer);
 		$.ajax({
 			type:"post",
 			url:path+"/apprej.do",
-			data:"a_no="+$(this).val()+"&a_resultN="+a_resultN+"&a_name="+a_name,
+			data:"a_no="+$(this).val()+"&a_resultN="+a_resultN+"&a_name="+a_name+"&a_requestP="+a_requestP+"&j_no="+j_no,
 			success:function(){
-				console.log("성공");
+				location.href=path+'/authIng.do';
 			},
 			error:function(request, status, err){
 				console.log(request);
@@ -42,14 +48,16 @@ $('#authBtn').on('click', function(){
 	});
 });
 
+// 모달창 내비게이션 바, 클릭 된 메뉴만 active 클래스 더하기
 $('.task_info_nav').on('click', function(){
 	$('.task_info_nav').removeClass('active');
 	$(this).addClass('active');
 	$('.tab-pane').removeClass('active');
 	$($(this).attr('href')).addClass('active');
-	return false; // a태그 #sss 주소 안나오게 하기
+	return false; // a태그 #ooo 주소창에 안나오게 하기
 });
 
+// 작업명 클릭 했을 때 모달창에 해당 작업정보 ajax로 불러와서 넣기
 $('[class^=jno]').on('click', function(){
 	var j_no=$(this).attr('class').split("_")[1];
 	var a_no=$(this).parent().parent().data('ano');
@@ -71,12 +79,13 @@ $('[class^=jno]').on('click', function(){
 	});
 });
 
+// 작업상세정보 - 산출물탭
 function modalOutputInfo(data) {
 	$('#tab_1_2 .grid-template-row').empty();
 	$.each(data, function(idx, output){
 		var outputCode = '';
 		outputCode += '<div class="row grid-row"><div class="col-md-7">';
-		outputCode += '<div class="forum-list-title" id="task_outputname">'+output.o_name+'</div></div>';
+		outputCode += '<div class="forum-list-title" id="task_outputname'+idx+'">'+output.o_name+'</div></div>';
 		outputCode += '<div class="col-md-4" style="max-width: 32%;">';
 		outputCode += '<a href="#" class="btn-label-brand btn btn-sm" title="파일 다운로드">';
 		outputCode += '<i class="fa fa-download"></i></a></div></div>';
@@ -84,19 +93,21 @@ function modalOutputInfo(data) {
 	});
 }
 
+// 작업상세정보 - 결재정보탭
 function modalAuthInfo(data) {
 	$('#modal_reqName').text(data.req_name);
-	$('#modal_reqN').text(data.a_requestN);
+	$('#modal_reqN').html(data.a_requestN);
 	$('#task_resName').text(data.res_name);
-	console.log(data.a_name);
+	// 결재 상태가 반려/승인완료가 아니면 결재자가 뜨면 안됨
 	if(data.a_name=='반려' || data.a_name=='승인완료') {
 		$('#modal_resName').text(data.res_name);
-		$('#modal_resN').text(data.a_resultN);
+		$('#modal_resN').html(data.a_resultN);
 	} else {
 		$('.task_resInfo').empty();	
 	}
 }
 
+// 작업상세정보 - 작업정보탭
 function modalJobInfo(data) {
 	$('#task_name').text(data.j_name);
 	$('#task_start').text(new Date(data.j_startD).toLocaleDateString());
@@ -104,6 +115,7 @@ function modalJobInfo(data) {
 	$('#task_completeP').text(data.j_completeR*100+'%');
 }
 
+// 결재요청함에서 [결재회수] 버튼 클릭 했을 때 결재회수하기
 $('.auth-cancle').on('click', function(){
 	console.log($(this).parent().parent().data('ano'));
 	var ano=$(this).parent().parent().data('ano');
@@ -112,10 +124,20 @@ $('.auth-cancle').on('click', function(){
 	}
 });
 
+// 결재상태 셀렉트 바 변경시 바로 검색폼 submit하기
 $('#a_name').on('change', function(){
 	$('.auth-search-btn').click();
 });
 
+// 프로젝트명 셀렉트 바 변경시 바로 검색폼 submit하기
 $('#pro_name').on('change', function(){
 	$('.auth-search-btn').click();
 });
+
+// 프로젝트 디테일 화면 이동하기
+function goProject(pno) {
+	var formCode = '<form id="proform" method="post" action="'+path+'/project.do?method=form">';
+	formCode += '<input type="hidden" name="p_no" value="'+pno+'">';
+	$('#authTableBody').append(formCode);
+	$('#proform').submit();
+}

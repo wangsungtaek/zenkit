@@ -277,3 +277,100 @@ SELECT *
   FROM Z_JOB
  WHERE p_no = 1
    AND u_no = 4;
+   
+-- 특정 인원의 특정 프로젝트에 참여한 작업 건
+SELECT count(*) cnt
+  FROM Z_JOB
+ WHERE u_no = 4
+   AND p_no = 27;
+  
+SELECT j_no
+  FROM Z_JOB
+ WHERE u_no = 4
+   AND p_no = 27;
+
+-- 해당인원의 job을 PM으로 변경
+UPDATE Z_JOB
+   SET u_no = (
+   	SELECT u_no
+		  FROM Z_USER
+		 WHERE u_id = (
+		 	SELECT p_pm FROM Z_PROJECT WHERE p_no = 27
+		 )
+   )
+ WHERE j_no IN (
+ 	SELECT j_no
+	  FROM Z_JOB
+	 WHERE u_no = 4
+	   AND p_no = 27
+ );
+
+-- 작업에 참여했지만 소속이 아닌애들 => PM으로 변경
+UPDATE Z_JOB
+   SET u_no = #{u_no}
+ WHERE u_no IN (
+	SELECT u_no
+	  FROM Z_JOB
+	 WHERE p_no = #{p_no}
+	   AND u_no NOT IN (
+		SELECT u_no
+		  FROM Z_RESOURCE
+		 WHERE p_no = #{p_no}
+		)
+ );
+-- 작업에 참여한 인원
+SELECT u_no
+  FROM Z_JOB
+ WHERE p_no = 26;
+-- 프로젝트에 참여한 인원
+SELECT u_no
+  FROM Z_RESOURCE
+ WHERE p_no = 26;
+
+
+
+
+ 
+SELECT *
+  FROM Z_JOB
+ WHERE u_no = 4
+   AND p_no = 1;  
+  
+-- 특정 프로젝트의 PM의 u_no
+SELECT u_no
+  FROM Z_USER
+ WHERE u_id = (
+ 	SELECT p_pm FROM Z_PROJECT WHERE p_no = 27);
+ 
+
+UPDATE Z_JOB
+   SET u_no = 4
+ WHERE u_no IN (
+	SELECT u_no
+	  FROM Z_JOB
+	 WHERE p_no = 27
+	   AND u_no NOT IN (
+		SELECT u_no
+		  FROM Z_RESOURCE
+		 WHERE p_no = 27
+		)
+ );
+ 
+SELECT * FROM Z_JOB
+WHERE p_no = 27;
+
+SELECT *
+  FROM (
+	SELECT ROWNUM num, p.*
+	  FROM (
+		 	SELECT *
+			  FROM Z_PROJECT
+			 WHERE p_no IN (
+					SELECT p_no FROM Z_RESOURCE WHERE u_no = 3
+			 )			AND p_name LIKE '%'||''||'%'
+				 ORDER BY p_no DESC
+		) p
+	)
+WHERE num BETWEEN 10 AND 13;
+
+SELECT * FROM Z_USER zu ;
