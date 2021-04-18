@@ -1,89 +1,108 @@
-# Thank you for purchasing Black Dashboard PRO <3
+## PMS (프로젝트 매니져 시스템)
 
-## Docs and Examples
+## 담당영역
 
-Please check the official documentation in `docs/1.0/getting-started/introduction.html` or directly to this link: https://demos.creative-tim.com/marketplace/black-dashboard-pro/docs/1.0/getting-started/introduction.html
+> 부서 관리
 
-## Getting Started
+> 임직원 관리
 
-We've also included an optional Gulp file to help you get started with theme customization. You'll need to install Node.js and Gulp before using our included gulpfile.js.
+> 프로젝트 CRUD
 
-1. Download the project's zip
-2. Make sure you have node.js (https://nodejs.org/en/) installed
-3. Type `npm install` in terminal/console in the source folder where `package.json` is located
-4. You will find all the branding colors inside `assets/scss/black-dashboard/custom/variables/_brand.scss`. You can change them with a `HEX` value or with other predefined variables from`assets/scss/black-dashboard/custom/variables/_colors.scss`
-5. Run in terminal `gulp compile-scss` for a single compilation or `gulp watch` for continous compilation of the changes that you make in `*.scss` files. This command should be run in the same folder where `gulpfile.js` and `package.json` are located
-6. Run in terminal `gulp default` for opening the Dashboard Page (default) of the product.
+> 작업 관리 (간트차트)
 
-## Support
+> 다국어 처리
 
-If you experience any problems with the above, or if you think you've found a bug with your theme - please don't hesitate to reach out to https://www.creative-tim.com/support thanks!!
+> 산출물 관리 (업로드, 다운로드)
 
-### What's included
+## 기간
 
-Within the download you'll find the following directories and files:
+> 2021.04.01 ~ 2021.04.22
 
-```
-├── CHANGELOG.md
-├── README.md
-├── assets
-│   ├── css
-│   │   ├── black-dashboard.css
-│   │   ├── black-dashboard.css.map
-│   │   ├── black-dashboard.min.css
-│   │   └── nucleo-icons.css
-│   ├── demo
-│   │   ├── demo.css
-│   │   └── demo.js
-│   ├── fonts/
-│   ├── img/
-│   ├── js/
-│   │   ├── black-dashboard.js
-│   │   ├── black-dashboard.js.map
-│   │   ├── black-dashboard.min.js
-│   │   ├── core/
-│   │   └── plugins/
-│   └── scss
-│       ├── black-dashboard/
-│       │   ├── cards/
-│       │   ├── mixins/
-│       │   └── plugins/
-│       └── black-dashboard.scss
-├── docs/
-├── examples/
-│   ├── calendar.html
-│   ├── charts.html
-│   ├── components/
-│   │   ├── buttons.html
-│   │   ├── grid.html
-│   │   ├── icons.html
-│   │   ├── notifications.html
-│   │   ├── panels.html
-│   │   ├── sweet-alert.html
-│   │   └── typography.html
-│   ├── dashboard.html
-│   ├── forms/
-│   │   ├── extended.html
-│   │   ├── regular.html
-│   │   ├── validation.html
-│   │   └── wizard.html
-│   ├── maps/
-│   │   ├── fullscreen.html
-│   │   ├── google.html
-│   │   └── vector.html
-│   ├── pages/
-│   │   ├── lock.html
-│   │   ├── login.html
-│   │   ├── pricing.html
-│   │   ├── register.html
-│   │   ├── rtl.html
-│   │   ├── timeline.html
-│   │   └── user.html
-│   ├── tables/
-│   │   ├── datatables.net.html
-│   │   ├── extended.html
-│   │   └── regular.html
-│   └── widgets.html
-├── gulpfile.js
-└── package.json
-```
+<br>
+
+## 사용기술
+
+> Spring Framwork 사용
+
+> MVC2 방식 사용
+
+> MyBatis 사용
+
+> Jquery, JSTL 라이브러리 사용
+
+<br>
+
+### 어려웠던 점
+- 문제 : 
+
+### 느낀 점
+
+--
+#### 데이터베이스 설계
+
+> 총 14개의 테이블로 구성
+
+![image](https://user-images.githubusercontent.com/68735491/115123507-51528380-9ff8-11eb-824b-6cc936fc12a0.png)
+
+<br>
+
+#### 로그인 페이지 : 다국어 처리
+
+- 영어, 한국어 선택 가능
+
+![다국어처리](https://user-images.githubusercontent.com/68735491/115123652-02591e00-9ff9-11eb-8fe8-7e708e3709e5.gif)
+
+<br>
+
+#### 부서 관리
+
+- 부서 생성, 삭제, 조회
+
+- 부서 삭제 시 해당 소속 인원들 소속 없음 처리
+
+![ezgif com-gif-maker](https://user-images.githubusercontent.com/68735491/115123732-55cb6c00-9ff9-11eb-9c98-0c2b5637f86a.gif)
+
+<br>
+
+#### 회원 초대
+
+- 이메일 발송
+
+- 임시 비밀번호, 임시 사원 발급
+
+![ezgif com-gif-maker (1)](https://user-images.githubusercontent.com/68735491/115123845-e86c0b00-9ff9-11eb-9868-8139278389cb.gif)
+
+<br>
+
+#### 회원 관리
+
+- 직책, 부서, 직무 선택가능
+
+- 직무별 권한 부여 (CEO, 인사담당자, PM, 임직원)
+
+![ezgif com-gif-maker (3)](https://user-images.githubusercontent.com/68735491/115123980-bb6c2800-9ffa-11eb-9de9-cb2afa9bb46c.gif)
+
+<br>
+
+#### 프로필 수정
+
+- 프로필 이미지 수정 (업로드 기능)
+
+![ezgif com-gif-maker (4)](https://user-images.githubusercontent.com/68735491/115124186-ee62eb80-9ffb-11eb-8662-1399d72cb63d.gif)
+
+<br>
+
+#### 프로젝트 등록, 조회
+
+![ezgif com-gif-maker (5)](https://user-images.githubusercontent.com/68735491/115124327-7e089a00-9ffc-11eb-8702-6bf4263c0646.gif)
+
+<br>
+
+#### 프로젝트 상세
+
+![ezgif com-gif-maker (7)](https://user-images.githubusercontent.com/68735491/115124644-2c610f00-9ffe-11eb-87ee-88e71b90a85a.gif)
+
+<br>
+
+![ezgif com-gif-maker (8)](https://user-images.githubusercontent.com/68735491/115124844-6979d100-9fff-11eb-82a7-1a2604cf16d8.gif)
+
