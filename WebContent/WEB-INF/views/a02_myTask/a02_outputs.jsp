@@ -366,10 +366,12 @@
 		// 산출물 다운로드
 		$('.download').on("click", function(){
 			var o_path = $(this).parent().prevAll().eq(4).val();
+			console.log(o_path);
 			var realpath = "${path}/z03_upload"+o_path;
+			location.href="${path}/output.do?method=down&fname="+o_path;
 			
 			// 파일 유뮤 테스트
-			$.ajax({
+			/* $.ajax({
 				url: realpath,
 				type: 'HEAD',
 				success: function () {
@@ -402,7 +404,7 @@
 						timer: 1500
 					})
 				}
-			});
+			}); */
 		})
 	</script>
 	

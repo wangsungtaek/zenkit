@@ -21,7 +21,7 @@ SELECT * FROM z_rank;
 SELECT Z_RANK_NO_SEQ.CURRVAL FROM DUAL;
 
 -- 삭제
-DROP TABLE Z_RANK CASCADE CONSTRAINTS ;
+DROP TABLE Z_RANK CASCADE CONSTRAINTS;
 DROP SEQUENCE Z_RANK_NO_SEQ;
 
 ----------------------------------------------------------------
@@ -89,39 +89,9 @@ CREATE TABLE z_user(
 	r_no NUMBER CONSTRAINT z_user_r_no_fk REFERENCES z_rank(r_no) ON DELETE CASCADE
 );
 
-CREATE SEQUENCE Z_USER_NO_SEQ
-	START WITH 1
-	INCREMENT BY 1;
-	
 -- 데이터
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '75CE001','king777','김경일',
-							'ceo@google.com','01012549836','img/user/75CE001_김경일.jpg',01,01,01);
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '85CE002','dladnjs12','임한원',
-							'dlsdnjs@google.com','01011354562','img/user/85CE002_임한원.jpg',05,02,02);						
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '02MA064','kangny56','김나영',
-							'nayonee@google.com','01031292712','img/user/02MA064_김나영.jpg',02,03,03);	
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '15MA486','haha1253','하성찬',
-							'hahaha@google.com','01031927121','img/user/15MA486_하성찬.jpg',02,04,05);							
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '82HR012','passhr00','이강식',
-							'hjhj@google.com','01012349876','img/user/82HR012_이강식.jpg',03,03,03);
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '17HR095','wonhk123','차원혁',
-							'wkyuk@google.com','01007051220','img/user/17HR095_차원혁.jpg',03,04,06);			
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '05PL125','jonejj','정하나',
-							'jj11@google.com','01007751389','img/user/05PL125_정하나.jpg',04,04,04);
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '99PL614','zoooo555','강주희',
-							'zzzooo@google.com','01057513645','img/user/99PL614_강주희.jpg',04,04,03);							
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '94IT757','psma9854','한지혜',
-							'ks9854@google.com','01012135976','img/user/94IT757_한지혜.jpg',05,04,03);						
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '15IT536','jaekkk','이재관',
-							'jaekk@google.com','01054621568','img/user/15IT536_이재관.jpg',05,04,05);
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '09IT801','jjean159','정택진',
-							'jjean@google.com','01057513645','img/user/09IT801_정택진.jpg',05,04,04);							
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '20IT254','doood987','도경아',
-							'dodok@google.com','01065125014','img/user/20IT254_도경아.jpg',05,04,06);						
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '18IT279','mingee31','이민지',
-							'minjee@google.com','01028915267','img/user/18IT279_이민지.jpg',05,04,06);	
-INSERT INTO Z_USER VALUES (Z_USER_NO_SEQ.NEXTVAL, '19IT574','you55','유성환',
-							'hwan@google.com','01055198510','img/user/19IT574_유성환.jpg',05,04,06);		
+INSERT INTO Z_USER VALUES (1, 'admin','admin','양현수',
+							'gun235448@gmail.com','01050326881','img/user/02MA064_김나영.jpg',02,02,02);	
 							
 -- 조회
 SELECT * FROM Z_USER;
@@ -486,5 +456,8 @@ SELECT Z_OUTPUTS_NO_SEQ.CURRVAL FROM DUAL;
 DROP TABLE Z_OUTPUTS CASCADE CONSTRAINTS;
 DROP SEQUENCE Z_OUTPUTS_NO_SEQ;
 
+SELECT * FROM Z_PROJECT
+ORDER BY p_no desc;
 
 
+SELECT * FROM Z_USER zu ;

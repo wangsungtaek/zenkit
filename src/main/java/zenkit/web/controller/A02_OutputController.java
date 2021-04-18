@@ -42,11 +42,12 @@ public class A02_OutputController {
 		
 		return "a02_myTask/a02_outputs";
 	}
+	
+	// 산출물 등록
 	@PostMapping(params="method=reg")
-	public String regOutput(MultipartFile o_file, UpOutput output, Model m) {
+	public String regOutput(MultipartFile o_file, UpOutput output, Model m,
+			HttpServletRequest request) {
 		
-		System.out.println("name="+o_file.getOriginalFilename());
-		System.out.println("size="+o_file.getSize());
 		// 산출물 등록
 		service.regOutput(output, o_file);
 		return "redirect:/output.do?method=outputs";

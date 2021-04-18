@@ -21,7 +21,7 @@
 	
 	<!-- 산출물 o_no 확인 -->
 	<select id="getMaxNo" resultType="int">
-		SELECT max(o_no) AS o_no
+		SELECT NVL(max(o_no),0) AS o_no
   		  FROM Z_OUTPUTS
 	</select>
 	

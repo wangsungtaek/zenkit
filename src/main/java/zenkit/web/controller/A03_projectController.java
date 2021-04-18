@@ -120,10 +120,6 @@ public class A03_projectController {
 		HttpSession session = req.getSession();
 		int p_no = (int)session.getAttribute("p_no");
 		
-		System.out.println(btnState);
-		System.out.println("u_name:"+u_name);
-		System.out.println("p_no:"+p_no);
-		
 		AddResource resource = new AddResource(p_no, u_name);
 		if(btnState.equals("add")) 
 			service.addResource(resource); // 프로젝트 참여시키기
@@ -168,12 +164,6 @@ public class A03_projectController {
 		sch.setSchWord("");
 		sch.setStartNum(0);
 		sch.setEndNum(99999);
-		System.out.println(sch);
-		System.out.println("u_no = " + sch.getU_no());
-		System.out.println("schWord = " + sch.getSchWord());
-		System.out.println("StartNum = " + sch.getStartNum());
-		System.out.println("EndNum = " + sch.getEndNum());
-		
 		
 		d.addAttribute("projectList", service.getProList(sch));
 		return "pageJsonReport";

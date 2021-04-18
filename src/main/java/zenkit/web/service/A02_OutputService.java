@@ -55,11 +55,12 @@ public class A02_OutputService {
 		if(filename != null && !filename.equals("")) {
 			
 			// 등록된 산출물 PK (o_no)
-			int o_no = dao.getMaxNo()+1;
 			
+			String o_no = "o_"+ Integer.toString(dao.getMaxNo()+1);
+			String p_no = "p_"+output.getP_no();
 			// 파일 경로 생성(웹경로, 실제경로)
-			String upPath = uploadPath + File.separator + "output" + File.separator + o_no;
-			String dbPath = File.separator+"output"+File.separator+o_no+File.separator+filename;
+			String upPath = uploadPath + File.separator + "output" + File.separator + p_no + File.separator + o_no;
+			String dbPath = File.separator+"output"+File.separator+p_no+File.separator+o_no+File.separator+filename;
 			
 			File realSavePath = new File(upPath); // 물리적 경로
 			
