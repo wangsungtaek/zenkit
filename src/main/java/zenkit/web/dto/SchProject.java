@@ -4,6 +4,8 @@ public class SchProject {
 	private int u_no;
 	private String schWord;
 	private int currPage;
+	private int startPage;
+	private int endPage;
 	private int count;
 	private int startNum;
 	private int endNum;
@@ -56,5 +58,16 @@ public class SchProject {
 	public void setCount(int count) {
 		this.count = count;
 	}
-
+	public int getStartPage() {
+		return startPage;
+	}
+	public void setStartPage(int startPage) {
+		this.startPage = startPage;
+	}
+	public int getEndPage() {
+		return endPage;
+	}
+	public void setEndPage(int endPage) {
+		this.endPage = endPage;
+	}
 }

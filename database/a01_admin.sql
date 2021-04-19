@@ -2,6 +2,12 @@
 
 INSERT INTO Z_DEPARTMENT VALUES (Z_DEPARTMENT_NO_SEQ.NEXTVAL,'IT팀');
 
+-- 비밀번호 변경
+UPDATE Z_USER
+   SET u_pass = #{u_pass}
+ WHERE u_no = #{u_no};
+SELECT * FROM Z_USER zu ;
+
 DELETE Z_DEPARTMENT
  WHERE d_name = '테스트';
 

@@ -2,19 +2,22 @@
 	pageEncoding="UTF-8" import="java.util.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <fmt:requestEncoding value="UTF-8" />
 <!DOCTYPE html>
 <html>
 <head>
 	<%@ include file="../a01_main/bootstrapTop.jsp"%>
+	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<style>
 	.project-item:hover {
 		background: #1E1E28;
 		cursor: pointer;
 	}
 	</style>
+	<script>
+	</script>
 </head>
 <body class="sidebar-mini ">
 	<div class="wrapper">
@@ -41,7 +44,7 @@
                     </div>
 					</div>
 					<div class="col-12 col-md-2 text-left p-0">
-						<button class="btn">검 색</button>
+						<button class="btn" id="schBtn">검 색</button>
 					</div>
 					<c:if test="${sesMem.pos_no == 3}">
 					<div class="col-12 col-md-2 ml-auto text-right">
@@ -86,32 +89,26 @@
 								</form>
 								
 								<!-- 페이징 -->
-								<ul class="pagination justify-content-center">
-								<c:set var="page" value="${(empty schObject.currPage)?1:schObject.currPage}" />
-								<c:set var="startNum" value="${page-(page-1)%5}"/>
-								<c:set var="lastNum" value="${fn:substringBefore(Math.ceil(schObject.count/10), '.')}"/>
-								
+								<ul class="pagination justify-content-center" id="viewShow">
 									<!-- 이전 버튼 -->
-									<li class="page-item">
-										<button class="page-link" aria-label="Previous" ${(startNum <= 1)?'disabled':''}>
+									<li class="page-item" id="preBtn">
+										<button class="page-link" aria-label="Previous">
 											<span aria-hidden="true">
 												<i class="tim-icons icon-double-left" aria-hidden="true"></i>
 											</span>
 										</button>
 									</li>
 									
-									<!-- 페이지 버튼 -->
-									<c:forEach begin="${startNum}" end="${startNum+4}" varStatus="status">
-										<li class="page-item ${(page) == (status.current)?'active':''}">
-											<button class="page-link">
-												${status.index}
-											</button>
-										</li>
-									</c:forEach>
+									<!-- 페이징 버튼 -->
+									<li class='page-item' v-for="i in (endPage-startPage)+1">
+										<button class='page-link pageBtn'>
+											{{(i+startPage)-1}}
+										</button>
+									</li>
 									
 									<!-- 다음 버튼 -->									
 									<li class="page-item">
-										<button class="page-link" aria-label="Next" ${(lastNum <= startNum+4)?'disabled':''}>
+										<button class="page-link" aria-label="Next">
 											<span aria-hidden="true">
 												<i class="tim-icons icon-double-right" aria-hidden="true"></i>
 											</span>
@@ -133,48 +130,83 @@
 
 		</div>
 	</div>
-	<script src="${path}/assets/js/core/jquery.min.js"></script>
-	<script>
-	// 프로젝트 리스트 읽어오기
-	var sch = $('[name=sch]').val();
-	
-	$.ajax({
-		type:"post",
-		url:"${path}/project.do?method=data",
-		/* data:$('form').serialize(), */
-		dataType:"json",
-		success:function(data){
-			console.log(data);
-			var projectList = data.projectList;
-			
-			var show = "";
-			$.each(projectList, function(idx, pro){
-				show += "<tr class='project-item'><td>"+pro.p_name+"</td>";
-				show += "<td>"+pro.p_no+"</td>";
-				show += "<td>"+pro.p_startD_s+"</td>";
-				show += "<td>"+pro.p_endD_s+"</td>";
-				show += "<td>"+5+"</td>";
-				show += "<td>"+5+"</td></tr>";
-			});
-			$('#project-list').html(show);
-		},
-		error:function(err){
-			console.log(err);
-		}
-	});
-	</script>
 	<%@ include file="../a01_main/plugin.jsp"%>
 	<%@ include file="../a01_main/bootstrapBottom.jsp"%>
 	
 	<script>
-	$(document).ready(function() {
+	 jQuery(function($){
+		var page = 1;
+		var sch = "";
+		getProList(page, sch);
+		$('.page-item').eq(page).addClass("active");
+		
+		// 페이지 버튼 클릭
+		$(document).on("click", ".pageBtn",function(){
+			$('.page-item').removeClass("active"); // 클래스 삭제
+			$(this).parent().addClass("active"); // 클래스 생성
+			
+			page = $(this).text(); // 클릭된 번호 얻기
+			sch = $('[name=schWord]').val(); // 검색어 얻기
+			
+			// 리스트 출력
+			getProList(page, sch);
+		});
+		
+		// 검색
+		$('#schBtn').on('click', function(){
+			$('.page-item').removeClass("active"); // 클래스 삭제
+			$('.page-item').eq(1).addClass("active"); // 클래스 생성
+			sch = $('[name=schWord]').val(); // 검색어 얻기
+			page = 1;
+			
+			// 리스트 출력
+			getProList(page, sch);
+		})
+		
+		
+		// 함수 : 프로젝트 리스트
+		function getProList(page, sch){
+			$.ajax({
+				type:"post",
+				url:"${path}/project.do?method=data&u_no="+"${sesMem.u_no}"+"&currPage="+page+"&schWord="+sch,
+				/* data:$('form').serialize(), */
+				dataType:"json",
+				success:function(data){
+					console.log(data);
+					var projectList = data.projectList;
+					var schProject = data.schProject;
+					console.log(schProject);
+					// 프로젝트 리스트
+					var show = "";
+					$.each(projectList, function(idx, pro){
+						show += "<tr class='project-item'><td>"+pro.p_name+"</td>";
+						show += "<td>"+pro.p_no+"</td>";
+						show += "<td>"+pro.p_startD_s+"</td>";
+						show += "<td>"+pro.p_endD_s+"</td>";
+						show += "<td>"+5+"</td>";
+						show += "<td>"+5+"</td></tr>";
+					});
+					$('#project-list').html(show);
+					
+					var vm = new Vue({
+						el : "#viewShow",
+						data : schProject
+					});
+				},
+				error:function(err){
+					console.log(err);
+				}
+			});		
+		}
 		// 프로젝트 상세 클릭
-		$('.project-item').on('click',function(){
+		$(document).on("click",".project-item",function(){
+			console.log("asdf");
 			var p_no = $(this).children().eq(1).text();
 			$('[name=p_no]').val(p_no);
 			$('#proForm').submit();
-		});
+		});	
 	});
+	 
 	</script>
 </body>
 </html>

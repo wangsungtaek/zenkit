@@ -80,4 +80,10 @@ public class A00_loginService {
 			
 		return buffer.toString();
 	}
+	
+	// 패스워드 변경
+	public void updatePwd(User user) {
+		dao.updatePwd(user);
+	}
+	
 }

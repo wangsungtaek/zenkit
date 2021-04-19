@@ -39,18 +39,6 @@ public class A03_projectController {
 	@GetMapping(params = "method=form")
 	public String projectListForm(HttpServletRequest request, Model m) {
 		
-		// 프로젝트 번호 session으로 받기
-		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute("sesMem");
-		
-		SchProject sch = new SchProject();
-		sch.setU_no(user.getU_no());
-		sch.setSchWord("");
-		sch.setCurrPage(1);
-		sch.setCount(service.getProListCnt(sch));
-		
-		m.addAttribute("schObject", sch);
-		
 		return "/a03_project/a00_projectList";
 	}
 	// http://localhost:7080/zenkit/project.do?method=form
@@ -156,14 +144,21 @@ public class A03_projectController {
 	// http://localhost:7080/zenkit/project.do?method=data
 	@RequestMapping(params = "method=data")
 	public String projectList(HttpServletRequest req, Model d, SchProject sch) {
-		// session 값 받기 (user)
-		HttpSession session = req.getSession();
-		User user = (User)session.getAttribute("sesMem");
+
+		// 페이징 기능을 위해 startNum, EndNum값 구하기
+		int size = 2;
+		int page = sch.getCurrPage();
+		int startNum = 1 + (page-1)*size;
+		int endNum = page * size;
+		int startPage = page-(page-1)%5;
+		int cnt = service.getProListCnt(sch);
+		int lastPage = ((cnt/size) == 0)? (cnt/size) : (cnt/size)+1;
+		int endPage = ((startPage*5 < lastPage)?startPage*5:lastPage);
 		
-		sch.setU_no(user.getU_no());
-		sch.setSchWord("");
-		sch.setStartNum(0);
-		sch.setEndNum(99999);
+		sch.setStartNum(startNum);
+		sch.setEndNum(endNum);
+		sch.setStartPage(startPage);
+		sch.setEndPage(endPage);
 		
 		d.addAttribute("projectList", service.getProList(sch));
 		return "pageJsonReport";
