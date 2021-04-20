@@ -10,13 +10,14 @@ import zenkit.web.dto.JobStateCnt;
 import zenkit.web.dto.ResourceName;
 import zenkit.web.dto.RiskStateCnt;
 import zenkit.web.dto.SchProject;
+import zenkit.web.dto.UpProject;
 import zenkit.web.vo.Job2;
 import zenkit.web.vo.Project;
 
 @Repository
 public interface A03_projectDao {
 	// 회원이 참여한 프로젝트 전체 리스트 출력
-	public ArrayList<Project> getProList(SchProject sch);
+	public ArrayList<UpProject> getProList(SchProject sch);
 	// 회원이 참여한 프로젝트 전체 리스트 카운트
 	public int getProListCnt(SchProject sch);
 	// 프로젝트 등록하기

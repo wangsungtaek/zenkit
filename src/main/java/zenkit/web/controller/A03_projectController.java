@@ -60,20 +60,26 @@ public class A03_projectController {
 		HttpSession session = req.getSession();
 		int p_no = (int)session.getAttribute("p_no");
 		User u_no = (User)session.getAttribute("sesMem");
-
+		System.out.println("p_no = "+p_no);
 		
 		// 본인의 작업 리스트
 		m.addAttribute("jobList",service.getJobList(p_no, u_no.getU_no()));
+		System.out.println("1");
 		// 프로젝트 기본정보
 		m.addAttribute("proInfo",service.getProjectInfo(p_no));
+		System.out.println("2");
 		// 프로젝트 PM
 		m.addAttribute("pm",service.getPM(p_no));
+		System.out.println("3");
 		// 프로젝트 참여인원
 		m.addAttribute("resourceList",service.getProjectResource(p_no));
+		System.out.println("4");
 		// 프로젝트 작업 상태 가져오기(카운트 값)
 		m.addAttribute("jobStatuCnt",service.getJobState(p_no));
+		System.out.println("5");
 		// 프로젝트 리스크 상태 가져오기(카운트 값)
 		m.addAttribute("riskStatuCnt",service.getRiskState(p_no));
+		System.out.println("6");
 		
 		return "/a03_project/a01_detailInfo";
 	}
@@ -146,15 +152,17 @@ public class A03_projectController {
 	public String projectList(HttpServletRequest req, Model d, SchProject sch) {
 
 		// 페이징 기능을 위해 startNum, EndNum값 구하기
-		int size = 2;
+		int size = sch.getPageSize();
 		int page = sch.getCurrPage();
 		int startNum = 1 + (page-1)*size;
 		int endNum = page * size;
 		int startPage = page-(page-1)%5;
 		int cnt = service.getProListCnt(sch);
-		int lastPage = ((cnt/size) == 0)? (cnt/size) : (cnt/size)+1;
-		int endPage = ((startPage*5 < lastPage)?startPage*5:lastPage);
+		int lastPage = ((cnt%size) == 0)? (cnt/size) : (cnt/size)+1;
+		int endPage = ((startPage+4 < lastPage)?startPage+4:lastPage);
 		
+		sch.setCount(cnt);
+		sch.setLastPage(lastPage);
 		sch.setStartNum(startNum);
 		sch.setEndNum(endNum);
 		sch.setStartPage(startPage);

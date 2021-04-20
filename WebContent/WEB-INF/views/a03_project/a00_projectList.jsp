@@ -9,15 +9,24 @@
 <html>
 <head>
 	<%@ include file="../a01_main/bootstrapTop.jsp"%>
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 	<style>
 	.project-item:hover {
 		background: #1E1E28;
 		cursor: pointer;
 	}
+	#nextBtn:focus {
+		outline: 0;
+		background: #fff;
+	}
+	.cnt {
+		display: inline-block;
+		width: 50px;
+		height: 20px;
+		border-radius: 5px;
+		font-weight: 600;
+		text-align: center;
+	}
 	</style>
-	<script>
-	</script>
 </head>
 <body class="sidebar-mini ">
 	<div class="wrapper">
@@ -32,20 +41,38 @@
 			<div class="content">
 				
 				<div class="row mb-3">
-					<div class="col-12 col-md-3 pr-0">
-                    <div class="input-group m-0" style="top: 5px;">
-                      <div class="input-group-prepend">
-                        <div class="input-group-text">
-                          <i class="tim-icons icon-zoom-split"></i>
-                        </div>
-                      </div>
-                      <input type="text" name="schWord" value="${schObject.schWord}"
-                      	class="form-control" placeholder="Search.."/>
-                    </div>
+				
+					<!-- 보기 -->
+					<label class="col-sm-1 col-form-label text-right">
+						<p class="mt-2">페이지 크기</p>
+					</label>
+					<div class="col-12 col-md-1 pl-0">
+						<select class="selectpicker" data-size="7" data-style="btn btn-primary"
+							title="Single Select" id="pageSize">
+							<option selected>3</option>
+							<option>5</option>
+							<option>10</option>
+							<option>20</option>
+						</select>
 					</div>
-					<div class="col-12 col-md-2 text-left p-0">
+					
+					<!-- 검색 -->
+					<div class="col-12 col-md-3 pr-0">
+						<div class="input-group m-0" style="top: 5px;">
+							<div class="input-group-prepend">
+								<div class="input-group-text">
+									<i class="tim-icons icon-zoom-split"></i>
+								</div>
+							</div>
+							<input type="text" name="schWord" value="${schObject.schWord}"
+								class="form-control" placeholder="Search.."/>
+						</div>
+					</div>
+					<div class="col-12 col-md-1 text-left p-0">
 						<button class="btn" id="schBtn">검 색</button>
 					</div>
+					
+					<!-- 등록 -->
 					<c:if test="${sesMem.pos_no == 3}">
 					<div class="col-12 col-md-2 ml-auto text-right">
 						<button class="btn btn-primary"
@@ -54,6 +81,7 @@
 						</button>
 					</div>
 					</c:if>
+					
 				</div>
 
 				<div class="row">
@@ -89,26 +117,22 @@
 								</form>
 								
 								<!-- 페이징 -->
-								<ul class="pagination justify-content-center" id="viewShow">
+								<ul class="pagination justify-content-center">
 									<!-- 이전 버튼 -->
 									<li class="page-item" id="preBtn">
-										<button class="page-link" aria-label="Previous">
+										<button class="page-link" aria-label="Previous" style="background: none;">
 											<span aria-hidden="true">
 												<i class="tim-icons icon-double-left" aria-hidden="true"></i>
 											</span>
 										</button>
 									</li>
 									
-									<!-- 페이징 버튼 -->
-									<li class='page-item' v-for="i in (endPage-startPage)+1">
-										<button class='page-link pageBtn'>
-											{{(i+startPage)-1}}
-										</button>
-									</li>
+									<ul class="pagination justify-content-center" id="pageList">
+									</ul>
 									
 									<!-- 다음 버튼 -->									
-									<li class="page-item">
-										<button class="page-link" aria-label="Next">
+									<li class="page-item" id="nextBtn">
+										<button class="page-link" aria-label="Next" style="background: none;">
 											<span aria-hidden="true">
 												<i class="tim-icons icon-double-right" aria-hidden="true"></i>
 											</span>
@@ -135,47 +159,87 @@
 	
 	<script>
 	 jQuery(function($){
+		 
+		/****** init ******/
 		var page = 1;
+		var startPage = 1;
+		var endPage = 1;
+		var lastPage = 1;
 		var sch = "";
-		getProList(page, sch);
-		$('.page-item').eq(page).addClass("active");
+		var size = $('#pageSize').children("option:selected").text();
+		$('.dropdown-toggle').css("margin","0px").css("top","5px").css("height","38px");
+		
+		getProList(page, sch, size); // pro 리스트 출력
+		/****** End of Init ******/
+		
+		// pageSize 변경
+		$('#pageSize').change(function(){
+			size = $(this).children("option:selected").text();
+			
+			getProList(1, sch, size); // pro 리스트 출력
+		});
 		
 		// 페이지 버튼 클릭
 		$(document).on("click", ".pageBtn",function(){
-			$('.page-item').removeClass("active"); // 클래스 삭제
-			$(this).parent().addClass("active"); // 클래스 생성
-			
 			page = $(this).text(); // 클릭된 번호 얻기
+			sch = $('[name=schWord]').val(); // 검색어 얻기 
+			
+			getProList(page, sch, size); // pro 리스트 출력
+		});
+		
+		// 이전 버튼
+		$(document).on("click", "#preBtn",function(){
+			page = startPage-5; // 이전 페이지 구하기
 			sch = $('[name=schWord]').val(); // 검색어 얻기
 			
-			// 리스트 출력
-			getProList(page, sch);
+			getProList(page, sch, size); // pro 리스트 출력
+		});
+		// 다음 버튼
+		$(document).on("click", "#nextBtn",function(){
+			page = (endPage+1 > lastPage)? lastPage : endPage+1; // 다음 페이지 구하기
+			sch = $('[name=schWord]').val(); // 검색어 얻기
+			
+			getProList(page, sch, size); // pro 리스트 출력
 		});
 		
 		// 검색
 		$('#schBtn').on('click', function(){
-			$('.page-item').removeClass("active"); // 클래스 삭제
-			$('.page-item').eq(1).addClass("active"); // 클래스 생성
 			sch = $('[name=schWord]').val(); // 검색어 얻기
-			page = 1;
 			
-			// 리스트 출력
-			getProList(page, sch);
+			getProList(1, sch, size); // 리스트 출력
 		})
 		
+		// 프로젝트 상세 클릭
+		$(document).on("click",".project-item",function(){
+			var p_no = $(this).children().eq(1).text();
+			$('[name=p_no]').val(p_no);
+			$('#proForm').submit();
+		});
 		
 		// 함수 : 프로젝트 리스트
-		function getProList(page, sch){
+		function getProList(page, sch, size){
+			// 클래스 삭제
+			$('.page-item').removeClass("active");
+			
+			// query String 생성
+			var address = "${path}/project.do?method=data";
+			address += "&u_no=${sesMem.u_no}";
+			address += "&currPage="+page;
+			address += "&schWord="+sch;
+			address += "&pageSize="+size;
+			
 			$.ajax({
-				type:"post",
-				url:"${path}/project.do?method=data&u_no="+"${sesMem.u_no}"+"&currPage="+page+"&schWord="+sch,
-				/* data:$('form').serialize(), */
-				dataType:"json",
+				type: "post",
+				url: address,
+				dataType: "json",
 				success:function(data){
-					console.log(data);
 					var projectList = data.projectList;
 					var schProject = data.schProject;
-					console.log(schProject);
+					startPage = schProject.startPage;
+					endPage = schProject.endPage;
+					lastPage = schProject.lastPage;
+					console.log(data);
+					
 					// 프로젝트 리스트
 					var show = "";
 					$.each(projectList, function(idx, pro){
@@ -183,30 +247,44 @@
 						show += "<td>"+pro.p_no+"</td>";
 						show += "<td>"+pro.p_startD_s+"</td>";
 						show += "<td>"+pro.p_endD_s+"</td>";
-						show += "<td>"+5+"</td>";
-						show += "<td>"+5+"</td></tr>";
+						show += "<td><span class='cnt badge-info'>"+pro.outputCnt+"</span></td>";
+						show += "<td><span class='cnt badge-danger'>"+pro.riskCnt+"</span></td></tr>";
 					});
 					$('#project-list').html(show);
 					
-					var vm = new Vue({
-						el : "#viewShow",
-						data : schProject
-					});
+					// 페이지 구성
+					show = "";
+					for(i=startPage; i<=endPage; i++){
+						show += "<li class='page-item'>";
+						show += "<button class='page-link pageBtn'>";
+						show += i
+						show += "</button></li>";
+					}
+					$('#pageList').html(show);
+					$('#pageList li').eq(schProject.currPage%5-1).addClass("active");
+					
+					// 이전 페이지 없을때 조건 처리
+					if(startPage <= 1)
+						$('#preBtn').css("display", "none");
+					else {
+						$('#preBtn').css("display", "inline-block");
+					}
+					// 다음 페이지 없을때 조건 처리
+					if(endPage >= lastPage)
+						$('#nextBtn').css("display", "none");
+					else {
+						$('#nextBtn').css("display", "inline-block");
+					}
+					
 				},
 				error:function(err){
 					console.log(err);
 				}
 			});		
 		}
-		// 프로젝트 상세 클릭
-		$(document).on("click",".project-item",function(){
-			console.log("asdf");
-			var p_no = $(this).children().eq(1).text();
-			$('[name=p_no]').val(p_no);
-			$('#proForm').submit();
-		});	
 	});
 	 
 	</script>
+	
 </body>
 </html>

@@ -14,6 +14,7 @@ import zenkit.web.dto.JobStateCnt;
 import zenkit.web.dto.ResourceName;
 import zenkit.web.dto.RiskStateCnt;
 import zenkit.web.dto.SchProject;
+import zenkit.web.dto.UpProject;
 import zenkit.web.vo.Gantt;
 import zenkit.web.vo.Job2;
 import zenkit.web.vo.Project;
@@ -28,8 +29,8 @@ public class A03_projectService {
 	A03_JobDao jobDao;
 	
 	// 회원별 프로젝트 리스트
-	public ArrayList<Project> getProList(SchProject sch){
-		ArrayList<Project> pros = dao.getProList(sch);
+	public ArrayList<UpProject> getProList(SchProject sch){
+		ArrayList<UpProject> pros = dao.getProList(sch);
 		for(Project p : pros) {
 			SimpleDateFormat sDate = new SimpleDateFormat("YYYY. MM. dd");
 			String startD = sDate.format(p.getP_startD());
