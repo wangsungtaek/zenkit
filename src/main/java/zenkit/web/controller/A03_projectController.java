@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import zenkit.web.dto.AddResource;
+import zenkit.web.dto.MyRisk;
 import zenkit.web.dto.ResourceName;
 import zenkit.web.dto.SchProject;
 import zenkit.web.service.A03_JobService;
@@ -59,27 +60,22 @@ public class A03_projectController {
 		// 프로젝트 번호 session으로 받기
 		HttpSession session = req.getSession();
 		int p_no = (int)session.getAttribute("p_no");
-		User u_no = (User)session.getAttribute("sesMem");
-		System.out.println("p_no = "+p_no);
+		User user = (User)session.getAttribute("sesMem");
 		
 		// 본인의 작업 리스트
-		m.addAttribute("jobList",service.getJobList(p_no, u_no.getU_no()));
-		System.out.println("1");
+		m.addAttribute("jobList",service.getJobList(p_no, user.getU_no()));
 		// 프로젝트 기본정보
 		m.addAttribute("proInfo",service.getProjectInfo(p_no));
-		System.out.println("2");
 		// 프로젝트 PM
 		m.addAttribute("pm",service.getPM(p_no));
-		System.out.println("3");
 		// 프로젝트 참여인원
 		m.addAttribute("resourceList",service.getProjectResource(p_no));
-		System.out.println("4");
 		// 프로젝트 작업 상태 가져오기(카운트 값)
 		m.addAttribute("jobStatuCnt",service.getJobState(p_no));
-		System.out.println("5");
 		// 프로젝트 리스크 상태 가져오기(카운트 값)
 		m.addAttribute("riskStatuCnt",service.getRiskState(p_no));
-		System.out.println("6");
+		// 내가 조치해야할 리스크 목록 가져오기
+		m.addAttribute("myRiskList",service.getMyRisk(new MyRisk(p_no, user.getU_id())));
 		
 		return "/a03_project/a01_detailInfo";
 	}
@@ -129,10 +125,11 @@ public class A03_projectController {
 		// 현재 날짜 및 한달 후 날짜 계산
 		Calendar cal = Calendar.getInstance();
 		Date date = new Date();
-		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat fm = new SimpleDateFormat("yyyy/MM/dd");
 		
 		cal.setTime(date);
 		cal.add(Calendar.MONTH, 1);
+		System.out.println(date);
 		
 		m.addAttribute("startDay", fm.format(date));
 		m.addAttribute("endDay", fm.format(cal.getTime()));
@@ -150,25 +147,36 @@ public class A03_projectController {
 	// http://localhost:7080/zenkit/project.do?method=data
 	@RequestMapping(params = "method=data")
 	public String projectList(HttpServletRequest req, Model d, SchProject sch) {
-
-		// 페이징 기능을 위해 startNum, EndNum값 구하기
-		int size = sch.getPageSize();
-		int page = sch.getCurrPage();
-		int startNum = 1 + (page-1)*size;
-		int endNum = page * size;
-		int startPage = page-(page-1)%5;
-		int cnt = service.getProListCnt(sch);
-		int lastPage = ((cnt%size) == 0)? (cnt/size) : (cnt/size)+1;
-		int endPage = ((startPage+4 < lastPage)?startPage+4:lastPage);
 		
-		sch.setCount(cnt);
-		sch.setLastPage(lastPage);
-		sch.setStartNum(startNum);
-		sch.setEndNum(endNum);
-		sch.setStartPage(startPage);
-		sch.setEndPage(endPage);
+		if(sch.getPageSize() != 0) {
+			// 페이징 기능을 위해 startNum, EndNum값 구하기
+			int size = sch.getPageSize();
+			int page = sch.getCurrPage();
+			int startNum = 1 + (page-1)*size;
+			int endNum = page * size;
+			int startPage = page-(page-1)%5;
+			int cnt = service.getProListCnt(sch);
+			int lastPage = ((cnt%size) == 0)? (cnt/size) : (cnt/size)+1;
+			int endPage = ((startPage+4 < lastPage)?startPage+4:lastPage);
+			
+			sch.setCount(cnt);
+			sch.setLastPage(lastPage);
+			sch.setStartNum(startNum);
+			sch.setEndNum(endNum);
+			sch.setStartPage(startPage);
+			sch.setEndPage(endPage);
+		} else {
+			HttpSession session = req.getSession();
+			User user = (User)session.getAttribute("sesMem");
+			
+			sch.setStartNum(0);
+			sch.setEndNum(999999);
+			sch.setSchWord("");
+			sch.setU_no(user.getU_no());
+		}
 		
 		d.addAttribute("projectList", service.getProList(sch));
+		
 		return "pageJsonReport";
 	}
 	
@@ -178,7 +186,6 @@ public class A03_projectController {
 		HttpSession session = request.getSession();
 		int p_no = (int)session.getAttribute("p_no");
 		User user = (User)session.getAttribute("sesMem");
-		System.out.println(p_no);
 		
 		m.addAttribute("userJob", service.getJobListJson(p_no, user.getU_no()));
 		m.addAttribute("totProgress", service.getTotProgress(p_no));

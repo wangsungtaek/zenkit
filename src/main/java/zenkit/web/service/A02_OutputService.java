@@ -40,10 +40,13 @@ public class A02_OutputService {
 				o.setF_name(fname);
 			}
 		}
-		
-		
 		return outputs;
 	}
+	// 산출물 갯수
+	public int getUserOutCnt(OutputSch sch) {
+		return dao.getUserOutCnt(sch);
+	}
+	
 	
 	// 산출물 등록
 	public void regOutput(UpOutput output, MultipartFile o_file){

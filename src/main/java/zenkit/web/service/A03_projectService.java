@@ -11,6 +11,7 @@ import zenkit.web.dao.A03_JobDao;
 import zenkit.web.dao.A03_projectDao;
 import zenkit.web.dto.AddResource;
 import zenkit.web.dto.JobStateCnt;
+import zenkit.web.dto.MyRisk;
 import zenkit.web.dto.ResourceName;
 import zenkit.web.dto.RiskStateCnt;
 import zenkit.web.dto.SchProject;
@@ -18,6 +19,7 @@ import zenkit.web.dto.UpProject;
 import zenkit.web.vo.Gantt;
 import zenkit.web.vo.Job2;
 import zenkit.web.vo.Project;
+import zenkit.web.vo.Risk;
 
 @Service
 public class A03_projectService {
@@ -31,14 +33,32 @@ public class A03_projectService {
 	// 회원별 프로젝트 리스트
 	public ArrayList<UpProject> getProList(SchProject sch){
 		ArrayList<UpProject> pros = dao.getProList(sch);
-		for(Project p : pros) {
+		ArrayList<UpProject> riskCnt = dao.getProRiskCnt(sch.getU_no());
+		ArrayList<UpProject> outCnt = dao.getProOutCnt(sch.getU_no());
+		
+		for(UpProject p : pros) {
+			
+			// VIEW단에서 보여질 날짜포맷으로 변경
 			SimpleDateFormat sDate = new SimpleDateFormat("YYYY. MM. dd");
 			String startD = sDate.format(p.getP_startD());
 			String endD = sDate.format(p.getP_endD());
 			
 			p.setP_startD_s(startD);
 			p.setP_endD_s(endD);
+			
+			// 리스크 갯수 맵핑
+			for(UpProject rc : riskCnt) {
+				if(p.getP_no() == rc.getP_no())
+					p.setRiskCnt(rc.getRiskCnt());
+			}
+			// 산출물 갯수 맵핑
+			for(UpProject oc : outCnt) {
+				if(p.getP_no() == oc.getP_no())
+					p.setOutputCnt(oc.getOutputCnt());
+			}
 		}
+		
+		
 		return pros;
 	}
 	// 회원별 프로젝트 리스트 카운트
@@ -89,6 +109,11 @@ public class A03_projectService {
 	// 프로젝트 PM이름
 	public String getPM(int p_no) {
 		return dao.getPM(p_no);
+	}
+	
+	// 개인이 조치해야할 리스크 목록
+	public ArrayList<Risk> getMyRisk(MyRisk myRisk){
+		return dao.getMyRisk(myRisk);
 	}
 	
 	// 프로젝트 참여시키기

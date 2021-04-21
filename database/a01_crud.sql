@@ -338,7 +338,7 @@ CREATE TABLE z_risk (
 	r_receive VARCHAR2(100) , --조치자
 	r_rcontent VARCHAR2(500), --조치내용
 	r_file VARCHAR2(300), --첨부파일
-	j_no NUMBER CONSTRAINT z_job_j_no_fk REFERENCES Z_JOB(j_no) ON DELETE CASCADE, --작업번호
+	p_no NUMBER CONSTRAINT z_risk_p_no_fk REFERENCES Z_PROJECT(p_no) ON DELETE CASCADE, --프로젝트번호
 	rs_name VARCHAR2(20) CONSTRAINT z_risk_state_rs_name_fk REFERENCES Z_RISK_STATE(rs_name) ON DELETE CASCADE --상태명
 );
 
@@ -360,8 +360,12 @@ create sequence Z_RISK_ACTION_SEQ
 	start with 1
 	increment by 1;
 
+SELECT * FROM z_user;
+SELECT * FROM Z_RESOURCE zr ;
+
                            --리스크 번호          --리스크명  --리스크 내용       --등록일  --등록자  --조치자  --조치내용  --첨부파일 --작업번호 --상태명
-INSERT INTO z_risk values(z_risk_no_seq.nextval, '데이터베이스 기술 문제','데이터베이스 서버 문제가 생겼습니다.',sysdate,'19IT574',NULL,NULL,NULL,1,'오픈');--1
+INSERT INTO z_risk values(z_risk_no_seq.nextval, '데이터베이스 기술 문제','데이터베이스 서버 문제가 생겼습니다.',sysdate,'210417-4',NULL,NULL,NULL,1,'오픈');--1
+INSERT INTO z_risk values(z_risk_no_seq.nextval, '데이터베이스 기술 문제2','데이터베이스 서버 문제가 생겼습니다.',sysdate,'210417-4',NULL,NULL,NULL,1,'오픈');--1
 INSERT INTO z_risk values(z_risk_no_seq.nextval, '일정 지연','기술적으로 너무 어려운 개발이기 때문에 마감 기한까지 완성시킬 수 없을 것 같습니다.',sysdate,'15MA486',NULL,NULL,NULL,2,'오픈');--2
 INSERT INTO z_risk values(z_risk_no_seq.nextval, '프로젝트 변경 요소','갑작스러운 프로젝트 변경 요소가 생겼습니다.',sysdate,'94IT757',NULL,NULL,NULL,2,'오픈');--3
 INSERT INTO z_risk values(z_risk_no_seq.nextval, '프로젝트 통합관리','프로젝트관리 계획서 변경이 필요합니다.',sysdate,'17HR095',NULL,NULL,NULL,4,'오픈');--4

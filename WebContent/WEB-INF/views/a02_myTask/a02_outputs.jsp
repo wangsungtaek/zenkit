@@ -30,8 +30,8 @@
 					<!-- 프로젝트로 검색 -->
 					<div class="col-md-3 ">
 						<select class="selectpicker" data-size="5" data-style="btn btn-primary"
-							title="Single Select" id="modalProList">
-							<option selected>전체</option>
+							title="Single Select" id="proList">
+							<option value="0" selected>전체</option>
 						</select>
 					</div>
 					
@@ -252,10 +252,12 @@
 				dataType:"json",
 				success:function(data){
 					console.log(data);
-					var proejctList = data.projectList;
+					var projectList = data.projectList;
 					
+					console.log(projectList);
 					var show = "";
-					$.each(proejctList, function(idx, pro){
+					$.each(projectList, function(idx, pro){
+						console.log(idx);
 						show += "<option value='"+pro.p_no+"'>"+pro.p_name+"</option>";
 					});
 					$('[name=p_no]').append(show);
@@ -272,6 +274,27 @@
 	<%@ include file="../a01_main/plugin.jsp"%>
 	<%@ include file="../a01_main/bootstrapBottom.jsp"%>
 	<script>
+		var p_no = "${sch.p_no}";
+		var currPage = "${sch.currPage}";
+		var schWord = "${sch.schWord}";
+		
+		// select 버튼 변경 시
+		$('#proList').change(function(){
+			p_no = this.value;
+			
+			goSubmit();
+		})
+		
+		function goSubmit() {
+			var url = "${path}/output.do?method=outputs";
+			url += "&p_no="+p_no;
+			url += "&schWord="+schWord;
+			url += "&currPage="+currPage;
+			
+			location.href = url;
+		}
+		
+	
 	
 		// 프로젝트 클릭 시, 작업 내역 가져오기
 		$('[name=p_no]').change(function(){

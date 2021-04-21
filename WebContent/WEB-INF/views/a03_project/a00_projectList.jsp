@@ -68,7 +68,7 @@
 								class="form-control" placeholder="Search.."/>
 						</div>
 					</div>
-					<div class="col-12 col-md-1 text-left p-0">
+					<div class="col-12 col-md-3 text-left p-0">
 						<button class="btn" id="schBtn">검 색</button>
 					</div>
 					

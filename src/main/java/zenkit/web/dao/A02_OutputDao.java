@@ -11,6 +11,8 @@ import zenkit.web.dto.UpOutput;
 public interface A02_OutputDao {
 	// 회원의 참여한 프로젝트의 작업에 대한 산출물 리스트 조회
 	public ArrayList<UpOutput> getOutputs(OutputSch sch);
+	// 산출물 갯수
+	public int getUserOutCnt(OutputSch sch);
 	// 산출물 등록
 	public void regOutput(UpOutput output);
 	// 산출물 o_no 얻기

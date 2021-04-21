@@ -3,7 +3,7 @@ SELECT * FROM Z_RESOURCE;
 SELECT * FROM Z_JOB;
 SELECT * FROM Z_OUTPUTS;
 SELECT * FROM Z_RISK;
-SELECT * FROM Z_USER ;
+SELECT * FROM Z_USER;
 
 
 
@@ -384,3 +384,122 @@ SELECT *
 WHERE num BETWEEN 10 AND 13;
 
 SELECT * FROM Z_USER zu ;
+
+SELECT *
+  FROM Z_RISK
+ WHERE p_no = 1
+   AND r_receive = '210417-4';
+  
+  
+SELECT count(*) cnt
+  FROM Z_PROJECT
+ WHERE p_no IN (SELECT p_no FROM Z_RESOURCE WHERE u_no = 3)
+	AND p_name LIKE '%'||''||'%';
+
+
+SELECT count(*) FROM Z_RESOURCE WHERE u_no = 3;
+SELECT * FROM Z_USER zu ;
+
+SELECT *
+  FROM (
+	SELECT ROWNUM num,upproject.*
+	  FROM (
+		SELECT p.*, pr.riskCnt, po.outputCnt
+		  FROM Z_PROJECT p, (
+				SELECT p.p_no, count(r.p_no) AS riskCnt
+			   FROM Z_RISK r, Z_PROJECT p
+			   WHERE r.p_no(+) = p.p_no
+				AND p.p_no IN (
+					SELECT p_no
+					FROM Z_RESOURCE
+					WHERE u_no = 3
+				)
+				GROUP BY p.p_no
+		  ) pr, (
+				SELECT p.p_no, count(o.o_no) outputCnt
+				FROM Z_JOB j, Z_OUTPUTS o, Z_PROJECT p
+				WHERE j.j_no = o.j_no(+)
+				AND p.p_no = j.p_no(+)
+			 	AND p.p_no IN (
+			 		SELECT p_no
+					FROM Z_RESOURCE
+					WHERE u_no = 3
+				)
+				GROUP BY p.p_no
+		  ) po
+		WHERE p.p_no = pr.p_no
+		  AND p.p_no = po.p_no
+		  AND p.p_name LIKE '%'||''||'%'
+		ORDER BY p.p_no DESC
+	) upproject
+)
+WHERE num BETWEEN 1 AND 3;
+
+-- 프로젝트 리스트
+SELECT *
+  FROM (
+	SELECT ROWNUM num, p.*
+	  FROM (
+			SELECT *
+			  FROM Z_PROJECT
+			 WHERE p_no IN (SELECT p_no FROM Z_RESOURCE WHERE u_no = 3)
+			   AND p_name LIKE '%'||'C'||'%'
+			ORDER BY p_no DESC
+		) p
+	)
+WHERE num BETWEEN 1 AND 10;
+
+-- 프로젝트 리스크 갯수
+SELECT p_no, count(*) riskCnt
+  FROM Z_RISK
+ WHERE p_no IN (SELECT p_no FROM Z_RESOURCE WHERE u_no = 3)
+GROUP BY p_no;
+
+-- 프로젝트 산출물 갯수
+SELECT j.p_no, count(o.o_no) outputCnt
+  FROM Z_JOB j, Z_OUTPUTS o
+ WHERE j.j_no = o.j_no
+   AND j.p_no IN (SELECT p_no FROM Z_RESOURCE WHERE u_no = 3)
+GROUP BY j.p_no;
+ 
+SELECT * FROM Z_JOB zj ;
+SELECT * FROM Z_OUTPUTS zo ;
+SELECT * FROM Z_USER zu ;
+SELECT * FROM Z_RISK zr ;
+
+
+
+SELECT *
+		  FROM (
+			SELECT ROWNUM num,upproject.*
+			  FROM (
+				SELECT p.*, pr.riskCnt, po.outputCnt
+				  FROM Z_PROJECT p, (
+						SELECT p.p_no, count(r.p_no) AS riskCnt
+					   FROM Z_RISK r, Z_PROJECT p
+					   WHERE r.p_no(+) = p.p_no
+						AND p.p_no IN (
+							SELECT p_no
+							FROM Z_RESOURCE
+							WHERE u_no = #{u_no}
+						)
+						GROUP BY p.p_no
+				  ) pr, (
+						SELECT p.p_no, count(o.o_no) outputCnt
+						FROM Z_JOB j, Z_OUTPUTS o, Z_PROJECT p
+						WHERE j.j_no = o.j_no(+)
+						AND p.p_no = j.p_no(+)
+					 	AND p.p_no IN (
+					 		SELECT p_no
+							FROM Z_RESOURCE
+							WHERE u_no = #{u_no}
+						)
+						GROUP BY p.p_no
+				  ) po
+				WHERE p.p_no = pr.p_no
+				  AND p.p_no = po.p_no
+				  AND p.p_name LIKE '%'||#{schWord, jdbcType=VARCHAR}||'%'
+				ORDER BY p.p_no DESC
+			) upproject
+		)
+		WHERE num BETWEEN #{startNum} AND #{endNum}

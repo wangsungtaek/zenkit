@@ -233,20 +233,70 @@ SELECT *, (SELECT count(*) FROM Z_RISK WHERE p_no IN (		SELECT p_no
 		 WHERE u_no = 3
  );
 
-SELECT p.*, pr.riskcnt
-	  FROM Z_PROJECT p, (
-		SELECT p.p_no, count(r.p_no) AS riskCnt
-		  FROM Z_RISK r, Z_PROJECT p
-		 WHERE r.p_no(+) = p.p_no
-		   AND p.p_no IN (
-		 		SELECT p_no
-				FROM Z_RESOURCE
-				WHERE u_no = 3
-			 	)
-		GROUP BY p.p_no
-		
-		) pr
-WHERE p.p_no = pr.p_no;
+SELECT *
+  FROM (
+	SELECT ROWNUM num,upproject.*
+	  FROM (
+		SELECT p.*, pr.riskCnt, po.outputCnt
+		  FROM Z_PROJECT p, (
+				SELECT p.p_no, count(r.p_no) AS riskCnt
+			   FROM Z_RISK r, Z_PROJECT p
+			   WHERE r.p_no(+) = p.p_no
+				AND p.p_no IN (
+					SELECT p_no
+					FROM Z_RESOURCE
+					WHERE u_no = 3
+				)
+				GROUP BY p.p_no
+		  ) pr, (
+				SELECT p.p_no, count(o.o_no) outputCnt
+				FROM Z_JOB j, Z_OUTPUTS o, Z_PROJECT p
+				WHERE j.j_no = o.j_no(+)
+				AND p.p_no = j.p_no(+)
+			 	AND p.p_no IN (
+			 		SELECT p_no
+					FROM Z_RESOURCE
+					WHERE u_no = 3
+				)
+				GROUP BY p.p_no
+		  ) po
+		WHERE p.p_no = pr.p_no
+		  AND p.p_no = po.p_no
+		  AND p.p_name LIKE '%'||''||'%'
+		ORDER BY p.p_no DESC
+	) upproject
+)
+WHERE num BETWEEN 0 AND 99;
+SELECT * FROM Z_USER zu ;
+
+SELECT p.p_no, count(o.o_no) outputCnt
+  FROM Z_JOB j, Z_OUTPUTS o, Z_PROJECT p
+ WHERE j.j_no = o.j_no(+)
+	AND p.p_no = j.p_no(+)
+ 	AND p.p_no IN (
+ 		SELECT p_no
+		FROM Z_RESOURCE
+		WHERE u_no = 3
+)
+GROUP BY p.p_no;
+
+
+SELECT p_no
+		FROM Z_RESOURCE
+		WHERE u_no = 3;
+SELECT * FROM Z_OUTPUTS zo ;
+SELECT * FROM Z_JOb;
+
+SELECT p.p_no, count(r.p_no) AS riskCnt
+  FROM Z_RISK r, Z_PROJECT p
+ WHERE r.p_no(+) = p.p_no
+   AND p.p_no IN (
+ 		SELECT p_no
+		FROM Z_RESOURCE
+		WHERE u_no = 3
+	 	)
+GROUP BY p.p_no;
+	
 
 
 SELECT pr.
