@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import zenkit.web.dao.A02_OutputDao;
 import zenkit.web.dto.OutputSch;
 import zenkit.web.dto.UpOutput;
+import zenkit.web.vo.Project;
 
 @Service
 public class A02_OutputService {
@@ -42,6 +43,11 @@ public class A02_OutputService {
 		}
 		return outputs;
 	}
+	// 프로젝트 리스트
+	public ArrayList<Project> getUserProList(int u_no){
+		return dao.getUserProList(u_no);
+	}
+	
 	// 산출물 갯수
 	public int getUserOutCnt(OutputSch sch) {
 		return dao.getUserOutCnt(sch);

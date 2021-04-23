@@ -40,7 +40,7 @@ public class A02_OutputController {
 		if(sch.getCurrPage() == 0) {
 			sch.setCurrPage(1);
 		}
-		int size = 2;
+		int size = 3;
 		int page = sch.getCurrPage();
 		int startNum = 1 + (page-1) * size;
 		int endNum = page * size;
@@ -56,6 +56,8 @@ public class A02_OutputController {
 		sch.setStartPage(startPage);
 		sch.setEndPage(endPage);
 		
+		// 해당 유저 프로젝트 리스트
+		m.addAttribute("proList", service.getUserProList(user.getU_no()));
 		// 해당 유저의 산출물 리스트
 		m.addAttribute("outputList", service.getOutput(sch));
 		// 검색 객체

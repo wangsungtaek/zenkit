@@ -35,8 +35,6 @@
       <typeAlias alias="mytasksch" type="zenkit.web.dto.MyTaskSch"/>
       <typeAlias alias="upproject" type="zenkit.web.dto.UpProject"/>
       <typeAlias alias="myRisk" type="zenkit.web.dto.MyRisk"/>
-      
-      
 	</typeAliases>
       
       

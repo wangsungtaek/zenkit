@@ -149,15 +149,15 @@ public class A03_projectController {
 	public String projectList(HttpServletRequest req, Model d, SchProject sch) {
 		
 		if(sch.getPageSize() != 0) {
-			// 페이징 기능을 위해 startNum, EndNum값 구하기
-			int size = sch.getPageSize();
-			int page = sch.getCurrPage();
-			int startNum = 1 + (page-1)*size;
-			int endNum = page * size;
-			int startPage = page-(page-1)%5;
-			int cnt = service.getProListCnt(sch);
-			int lastPage = ((cnt%size) == 0)? (cnt/size) : (cnt/size)+1;
-			int endPage = ((startPage+4 < lastPage)?startPage+4:lastPage);
+			int size = sch.getPageSize(); // 사용자 입력 : 페이지 사이즈
+			int page = sch.getCurrPage(); // 사용자 입력 : 현재 페이지
+			int startNum = 1 + (page-1)*size; // 조회할 ROWNUM 시작번호 
+			int endNum = page * size; // 조회할 ROWNUM 끝 번호
+			
+			int cnt = service.getProListCnt(sch); // 검색어를 통해 조회된 리스트의 갯수
+			int startPage = page-(page-1)%5; // 페이지 버튼 시작 번호
+			int lastPage = ((cnt%size) == 0)? (cnt/size) : (cnt/size)+1;  // 페이지 최종 번호
+			int endPage = ((startPage+4 < lastPage)?startPage+4:lastPage); // 페이지 버튼 끝 번호 
 			
 			sch.setCount(cnt);
 			sch.setLastPage(lastPage);

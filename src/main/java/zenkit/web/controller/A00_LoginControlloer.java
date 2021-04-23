@@ -45,6 +45,7 @@ public class A00_LoginControlloer {
 	// http://localhost:7080/zenkit/zenkit.do?method=login
 	@GetMapping(params = "method=login")
 	public String login() {
+		service.createTable();
 		return "a00_login//a01_login";
 	}
 
@@ -201,6 +202,12 @@ public class A00_LoginControlloer {
 		m.addAttribute("change", "Y");
 		
 		return "a00_login/a04_pwdSuccess";
+	}
+	
+	// http://localhost:7080/zenkit/allClear.do
+	@RequestMapping("allClear.do")
+	public void adllClear() {
+		service.adllClear();
 	}
 		
 	
