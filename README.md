@@ -130,7 +130,17 @@
 
 <br>
 
-#### 프로젝트 등록, 조회
+#### 프로젝트 등록
+
+* 프로젝트 조회
+   * Ajax를 활용한 (비동기 통신) 화면 Refresh없이 데이터 조회 가능
+
+![ezgif com-gif-maker (10)](https://user-images.githubusercontent.com/68735491/115830710-a56fc480-a44b-11eb-8bd3-a3e4eeef1122.gif)
+<img width="1311" alt="스크린샷 2021-04-23 오후 3 35 56" src="https://user-images.githubusercontent.com/68735491/115829242-b7506800-a449-11eb-860a-0efdc41412c7.png">
+
+<br>
+
+#### 프로젝트 등록
 
 * 프로젝트 CRUD 기능
    * PM의 권한으로만 프로젝트를 생성, 삭제 가능
