@@ -15,7 +15,6 @@
 <%@ include file="../a01_main/bootstrapTop.jsp"%>
 <script type="text/javascript">
 	$(document).ready(function() {
-
 		var pm = "${project.p_pm}";
 		var user = "${sesMem.u_id}";
 		if (pm != user) {
@@ -27,17 +26,38 @@
 			location.href = "${path}/job.do?method=list";
 			return false;
 		});
-
-		$("#uptBtn").on("click", function() {
-
-			if (confirm("수정하시겠습니까??")) {
-				$("[name=j_refno]").removeAttr("disabled");
-				$("form").attr("action", "${path}/job.do?method=update");
-				$("[name=proc]").val("update");
-				$("form").submit();
+		
+		$("[name=j_endD]").on("focusout",function(){
+			if($("[name=j_endD]").val() < $("[name=j_startD]").val()){
+				$("[name=j_endD]").attr("style", "border-color:red;");
+				$("[name=j_endD]").val("");
 			}
-			;
-		});
+		})
+		
+		
+		$("#uptBtn").on("click",function(){
+			if($("[name=j_name]").val() == "") {
+				$("[name=j_name]").attr("style", "border-color:red;")
+				return false;
+			}else if($("[name=j_content]").val() == ""){
+				$("[name=j_content]").attr("style", "border-color:red; width: 99%; height: 200px;")
+				return false;
+			}else if($("[name=j_startD]").val() == ""){
+				$("[name=j_startD]").attr("style", "border-color:red;")
+				return false;
+			}else if($("[name=j_endD]").val() == ""){
+				$("[name=j_endD]").attr("style", "border-color:red;")
+				return false;
+			}else{
+				if (confirm("수정하시겠습니까??")) {
+					$("[name=j_refno]").removeAttr("disabled");
+					$("form").attr("action", "${path}/job.do?method=update");
+					$("[name=proc]").val("update");
+					$("form").submit();
+				};
+			}
+		})
+		
 
 		$("#delBtn").on("click", function() {
 			if (confirm("삭제하시겠습니까??")) {
@@ -54,19 +74,17 @@
 			if (!confirm("등록 완료!! \n 계속 등록하시겠습니까??")) {
 				location.href = "${path}/job.do?method=list";
 			}
-		}
-		;
+		};
 		if (proc == "delete") {
 			alert("삭제 완료하였습니다. 조회페이지로 이동합니다.");
 			location.href = "${path}/job.do?method=list";
-		}
-		;
+		};
 
 		if (proc == "update") {
 			alert("수정완료");
 			location.href = "${path}/job.do?method=list";
-		}
-		;
+		};
+		
 		$("#jobBtn").attr("class", "btn btn-primary");
 
 	});

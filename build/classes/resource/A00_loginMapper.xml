@@ -120,7 +120,7 @@
 	<insert id="addDept" parameterType="String">
 		INSERT INTO Z_DEPARTMENT VALUES (Z_DEPARTMENT_NO_SEQ.NEXTVAL,#{dept_name})
 	</insert>
-	
+		
 	<!-- ############################################################################## -->
 	
 	<!-- 생성 : 임직원 테이블 -->
@@ -285,15 +285,15 @@
 		
 	<!-- 생성 : 리스크 테이블 -->
 	<select id="createRisk">
-		CREATE TABLE Z_RISK (
+		CREATE TABLE z_risk (
 		   r_no NUMBER CONSTRAINT z_risk_no_pk PRIMARY KEY,
 		   r_name VARCHAR2(100) CONSTRAINT z_risk_name_nn NOT NULL,
 		   r_content VARCHAR2(500) CONSTRAINT z_risk_content_nn NOT NULL,
 		   r_regdate DATE CONSTRAINT z_risk_regdate_nn NOT NULL,
 		   r_send VARCHAR2(100) CONSTRAINT z_risk_send_nn NOT NULL,
-		   r_receive VARCHAR2(100),
+		   r_receive VARCHAR2(100) ,
 		   r_rcontent VARCHAR2(500),
-		   j_no NUMBER CONSTRAINT z_job_j_no_fk REFERENCES Z_JOB(j_no) ON DELETE CASCADE,
+		   p_no NUMBER CONSTRAINT z_project_p_no_fk REFERENCES Z_project(p_no) ON DELETE CASCADE,
 		   rs_name VARCHAR2(20) CONSTRAINT z_risk_state_rs_name_fk REFERENCES Z_RISK_STATE(rs_name) ON DELETE CASCADE,
 		   r_strat varchar2(50)
 		)

@@ -52,17 +52,19 @@ html, body {
 </head>
 <body>
 
-	<div id="gantt_here" style='width:100%; height:90%;'></div>
-	
+	<div id="gantt_here" style='width: 100%; height: 90%;'></div>
+
 	<script>
-	document.addEventListener("DOMContentLoaded",function(eve){
+	document.addEventListener("DOMContentLoaded",function(){
+		// json데이터를 받아 ajax처리로 차트 출력
 		$.ajax({
 			type:"post",
 			url:"${path}/job.do?method=data",
 			dataType:"json",
 			success:function(data){
+				var project = data.project;
+				var people = data.people;
 				var data = data.job;
-				console.log(data);
 				gantt.init("gantt_here");
 				gantt.parse({
 					data
@@ -73,14 +75,21 @@ html, body {
 				console.log(err);
 			}
 		});
+		gantt.config.scales = [
+		    {unit: "month", step: 1, format: "%F, %Y"},
+		    {unit: "day", step: 1, format: "%j, %D"}
+		];
+		
+
+		// Gantt차트 속성 정의
 		var colHeader = '<div class="gantt_grid_head_cell gantt_grid_head_add" onclick="gantt.createTask()"></div>';
 		gantt.config.columns = [
-			{ name: "text", tree: true, width: 250, resize: true },
-            { name: "start_date", align: "center", resize: true ,width: 150},
-            { name: "end_date", align: "center", resize: true ,width: 150},
-            { name: "charger", align: "center" ,width: 100},
-            { name: "progress", align: "center" ,width: 100},
-	        { name: "buttons", label:colHeader, width: 75, template: function(task) {
+			{ name: "text", tree: true, width: 250, resize: true }, // 작업명
+            { name: "start_date", align: "center", resize: true ,width: 100}, // 시작일
+            { name: "end_date", align: "center", resize: true ,width: 100}, // 종료일
+            { name: "charger", align: "center" ,width: 100}, // 담당자
+            { name: "progress", align: "center" ,width: 100}, // 완료율
+	        { name: "buttons", label:colHeader, width: 75, template: function(task) { // CRUD 
 	            return (
 	               '<i class="fa fa-pencil" align="center" data-action="edit"></i>' +
 	               '<i class="fa fa-plus" align="center" data-action="add"></i>' +
@@ -88,152 +97,183 @@ html, body {
 	               );
 	         }}
 	      ];
-		// 테스크 버튼 클릭 시
-	      gantt.attachEvent("onTaskClick", function(id, e){
-	         var button = e.target.closest("[data-action]")
-	         if(button){
+		/* 간트영역 작업 더블클릭시 상세정보 막아둠 */
+		gantt.attachEvent("onTaskDblClick", function(id,e){
+		    return false;
+		});
+		/* 간트영역 수정/생성/삭제 클릭시 기능별 정의 */
+		gantt.attachEvent("onTaskClick", function(id, e){
+	        var button = e.target.closest("[data-action]")
+	        if(button){
 	            var action = button.getAttribute("data-action");
 	            switch (action) {
-	               case "edit":
-	                  gantt.showLightbox(id);
-	                  break;
-	               case "add":
-	                  gantt.createTask(null, id);
-	                  break;
-	               case "delete":
-	                  gantt.confirm({
-	                     title: gantt.locale.labels.confirm_deleting_title,
-	                     text: gantt.locale.labels.confirm_deleting,
-	                     callback: function (res) {
-	                        if (res)
-	                           gantt.deleteTask(id);
-	                     }
-	                  });
-	                  break;
+	                case "edit":
+	                	var pm = "${project.p_pm}";
+	            		var user = "${sesMem.u_id}";
+	            		if(pm != user){
+	            			alert("작업 수정 권한이 없습니다.");
+	            		}else{
+	            			gantt.showLightbox(id);	
+	            		}
+	                    break;
+	                case "add":
+	                	var pm = "${project.p_pm}";
+	            		var user = "${sesMem.u_id}";
+	            		if(pm != user){
+	            			alert("작업 등록 권한이 없습니다.");
+	            		}else{
+	            			location.href="${path}/job.do?method=insertForm";
+	            		}
+	                    break;
+	                case "delete":
+	                	var pm = "${project.p_pm}";
+	            		var user = "${sesMem.u_id}";
+	            		if(pm != user){
+	            			alert("작업 삭제 권한이 없습니다.");
+	            		}else{
+	            			gantt.locale.labels.confirm_deleting= "하위 작업도 삭제됩니다. <br>삭제 하시겠습니까?";
+		                    gantt.confirm({
+		                        title: gantt.locale.labels.confirm_deleting_title,
+		                        text: gantt.locale.labels.confirm_deleting,
+		                        callback: function (res) {
+		                            if (res)
+		                                gantt.deleteTask(id);
+		                        }
+		                    });	
+	            		}
+	                    break;
 	            }
 	            return false;
-	         }
-	         return true;
-	      });
-	      
 
-	      var opts = [
-	         { key:1 , label: 'High'},
-	         { key:2 , label: 'Normal'},
-	         { key:3 , label: 'Low'},
-	      ];
-	      // lightbox 내부 priority 영역 추가
-	      gantt.config.lightbox.sections = [
+	        }
+	        return true;
+	    });
+		 // lightbox 내부 속성 영역 추가
+	    gantt.config.lightbox.sections = [
 	    	  {name:"charger", height:30, map_to:"charger", type:"textarea"},
 	    	  {name:"pname", height:30, map_to:"pname", type:"textarea"},
 	          {name:"description", height:30, map_to:"text", type:"textarea", focus:true},
 	          {name:"centent", height:30, map_to:"jcontent", type:"textarea"},
 	          {name:"time", height:30, map_to:"start_date", type:"duration"},
 	          {name:"endtime", height:30, map_to:"end_date", type:"duration"},
-	          {name:"progress", height:30, map_to:"progress", type:"textarea"}
-	      ];
-	      // undefined ==> Priority 변경 (lightbox)
-	      gantt.locale.labels.section_charger="담당자";
-	      gantt.locale.labels.section_pname="프로젝트명";
-	      gantt.locale.labels.section_endtime="종료날짜";
-	      gantt.locale.labels.section_centent="작업설명";
-	      gantt.locale.labels.section_progress="완료율";
-	      
-	      
-	      gantt.attachEvent("onLightboxSave", function(id, task, is_new){
-	    	  var taskStart = task.start_date;
-	    	  var taskEnd = task.end_date;
-	    	  var scaleStart = gantt.config.start_date;
-	    	  var scaleEnd = gantt.config.end_date;
-	    	  alert(taskStart);
-	    	  alert(scaleStart);
-	          
-	          // ajax update 처리
-	          updateCall(task,is_new);
-	       // 갱신된 데이터 호출 필요
-	          return true;
-	      })
-	});// document 끝
-	   // task 생성 및 수정
-	   function updateCall(gantt,is_new){
-	        // callSch() 입력된 수정된 데이터를 요청값으로 전달
-	        if(is_new == false){
-	           $.ajax({
-	              type:"post",
-	              url:"${path}/job.do?method=update2",
-	              data:gantt,
-	              dataType:"json",
-	              success:function(data){
-	                 // data.모델명
-	                 if(data.success=="Y")
-	                    alert("수정완료");
-	              },
-	              error:function(err){
-	                 alert("에러발생: " + err);
-	                 console.log(err);
-	              }
-	           });
-	        } else if(is_new == true){
-	           
-	           var sch = callSch(gantt);
-	           console.log(sch);
-	           $.ajax({
-	              type:"post",
-	              url:"${path}/job.do?method=insert",
-	              data:sch,
-	              dataType:"json",
-	              success:function(data){
-	                 // data.모델명
-	                 if(data.success=="Y")
-	                    alert("수정완료");
-	              },
-	              error:function(err){
-	                 alert("에러발생: " + err);
-	                 console.log(err);
-	              }
-	           });
-	        }
-	        // 갱신된 데이터 호출 필요
-	     } 
-	   
-	   // is_new == true 일 때, 빈 데이터 채우기
-	   function callSch(gantt){
-	        var sch = {};
-	        sch.duration = gantt.duration;
-	        sch.parent = gantt.parent;
-	        sch.progress = 0;
-	        sch.sortorder = 9999; // id
-	        sch.id = 9999;   // id
-	        sch.text = gantt.text;
-	        sch.open = true;
-	        sch.start_date = gantt.start_date;
-	        
-	        return sch;
-	     }
-	     
-	   function getFormatDate(date){
-	       var year = date.getFullYear();              //yyyy
-	       var month = (1 + date.getMonth());          //M
-	       month = month >= 10 ? month : '0' + month;  //month 두자리로 저장
-	       var day = date.getDate();                   //d
-	       day = day >= 10 ? day : '0' + day;          //day 두자리로 저장
-	       return  year + '' + month + '' + day;       //'-' 추가하여 yyyy-mm-dd 형태 생성 가능
-	   }
-	   
-	   function sw(data){
-	      var sch = {};
-	      sch.id = data.id;
-	      //data.start_date = gantt.date.parseDate(data.start_date,"%Y-%m-%d %H:%i:%s");
-	      //sch.start_date = data.start_date.toISOString();
-	      sch.start_date = data.start_date;
-	      sch.duration = data.duration;
-	      sch.text = data.text;
-	      sch.progress = data.progress;
-	      sch.parent = data.parent;
-	      sch.sortorder = data.sortorder;
-	      sch.open = true;
-	      return sch;
-	   }
-	</script>
+	          {name:"progress", height:30, map_to:"progress", type:"textarea", default_value:"0"}
+	    ];
+	    // (lightbox에 속성 이름 정의)
+	    gantt.locale.labels.section_charger="담당자";
+	    gantt.locale.labels.section_pname="프로젝트명";
+	    gantt.locale.labels.section_endtime="종료날짜";
+	    gantt.locale.labels.section_centent="작업설명";
+	    gantt.locale.labels.section_progress="완료율";
+
+		gantt.attachEvent("onAfterTaskAdd", function(id,item){
+			insertCall(id,item);	
+		});
+		
+		gantt.attachEvent("onAfterTaskUpdate", function(id,item){
+			updateCall(id,item);	
+		});
+		
+		gantt.attachEvent("onAfterTaskDelete", function(id,item){
+			deleteTask(id);	
+		});
+	});
+	// 업데이트 처리
+	function updateCall(id, item){
+		if(item.progress == ""){
+			item.progress = 0;
+		}
+		$.ajax({
+			type:"post",
+			url:"${path}/job.do?method=update2",
+			data:item,
+			dataType:"json",
+			 success:function(data){
+				  if(data.success=="Y"){
+					  alert("수정 완료");  
+					  console.log(data.gantt);
+				  }
+			  },
+			  error:function(err){
+				  alert("에러발생: " + err);
+				  console.log(err);
+			  }
+		});
+	}
 	
+	function insertCall(id,item){
+		$.ajax({
+			type:"post",
+			url:"${path}/job.do?method=insert",
+			data:item,
+			dataType:"json",
+			 success:function(data){
+				  if(data.success=="Y"){
+					  alert("수정 완료");  
+					  console.log(data.gantt);
+				  }
+			  },
+			  error:function(err){
+				  alert("에러발생: " + err);
+				  console.log(err);
+			  }
+		});
+	}
+	
+	function deleteTask(id){
+		$.ajax({
+			type:"post",
+			url:"${path}/job.do?method=delete2",
+			data:{id:id},
+			dataType:"json",
+			 success:function(data){
+				  if(data.success=="Y"){
+					  alert("삭제 완료");  
+					  console.log(data.gantt);
+				  }
+			  },
+			  error:function(err){
+				  alert("에러발생: " + err);
+				  console.log(err);
+			  }
+		});
+	}
+	function callSch(gantt){
+		/* gantt.config.lightbox.sections = [
+	    	  {name:"charger", height:30, map_to:"charger", type:"textarea"},
+	    	  {name:"pname", height:30, map_to:"pname", type:"textarea"},
+	          {name:"description", height:30, map_to:"text", type:"textarea", focus:true},
+	          {name:"centent", height:30, map_to:"jcontent", type:"textarea"},
+	          {name:"time", height:30, map_to:"start_date", type:"duration"},
+	          {name:"endtime", height:30, map_to:"end_date", type:"duration"},
+	          {name:"progress", height:30, map_to:"progress", type:"textarea"},
+	          {name:"p_no", height:30, map_to:"p_no", type:"textarea"},
+	          {name:"parent", height:30, map_to:"parent", type:"textarea"}
+	    ]; */
+		console.log("###callSch###");
+		console.log(gantt);
+	  var sch = {};
+	  sch.charger = gantt.charger;
+	  sch.pname = gantt.pname;
+	  sch.text = gantt.text; 
+	  sch.jcontent = gantt.jcontent;	
+	  sch.text = gantt.text;
+	  sch.start_date = gantt.start_date;
+	  sch.end_date = gantt.end_date;
+	  if(gantt.progress == ""){
+		  sch.progress = 0;
+	  }else{
+		  sch.progress = gantt.progress;  
+	  }
+	};
+	/* 삭제 처리 기능 */
+	function getFormatDate(date){
+	    var year2 = date.substring(0,4);
+	    var month2 = date.substring(5,7);
+	    var day2 = date.substring(8,10);        
+	    var limit = new Date(year2,month2,day2);
+	    return limit;
+	}
+	
+	</script>
+
 </body>

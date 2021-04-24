@@ -56,7 +56,7 @@
 			}
 		});
 		
-		$("[name=j_startD]").keyup(function(event){
+		$("[name=j_startD]").focusout(function(event){
 			if($("[name=j_startD]").val().length > 0){
 				$("[name=j_startD]").attr("style", "border-color:none;");
 			}else{
@@ -64,7 +64,7 @@
 			}
 		});
 		
-		$("[name=j_endD]").keyup(function(event){
+		$("[name=j_endD]").focusout(function(event){
 			if($("[name=j_endD]").val().length > 0){
 				$("[name=j_endD]").attr("style", "border-color:none;");
 			}else{
@@ -74,23 +74,26 @@
 		
 		$("#regBtn").on("click",function(){
 			if($("[name=j_name]").val() == "") {
-				alert("작업명을 입력해 주세요");
 				$("[name=j_name]").attr("style", "border-color:red;")
 				return false;
 			}else if($("[name=j_content]").val() == ""){
 				$("[name=j_content]").attr("style", "border-color:red; width: 99%; height: 200px;")
-				alert("작업설명을 입력해 주세요");
 				return false;
 			}else if($("[name=j_startD]").val() == ""){
 				$("[name=j_startD]").attr("style", "border-color:red;")
-				alert("시작일을 선택해 주세요");
 				return false;
 			}else if($("[name=j_endD]").val() == ""){
 				$("[name=j_endD]").attr("style", "border-color:red;")
-				alert("종료일을 선택해 주세요");
 				return false;
 			}else{
 				$("form").submit();	
+			}
+		})
+		
+		$("[name=j_endD]").on("focusout",function(){
+			if($("[name=j_endD]").val() < $("[name=j_startD]").val()){
+				$("[name=j_endD]").attr("style", "border-color:red;");
+				$("[name=j_endD]").val("");
 			}
 		})
 		
@@ -99,8 +102,14 @@
 		if(proc == "insert"){
 			if(!confirm("등록 완료!! \n 계속 등록하시겠습니까??")){
 				location.href="${path}/job.do?method=list";	
+			}else{
+				location.href="${path}/job.do?method=insertForm";
 			}
 		};
+		
+		
+		
+		
 		$("#jobBtn").attr("class", "btn btn-primary");
 	
 		
@@ -129,10 +138,9 @@
 							</div>
 							<div class="card-body">
 								<form method="post" class="form-horizontal" action="${path}/job.do?method=insert">
-									<c:forEach var="job" items="${joblist}" varStatus="sts" >
-										<input type="hidden" class="a${sts.count}" value="${job.j_no}"/> 
+									<c:forEach var="job" items="${joblist}">
+										<input type="hidden" value="${job.j_startD}"/> 
 									</c:forEach>
-									<!-- <input type="hidden" name="status" value=""/> -->
 									<div class="row">
 										<label class="col-sm-2 col-form-label"> 
 											<i class="tim-icons icon-button-power"></i> 작업번호
