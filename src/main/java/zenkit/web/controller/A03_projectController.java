@@ -33,9 +33,6 @@ public class A03_projectController {
 	@Autowired
 	private A03_projectService service;
 	
-	@Autowired
-	private A03_JobService jobService;
-	
 	// http://localhost:7080/zenkit/project.do?method=form
 	@GetMapping(params = "method=form")
 	public String projectListForm(HttpServletRequest request, Model m) {
@@ -139,6 +136,7 @@ public class A03_projectController {
 	@PostMapping(params = "method=regForm")
 	public String proRegForm(Project pro, Model m) {
 		service.projectReg(pro);
+		
 		m.addAttribute("regSucc", "등록완료");
 		
 		return "/a03_project/a00_regProject";
@@ -193,9 +191,11 @@ public class A03_projectController {
 	}
 	// http://localhost:7080/zenkit/project.do?method=userJob
 	@RequestMapping(params = "method=userJob")
-	public String getUserJob(@RequestParam("p_no") int p_no, Model m) {
+	public String getUserJob(@RequestParam("p_no") int p_no, Model m, HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		User user = (User)session.getAttribute("sesMem");
 		
-		m.addAttribute("jobList", jobService.jobList3(p_no));
+		m.addAttribute("jobList", service.getJobList(p_no, user.getU_no()));
 		return "pageJsonReport";
 	}
 	

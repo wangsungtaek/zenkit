@@ -349,10 +349,12 @@
 			var o_name = $('[name=o_name]').val();
 			var p_no = $('[name=p_no] option:selected').val();
 			var j_no = $('[name=j_no] option:selected').val();
+			var o_file = $('[name="o_file"]').val();
 			
 			console.log(o_name);
 			console.log(p_no);
 			console.log(j_no);
+			console.log(o_file);
 			
 			if(o_name.trim() == "" || o_name.trim() == null){
 				Swal.fire({
@@ -376,6 +378,14 @@
 					position: 'center',
 					type: 'warning',
 					title: '프로젝트를 선택하세요.',
+					showConfirmButton: false,
+					timer: 1500
+		      })
+			} else if(o_file == ''){
+				Swal.fire({
+					position: 'center',
+					type: 'warning',
+					title: '파일을 선택하세요.',
 					showConfirmButton: false,
 					timer: 1500
 		      })

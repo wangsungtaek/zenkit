@@ -15,6 +15,11 @@
 		margin: 0px;
 		overflow: hidden; */
 	}
+	
+	.data:hover {
+		background: #1E1E28;
+		cursor: pointer;
+	}
 	</style>
 </head>
 <body class="sidebar-mini ">
@@ -173,8 +178,7 @@
 									<table class="table text-left mr-auto ml-auto" style="width: 90%">
 										<tbody>
 											<c:forEach var="risk" items="${myRiskList}">
-												<a href="##">
-												<tr>
+												<tr class="data" id="${risk.r_no}">
 													<td>${risk.r_no}</td>
 													<td>
 														<p class="text-warning" style="height: 21px; width:100%; overflow: hidden; margin: 0px;">
@@ -182,7 +186,6 @@
 														</p>
 													</td>
 												</tr>
-												</a>												
 											</c:forEach>										
 										</tbody>
 									</table>
@@ -326,6 +329,14 @@
 	
 	<script>
 		
+		$(".data").click(function(){
+			var r_no=$(this).attr("id");
+			console.log(r_no);
+			
+			location.href="${path}/zenkit.do?method=detail&r_no="+r_no;
+		});
+	
+	
 		var pos = "${sesMem.pos_no}";
 		
 		if(pos == 4){

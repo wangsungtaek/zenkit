@@ -17,6 +17,7 @@ import zenkit.web.dto.RiskStateCnt;
 import zenkit.web.dto.SchProject;
 import zenkit.web.dto.UpProject;
 import zenkit.web.vo.Gantt;
+import zenkit.web.vo.Job;
 import zenkit.web.vo.Job2;
 import zenkit.web.vo.Project;
 import zenkit.web.vo.Risk;
@@ -28,7 +29,8 @@ public class A03_projectService {
 	A03_projectDao dao;
 	
 	@Autowired
-	A03_JobDao jobDao;
+	A03_JobService jobDao;
+	
 	
 	// 회원별 프로젝트 리스트
 	public ArrayList<UpProject> getProList(SchProject sch){
@@ -65,18 +67,33 @@ public class A03_projectService {
 	public int getProListCnt(SchProject sch) {
 		return dao.getProListCnt(sch);
 	}
+
+	
 	
 	// 프로젝트 등록
 	public void projectReg(Project pro) {
 		SimpleDateFormat dateFormat = new SimpleDateFormat("YYYY-MM-dd");
+		SimpleDateFormat dateFormat2 = new SimpleDateFormat("YYYY-MM-dd");
+		
+		
 		
 		// Date타입 => String타입 (패턴으로 변경)
 		pro.setP_startD_s(dateFormat.format(pro.getP_startD()));
 		pro.setP_endD_s(dateFormat.format(pro.getP_endD()));
 		
+		
+		// 첫번째 작업 등록
+		UpProject upro = new UpProject();
+		upro.setP_name(pro.getP_name());
+		upro.setP_startD_s(dateFormat2.format(pro.getP_startD()));
+		upro.setP_endD_s(dateFormat2.format(pro.getP_endD()));
+		
+		
+		
 		// 프로젝트 설명 없을 때 처리
 		if(pro.getP_content().equals("") || pro.getP_content() == null)
 			pro.setP_content("설명없음");
+		
 		pro.setP_endD(pro.getP_startD());
 		
 		// 프로젝트 등록
@@ -90,6 +107,11 @@ public class A03_projectService {
 		hm.put("p_no", p_no);
 		hm.put("u_no", u_no);
 		dao.projectInvite(hm);
+		
+		// 첫번째 작업 등록
+		upro.setP_no(p_no);
+		upro.setU_no(u_no);
+		dao.firstJobInsert(upro);
 	}
 
 	// 프로젝트 기본정보
@@ -190,9 +212,9 @@ public class A03_projectService {
 		int parentCnt = 0; // 최상위 작업 카운트
 		double parentProgress = 0; // 최상위 작업 진행률
 		double totProgress = 0; // 진행률
-		ArrayList<Job2> jobs = jobDao.jobList3(p_no);
+		ArrayList<Job> jobs = jobDao.jobList3(p_no);
 		
-		for(Job2 j : jobs) {
+		for(Job j : jobs) {
 			// 최상위 작업일때,
 			if(j.getJ_refno() == 0) {
 				parentProgress += (j.getJ_completeR() * 100);

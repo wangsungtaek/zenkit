@@ -133,6 +133,7 @@
 		  FROM Z_RISK
 		 WHERE p_no = #{p_no}
 		   AND r_receive = #{u_id}
+		   AND rs_name != '조치완료'
 	</select>
 	
 	<!-- 프로젝트 별 작업상태 카운트 -->
@@ -187,6 +188,18 @@
 	         to_date(#{p_endD_s},'YYYY-MM-DD'),
 	         #{p_content}, #{p_pm}, #{d_no})
 	</insert>
+	
+	<insert id="firstJobInsert" parameterType="upproject">
+		INSERT INTO Z_JOB VALUES (z_job_no_seq.nextval, 0, #{p_name},'최상위',
+			to_date(#{p_startD_s},'yyyy/mm/dd'),
+			to_date(#{p_endD_s},'yyyy/mm/dd'),
+			sysdate,
+			sysdate,
+			0,
+			#{p_no},
+			#{u_no})
+	</insert>
+	
 	
 	<!-- 프로젝트 참여 -->
 	<insert id="projectInvite" parameterType="hashmap">
