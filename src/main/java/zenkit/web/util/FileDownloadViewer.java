@@ -48,6 +48,5 @@ public class FileDownloadViewer extends AbstractView{
 		OutputStream out = response.getOutputStream();
 		FileCopyUtils.copy(fis, out);
 		out.flush();
-		
 	}
 }

@@ -64,7 +64,6 @@ public class A02_OutputService {
 		if(filename != null && !filename.equals("")) {
 			
 			// 등록된 산출물 PK (o_no)
-			
 			String o_no = "o_"+ Integer.toString(dao.getMaxNo()+1);
 			String p_no = "p_"+output.getP_no();
 			// 파일 경로 생성(웹경로, 실제경로)
