@@ -6,5 +6,5 @@ pass=tiger
 test=scott
 # driver dburl user pass pass test
 # 파일 서버 정보
-upload=/Users/wangsungtaek/taek/workspace/zenkit/WebContent/z03_upload
+upload=C:\\Users\\user\\workspace\\zenkit\\WebContent\\z03_upload
 

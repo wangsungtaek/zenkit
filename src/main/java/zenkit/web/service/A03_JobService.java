@@ -158,7 +158,24 @@ public class A03_JobService {
 		upt.setJ_endD_s(endD);
 		dao.jobUpdate(upt);
 	}
-	
+	public void jobInsert2(Gantt2 g) {
+		Job ins = new Job();
+		ins.setJ_refno(g.getParent());
+		ins.setJ_name(g.getText());
+		ins.setJ_content(g.getJcontent());
+		SimpleDateFormat sDate = new SimpleDateFormat("yyyy/MM/dd");
+		System.out.println("시작일 : "+g.getStart_date());
+		System.out.println("종료일 : "+g.getEnd_date());
+		String startD = sDate.format(g.getStart_date());
+		String endD = sDate.format(g.getEnd_date());
+		System.out.println("시작일 : "+startD);
+		System.out.println("종료일 : "+endD);
+		ins.setJ_startD_s(startD);
+		ins.setJ_endD_s(endD);
+		ins.setP_no(g.getP_no());
+		ins.setU_no(g.getU_no());
+		dao.jobInsert(ins);
+	}
 	public Job parentjob(int j_no) {
 		return dao.parentjob(j_no);
 	}

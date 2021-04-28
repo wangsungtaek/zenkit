@@ -91,7 +91,7 @@
           </div>
           <div class="col-lg-3 col-md-6">
             <div class="card card-stats">
-              <div class="card-body" OnClick="location.href ='${path}/mytask.do?method=outputs'">
+              <div class="card-body">
                 <div class="row">
                   <div class="col-5">
                     <div class="info-icon text-center icon-danger">
@@ -109,8 +109,8 @@
               <div class="card-footer">
                 <hr>
                 <div class="stats">
-	                <a href="mytask.do?method=outputs" style="color:#a9a9b1; font-weight:500;">
-	                  View More <i class="tim-icons icon-minimal-right"></i>
+	                <a >
+	                &nbsp;
 	                </a> 
                 </div>
               </div>
@@ -329,12 +329,14 @@
 		<div class="row" style="margin-bottom:30px;">
               <div class="col-md-3 " style="float:right;">
               	 <input type="hidden" name="d_no" value=""/>
-                  <select class="selectpicker" data-size="5" data-style="btn btn-primary" 
-				        title="부서 선택" id="deptSelect" style="width:50px;">
+                   <select class="selectpicker" data-size="5" data-style="btn btn-primary" 
+                    title="부서 선택" id="deptSelect" style="width:50px;">
+                    <option value="0">부서 선택</option>
                        <c:forEach var="sd" items="${selectDname}">
-                    	  <option value="${sd.d_no}">${sd.d_name}</option>
+                         <option value="${sd.d_no}">${sd.d_name}</option>
                       </c:forEach>
                    </select>
+                   
              </div>
         </div>     	             
         <div class="row">

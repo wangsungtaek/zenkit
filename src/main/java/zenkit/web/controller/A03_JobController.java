@@ -19,6 +19,7 @@ import zenkit.web.service.A03_JobService;
 import zenkit.web.vo.Gantt;
 import zenkit.web.vo.Gantt2;
 import zenkit.web.vo.Job;
+import zenkit.web.vo.User;
 
 @Controller
 @RequestMapping("/job.do")
@@ -143,30 +144,33 @@ public class A03_JobController {
 	// Gantt 업데이트
 	// http://localhost:7080/zenkit/job.do?method=update2
 	@RequestMapping(params = "method=update2")
-	public String jobUpdate2(Gantt2 g, Model d) {
-		System.out.println("냥냥:"+g.getStart_date());
-		d.addAttribute("success","Y");
+	public String jobUpdate2(Gantt2 g, Model d, @SessionAttribute("p_no") int p_no) {
+		service.TopjobcomR(g.getParent());
 		service.jobUpdate2(g);
+		d.addAttribute("success","Y");
+		d.addAttribute("job", service.jobList(p_no));
 		return "pageJsonReport";
 	}
 	// Gantt 삭제
 	// http://localhost:7080/zenkit/job.do?method=delete2
 	@RequestMapping(params = "method=delete2")
-	public String jobDelete2(Gantt2 g, Model d) {
+	public String jobDelete2(Gantt2 g, Model d, @SessionAttribute("p_no") int p_no) {
 		d.addAttribute("success","Y");
 		service.jobDelete(g.getId()); // 작업 데이터 삭제 처리
+		d.addAttribute("job", service.jobList(p_no));
 		return "pageJsonReport";
 	}
-	/* Gantt 등록
-	// http://localhost:7080/zenkit/job.do?method=insert
+	
+	// Gantt 등록
+	// http://localhost:7080/zenkit/job.do?method=insert2
 	@RequestMapping(params = "method=insert2")
-	public String jobInsert2(Gantt2 g, Model d,HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		int p_no = (int) session.getAttribute("p_no");
+	public String jobInsert2(Gantt2 g, Model d, @SessionAttribute("p_no") int p_no, @SessionAttribute("sesMem") User user1) {
+		g.setU_no(user1.getU_no());
 		g.setP_no(p_no);
+		service.jobInsert2(g);
 		d.addAttribute("success","Y");
-		service.jobInsert2(g); // 작업 데이터 삭제 처리
-		return "forward:/job.do?method=insertForm";
+		d.addAttribute("job", service.jobList(p_no));
+		return "pageJsonReport";
 	}
-	*/
+	
 }

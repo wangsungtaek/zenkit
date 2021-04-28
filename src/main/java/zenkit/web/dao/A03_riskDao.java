@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Repository;
 
+import zenkit.web.dto.UpRisk;
 import zenkit.web.vo.Project;
 import zenkit.web.vo.Risk;
 import zenkit.web.vo.RiskAction;
@@ -14,7 +15,8 @@ import zenkit.web.vo.User;
 
 @Repository
 public interface A03_riskDao {
-  public ArrayList<Risk> riskList(Risk sch);
+	public int totCnt(UpRisk sch);
+  public ArrayList<Risk> riskList(UpRisk sch);
   public void riskInsert(Risk insert);
   public Risk getRisk(int r_no);
   public void updateRisk(Risk upt);

@@ -26,6 +26,12 @@
 #no_task_tr {
 	height:300px;
 }
+#taskTable a {
+	color: #d1c0e8;
+}
+#taskTable a:hover {
+	color: #FF00DD;
+}
 </style>
 </head>
 <body class="sidebar-mini ">
@@ -77,11 +83,11 @@
 		            <div class="card">
 
 		              <div class="card-body">
-		                  <table class="table table-striped">
+		                  <table class="table table-striped" id="taskTable">
 		                  	<colgroup>
 	        					<col width="50px">
 	        					<col width="20%">
-		        				<col width="20%">
+		        				<col width="25%">
 		        				<col width="90px">
 		        				<col width="80px">
 		        				<col width="100px">
@@ -115,8 +121,6 @@
 		                    </c:if>
 		                    <c:if test="${!empty taskList}">
 		                    <c:forEach var="task" items="${taskList}">
-		                    <fmt:formatDate var="startD" value="${task.j_startD}" pattern="yyyy-MM-dd"/>
-		                    <fmt:formatDate var="endD" value="${task.j_endD}" pattern="yyyy-MM-dd"/>
 							<c:choose>
 			                    <c:when test="${task.ingstate eq '지연'}">
 				                    <c:set var="state" value="<span class='badge badge-danger'>지연</span>"/>
@@ -143,13 +147,13 @@
 										</div>
         							</td>
 		                    		<td>${task.j_name}</td>
-		                    		<td>${task.p_name}</td>
+		                    		<td><a href="javascript:goProject(${task.p_no})">${task.p_name}</a></td>
 		                    		<td class="text-center">${task.pm_name}</td>
 		                    		<td class="text-center task_state">${state}</td>
-		                    		<td class="text-center">${startD}</td>
-		                    		<td class="text-center">${endD}</td>
+		                    		<td class="text-center"><fmt:formatDate value="${task.j_startD}" pattern="yyyy.MM.dd"/></td>
+		                    		<td class="text-center"><fmt:formatDate value="${task.j_endD}" pattern="yyyy.MM.dd"/></td>
 		                    		<td class="text-center">
-				                     	<input type="number" name="completeRate${task.j_no}" class="form-control" 
+				                     	<input type="number" name="completeRate${task.j_no}" class="form-control compleInput" 
 				                     		min="0" max="100" step="10" value="<fmt:parseNumber value='${task.j_completeR*100}' integerOnly='true'/>"/>
 		                    		</td>
 		                    	</tr>
@@ -159,9 +163,13 @@
 		                  </table>
 		                 <c:if test="${!empty taskList}">
 	        			<nav aria-label="...">
-	  						<ul class="pagination">
+	  						<ul class="pagination justify-content-center">
 								<li class="page-item">
-									<a class="page-link" href="javascript:goPage(${sch.startBlock-1})" tabindex="-1">Previous</a>
+									<a class="page-link" href="javascript:goPage(${sch.startBlock-1})" aria-label="Previous">
+										<span aria-hidden="true">
+											<i class="tim-icons icon-double-left" aria-hidden="true"></i>
+										</span>
+									</a>
 								</li>
 								<c:forEach var="cnt" begin="${sch.startBlock}" end="${sch.endBlock}">
 									<li class="page-item ${sch.curPage==cnt ? 'active':''}">
@@ -169,7 +177,11 @@
 									</li>
 								</c:forEach>
 								<li class="page-item">
-									<a class="page-link" href="javascript:goPage(${sch.endBlock+1})">Next</a>
+									<a class="page-link" href="javascript:goPage(${sch.endBlock+1})" aria-label="Next">
+										<span aria-hidden="true">
+											<i class="tim-icons icon-double-right" aria-hidden="true"></i>
+										</span>
+									</a>
 								</li>
 							</ul>
 						</nav>
@@ -205,21 +217,16 @@
 						</div>
 					</div>
 				<!-- end notice modal -->
-      	</div>
+ 			</div>
 			<!-- End Content -->	
 		</div>
 	</div>
 	<%@ include file="../a01_main/plugin.jsp"%>
 	 <%@ include file="../a01_main/bootstrapBottom.jsp"%>
 <script>
+	$('.navbar-brand').text('내 작업');
 	var path="${path}";
 	var task = {};
-<c:if test="${!empty taskList}">
-<c:forEach var="task" items="${taskList}">
-	var jNo = '${task.j_no}';
-	task[jNo] = {a_requestP:${task.j_completeR*100}};
-</c:forEach>
-</c:if>
 	var schPname="${sch.p_name}";
 	if(schPname!="") {
 		$('#prosel').val(schPname);
