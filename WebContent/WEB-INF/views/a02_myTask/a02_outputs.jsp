@@ -343,6 +343,12 @@
 				}
 			});
 		})
+		$('[name=o_name]').keydown(function(){
+			if(event.keyCode == 13){
+				event.preventDefault();
+			}
+		})
+		
 		
 		// 산출물 등록
 		$('#regBtn').on("click",function(){

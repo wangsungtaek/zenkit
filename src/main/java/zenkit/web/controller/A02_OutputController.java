@@ -40,7 +40,7 @@ public class A02_OutputController {
 		if(sch.getCurrPage() == 0) {
 			sch.setCurrPage(1);
 		}
-		int size = 3;
+		int size = 5;
 		int page = sch.getCurrPage();
 		int startNum = 1 + (page-1) * size;
 		int endNum = page * size;
